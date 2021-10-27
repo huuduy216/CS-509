@@ -29,26 +29,26 @@ const Drawtroggle = (props) => {
         visible={visible}
         className={classes.drawer}
     >
-     <DrawerButton icon={<UserAddOutlined style={{fontSize:'23px'}}/>} title={"User"} />
-     <DrawerButton icon={<ArrowLeftOutlined style={{fontSize:'23px'}}/>} title={"Home"}  edit={"home"}/>
+     <DrawerButton icon={<UserAddOutlined style={{fontSize:'23px'}}/>} title={"Users"} to ="/users"/>
+     <DrawerButton icon={<ArrowLeftOutlined style={{fontSize:'23px'}}/>} title={"Home"} to ="/employee"/>
     </Drawer>
     );
 
     
 
     if(props.role==="user" || localStorage.getItem('timesheetisAuthenticated')==="admin")
-    adminDrawButton=( 
-    <Drawer
-        width="264"
-        placement="left"
-        closable={false}
-        onClose={onClose}
-        visible={visible}
-        className={classes.drawer}
-    >
-     <DrawerButton icon={<ArrowLeftOutlined style={{fontSize:'23px'}}/>} title={"Home "} edit={props.editHome}/>
-    </Drawer>
-    );
+    adminDrawButton=null;
+    // <Drawer
+    //     width="264"
+    //     placement="left"
+    //     closable={false}
+    //     onClose={onClose}
+    //     visible={visible}
+    //     className={classes.drawer}
+    // >
+    //  <DrawerButton icon={<ArrowLeftOutlined style={{fontSize:'23px'}}/>} title={"Home "} edit={props.editHome}/>
+    // </Drawer>
+    
 
     return (
         <React.Fragment>
