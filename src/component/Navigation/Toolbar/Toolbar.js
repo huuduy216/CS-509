@@ -35,13 +35,7 @@ const Toolbar = (props) => {
         </div>
     );
 
-    let setting = (
-        <Menu.Item >
-            <a href="/setting">
-                Profile Settings
-            </a>
-        </Menu.Item>
-    );
+
     let logout = (
         <Menu.Item onClick={handleClickLogout}>
             <a href="/">
@@ -52,20 +46,20 @@ const Toolbar = (props) => {
     const menu = (
         <Menu className={classes.menu}>
             {userInfo}
-            {setting}
+            {/* {setting} */}
             {logout}
         </Menu>
     );
     /////////////////// notification menu
-    const notificationMenu = (
-        <Menu className={classes.menu}>
+    // const notificationMenu = (
+    //     <Menu className={classes.menu}>
 
-            <p> 1st menu item</p>
-            <p> 2st menu item</p>
-            <p> 3st menu item</p>
+    //         <p> 1st menu item</p>
+    //         <p> 2st menu item</p>
+    //         <p> 3st menu item</p>
 
-        </Menu>
-    );
+    //     </Menu>
+    // );
     ///////////////logo
     let logo = (<NavLink to="/" className={classes.logo}></NavLink>);
     if(props.role==="admin"||props.role==="user"){
@@ -78,7 +72,7 @@ const Toolbar = (props) => {
             {logo}
             <nav className={classes.des}>
                 <Login link="/login" exact >LOGIN </Login>
-                <Register link="/" exact >REGISTER </Register>
+                <Register link="/register" exact >REGISTER </Register>
             </nav>
         </Header>
     );
@@ -91,9 +85,9 @@ const Toolbar = (props) => {
                     <Login link="/login" exact displayLogin={"none"}>LOGIN </Login>
                     <div className={classes.loginButton}>
 
-                        <Dropdown overlay={notificationMenu} placement="bottomLeft" trigger="click">
+                        {/* <Dropdown overlay={notificationMenu} placement="bottomLeft" trigger="click">
                             <Button type="link" icon={<NotificationOutlined />} size="middle"></Button>
-                        </Dropdown>
+                        </Dropdown> */}
 
                         <Dropdown overlay={menu} placement="bottomLeft" trigger="click">
                             <Button size="middle" type="primary" shape="circle" className={classes.profilepic}>{localStorage['timesheeticonName']}</Button>

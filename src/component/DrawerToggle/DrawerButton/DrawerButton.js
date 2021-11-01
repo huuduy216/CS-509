@@ -11,7 +11,7 @@ import {Button} from 'antd';
 const drawButton = (props) => {
 
     let button=(
-        <Button icon={props.icon} className={classes.button} href={props.to} style={{fontWeight:"bolder"}} onClick={props.editHome}>{props.title}</Button>
+        <Button type = "link" icon={props.icon} className={classes.button} href={props.to} style={{fontWeight:"bolder"}} onClick={props.editHome}>{props.title}</Button>
     )
     if(props.edit==="algorithm"){
         button =(

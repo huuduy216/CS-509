@@ -3,11 +3,13 @@ export const AUTH_START = 'AUTH_START';
 export const AUTH_ADMINSUCCESS = 'AUTH_ADMINSUCCESS';
 export const AUTH_USERSUCCESS = 'AUTH_USERSUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
+export const REG_FAIL = 'REG_FAIL';
+export const REG_USERSUCCESS = 'REG_USERSUCCESS';
 export const AUTH = 'AUTH';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_CHANGEROUTER = 'AUTH_CHANGEROUTER';
-
+export const AUTH_REG ="REG";
 
 //user
 export const USER_GET = 'USER_GET';

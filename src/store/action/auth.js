@@ -1,7 +1,8 @@
 import axios from '../../axios/axios-local'
 import { userGet } from './user'
 import * as actionTypes from './actionTypes';
-
+import exp from 'constants';
+const querystring = require('querystring');
 
 export const auth = (userName, password) => {
 
@@ -10,7 +11,7 @@ export const auth = (userName, password) => {
         password: password
     }
     //send params instead of payload
-    const querystring = require('querystring');
+    
 
     //test
    
@@ -23,7 +24,7 @@ export const auth = (userName, password) => {
             dispatch(authUserSuccess());
         }
         else{
-            dispatch(authFail());
+            dispatch(authFail("Invalid credentials"));
         }
     }
     //----------------------
@@ -45,6 +46,46 @@ export const auth = (userName, password) => {
 
     // }
 }
+export const refresh =() =>{
+     return (dispatch) =>{
+         dispatch(authStart())
+     }
+}
+export const reg =(userName, password) =>{
+    const param = {
+        username: userName,
+        password: password
+    }
+    return (dispatch)=>{
+        dispatch(authStart())
+    // if(userName==="admin" && password==="123"){
+    //     dispatch(authAdminSuccess());
+    // }
+
+
+     //     axios.post('/login', querystring.stringify(param))
+    //         .then(response => {
+                
+    //             let token = response.headers["token"];
+    //             if (token !== undefined) {
+    //                 localStorage.setItem('timesheettoken',token);
+    //                 dispatch(authSuccess());
+    //                 dispatch(userGet(param.username,token));
+    //             }else{
+    //                 dispatch(authFail(response.data));
+    //             }
+    //         });
+    //     return Promise.resolve();
+
+    // }
+     if(userName==="demo1" && password==="123"){
+        dispatch(regUserSuccess("Registered!! Login Now"));
+    }
+    else{
+        dispatch(regFail("User Exists try different username"));
+    }
+     }
+    };
 
 export const authStart = () => {
     return {
@@ -63,7 +104,12 @@ export const authUserSuccess = () => {
         type: actionTypes.AUTH_USERSUCCESS,
     }
 }
-
+export const regUserSuccess = (msg) => {
+    return {
+        type: actionTypes.REG_USERSUCCESS,
+        loginMsg: msg
+    }
+}
 export const authFail = (loginError)=>{
     return{
         type:actionTypes.AUTH_FAIL,
@@ -71,7 +117,12 @@ export const authFail = (loginError)=>{
     }
 }
 
-
+export const regFail = (regError)=>{
+    return{
+        type:actionTypes.REG_FAIL,
+        loginError:regError
+    }
+}
 export const authLogout = () => {
     localStorage.removeItem('timesheettoken');
     localStorage.removeItem('timesheetUsername');
