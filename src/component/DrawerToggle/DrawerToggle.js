@@ -38,16 +38,6 @@ const Drawtroggle = (props) => {
 
     if(props.role==="user" || localStorage.getItem('timesheetisAuthenticated')==="admin")
     adminDrawButton=null;
-    // <Drawer
-    //     width="264"
-    //     placement="left"
-    //     closable={false}
-    //     onClose={onClose}
-    //     visible={visible}
-    //     className={classes.drawer}
-    // >
-    //  <DrawerButton icon={<ArrowLeftOutlined style={{fontSize:'23px'}}/>} title={"Home "} edit={props.editHome}/>
-    // </Drawer>
     
 
     return (
