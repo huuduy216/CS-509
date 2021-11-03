@@ -10,7 +10,7 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_CHANGEROUTER = 'AUTH_CHANGEROUTER';
 export const AUTH_REG ="REG";
-
+export const CALL_FAIL = "CALL_FAIL";
 //user
 export const USER_GET = 'USER_GET';
 

@@ -36,6 +36,10 @@ const regUserSuccess= (state,action)=>{
     return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:""});
 
 }
+const callFail = (state,action)=>{
+    return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:""});
+
+}
 const regFail=(state,action)=>{
     return update.updateObject(state,{loginError:action.loginError,isAuthenticated:false,loading:false,role:""});
 }
@@ -47,7 +51,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.AUTH_ADMINSUCCESS:return (authAdminSuccess(state,action));
         case actionTypes.AUTH_USERSUCCESS:return (authUserSuccess(state,action));
         case actionTypes.REG_USERSUCCESS:return (regUserSuccess(state,action));
-
+        case actionTypes.CALL_FAIL : return (callFail(state,action));
         case actionTypes.AUTH_FAIL:return (authFail(state,action));
         case actionTypes.REG_FAIL: return (regFail(state,action));
         case actionTypes.AUTH_LOGOUT:return (authLogout(state,action));

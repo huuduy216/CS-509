@@ -58,34 +58,37 @@ export const reg =(userName, password) =>{
     }
     return (dispatch)=>{
         dispatch(authStart())
-    // if(userName==="admin" && password==="123"){
-    //     dispatch(authAdminSuccess());
-    // }
+  
 
 
-     //     axios.post('/login', querystring.stringify(param))
-    //         .then(response => {
+        axios.post('authentication/register', querystring.stringify(param))
+            .then(response => {
                 
-    //             let token = response.headers["token"];
-    //             if (token !== undefined) {
-    //                 localStorage.setItem('timesheettoken',token);
-    //                 dispatch(authSuccess());
-    //                 dispatch(userGet(param.username,token));
-    //             }else{
-    //                 dispatch(authFail(response.data));
-    //             }
-    //         });
-    //     return Promise.resolve();
+                
+                if (response!== undefined || response!=null) {
+                  
+                    dispatch(regUserSuccess("Registered!! Login Now"));
+                    
+                }else{
+                    dispatch(regFail("User Exists try different username"));
+                }
+            }).catch(error =>{
+             // console.log(console.error(error.status))
+             console.log("----------")
+             dispatch(callFail())
+            });
+        return Promise.resolve();
 
+    }
+}
+    //  if(userName==="demo1" && password==="123"){
+    //     dispatch(regUserSuccess("Registered!! Login Now"));
     // }
-     if(userName==="demo1" && password==="123"){
-        dispatch(regUserSuccess("Registered!! Login Now"));
-    }
-    else{
-        dispatch(regFail("User Exists try different username"));
-    }
-     }
-    };
+    // else{
+    //     dispatch(regFail("User Exists try different username"));
+    // }
+    //  }
+    // };
 
 export const authStart = () => {
     return {
@@ -98,7 +101,12 @@ export const authAdminSuccess = () => {
         type: actionTypes.AUTH_ADMINSUCCESS,
     }
 }
-
+export const callFail =() =>{
+    return {
+        type: actionTypes.CALL_FAIL,
+        loginMsg : "Contact Admin"
+    }
+}
 export const authUserSuccess = () => {
     return {
         type: actionTypes.AUTH_USERSUCCESS,
