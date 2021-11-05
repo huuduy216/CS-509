@@ -18,14 +18,14 @@ export const auth = (userName, password) => {
     return (dispatch) => {
         dispatch(authStart())
         dispatch(authStart());
-        axios.post('/login', querystring.stringify(param))
+        axios.post('authentication/login', querystring.stringify(param))
             .then(response => {
                 
                 let token = response.headers["token"];
                 if (token !== undefined) {
                     localStorage.setItem('timesheettoken',token);
                     //dispatch(authSuccess());
-                    
+
                     dispatch(userGet(param.username,token));
                 }else{
                     dispatch(authFail(response.data));
