@@ -24,7 +24,8 @@ export const auth = (userName, password) => {
                 let token = response.headers["token"];
                 if (token !== undefined) {
                     localStorage.setItem('timesheettoken',token);
-                    dispatch(authSuccess());
+                    //dispatch(authSuccess());
+                    
                     dispatch(userGet(param.username,token));
                 }else{
                     dispatch(authFail(response.data));
