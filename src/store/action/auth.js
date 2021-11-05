@@ -17,34 +17,26 @@ export const auth = (userName, password) => {
    
     return (dispatch) => {
         dispatch(authStart())
-        if(userName==="admin" && password==="123"){
-            dispatch(authAdminSuccess());
+        dispatch(authStart());
+        axios.post('/login', querystring.stringify(param))
+            .then(response => {
+                
+                let token = response.headers["token"];
+                if (token !== undefined) {
+                    localStorage.setItem('timesheettoken',token);
+                    dispatch(authSuccess());
+                    dispatch(userGet(param.username,token));
+                }else{
+                    dispatch(authFail(response.data));
+                }
+            });
+        return Promise.resolve();
 
-        }else if(userName==="demo1" && password==="123"){
-            dispatch(authUserSuccess());
-        }
-        else{
-            dispatch(authFail("Invalid credentials"));
-        }
+    
     }
     //----------------------
     // return (dispatch) => {
-    //     dispatch(authStart());
-    //     axios.post('/login', querystring.stringify(param))
-    //         .then(response => {
-                
-    //             let token = response.headers["token"];
-    //             if (token !== undefined) {
-    //                 localStorage.setItem('timesheettoken',token);
-    //                 dispatch(authSuccess());
-    //                 dispatch(userGet(param.username,token));
-    //             }else{
-    //                 dispatch(authFail(response.data));
-    //             }
-    //         });
-    //     return Promise.resolve();
-
-    // }
+   
 }
 export const refresh =() =>{
      return (dispatch) =>{
