@@ -5,20 +5,25 @@ import exp from 'constants';
 const querystring = require('querystring');
 
 export const auth = (userName, password) => {
-
+    
     const param = {
         username: userName,
         password: password
     }
     //send params instead of payload
-    
+    const params = new URLSearchParams({
+        username: userName,
+        password : password,
+       
+      }).toString();
+
 
     //test
    
     return (dispatch) => {
         dispatch(authStart())
         dispatch(authStart());
-        axios.post('authentication/login', querystring.stringify(param))
+        axios.post('authentication/login?'+ params)
             .then(response => {
                 
                 let token = response.headers["token"];
@@ -30,7 +35,11 @@ export const auth = (userName, password) => {
                 }else{
                     dispatch(authFail(response.data));
                 }
-            });
+            }).catch(error =>{
+                // console.log(console.error(error.status))
+                console.log("----------")
+                dispatch(callFail())
+               });;
         return Promise.resolve();
 
     
@@ -49,12 +58,14 @@ export const reg =(userName, password) =>{
         username: userName,
         password: password
     }
+   
     return (dispatch)=>{
         dispatch(authStart())
   
 
 
-        axios.post('authentication/register', querystring.stringify(param))
+        axios.post('authentication/register', (param)
+           )
             .then(response => {
                 
                 
