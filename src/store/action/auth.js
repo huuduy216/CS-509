@@ -23,27 +23,33 @@ export const auth = (userName, password) => {
     return (dispatch) => {
         dispatch(authStart())
         dispatch(authStart());
-        axios.post('authentication/login?'+ params)
-            .then(response => {
+        // axios.post('authentication/login?'+ params)
+        //     .then(response => {
                 
-                let token = response.headers["token"];
-                if (token !== undefined) {
-                    localStorage.setItem('timesheettoken',token);
-                    //dispatch(authSuccess());
+        //         let token = response.headers["token"];
+        //         if (token !== undefined) {
+        //             localStorage.setItem('timesheettoken',token);
+        //             //dispatch(authSuccess());
 
-                    dispatch(userGet(param.username,token));
-                }else{
-                    dispatch(authFail(response.data));
-                }
-            }).catch(error =>{
-                // console.log(console.error(error.status))
-                console.log("----------")
-                dispatch(callFail())
-               });;
+        //             dispatch(userGet(param.username,token));
+        //         }else{
+        //             dispatch(authFail(response.data));
+        //         }
+        //     }).catch(error =>{
+        //         // console.log(console.error(error.status))
+        //         console.log("----------")
+        //         dispatch(callFail())
+        //        });;
+        // return Promise.resolve();
+
+        axios.get('/entries').then(response=>{
+            console.log(response)
+        }).catch(err=>{
+            console.log(err)
+        })
         return Promise.resolve();
-
-    
     }
+   
     //----------------------
     // return (dispatch) => {
    
