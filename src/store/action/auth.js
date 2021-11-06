@@ -11,19 +11,14 @@ export const auth = (userName, password) => {
         password: password
     }
     //send params instead of payload
-    const params = new URLSearchParams({
-        username: userName,
-        password : password,
-       
-      }).toString();
-
+   
 
     //test
    
     return (dispatch) => {
         dispatch(authStart())
         // dispatch(authStart());
-        axios.post('/authentication/login'+ params)
+        axios.post('/authentication/login', (param))
             .then(response => {
                 
                 let token = response.headers["token"];
