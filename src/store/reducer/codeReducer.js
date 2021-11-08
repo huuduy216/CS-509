@@ -28,6 +28,10 @@ const treeChildDelete=(state,action)=>{
     return update.updateObject(state,{treeData:action.treeData});
 }
 
+const treeModify=(state,action)=>{
+    return update.updateObject(state,{treeData:action.treeData});
+}
+
 const treeFresh=(state,action)=>{
     return update.updateObject(state,{fresh:action.fresh});
 }
@@ -39,6 +43,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_BENCHMARK_BUTTON:return(benchmarkEdit(state,action));
         case actionTypes.SET_TREE_CHILD_ADD:return(treeChildAdd(state,action));
         case actionTypes.SET_TREE_CHILD_DELETE:return(treeChildDelete(state,action));
+        case actionTypes.SET_TREE_MODIFY:return(treeModify(state,action));
         case actionTypes.SET_TREE_FRESH:return(treeFresh(state,action));
         default:
             return state;

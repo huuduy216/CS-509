@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 
 import classes from './AlgorithmRead.module.css';
 import { Button } from 'antd';
-<<<<<<< HEAD
 
-
-
-=======
 import TreeDemo from '../TreeDemo/tree/tree'
 import * as treeData from '../treeData';
 let Editbutton = (
@@ -31,7 +27,6 @@ function callback(key) {
 
 
 const AlgorithmRead = (props) => {
->>>>>>> ce3d5eb104d19c3b4b223010ba2ede35f1616a5a
 
 
 
@@ -40,16 +35,8 @@ const AlgorithmRead = (props) => {
             {/* <div className={classes.header}>
                 <p className={classes.p}>Top Class</p> */}
             <div className={classes.body}>
-                <TreeDemo data={treeData.allData} />
             </div>
-<<<<<<< HEAD
-           
-=======
-            {/* </div>
-            <div className={classes.body}>
-            </div> */}
 
->>>>>>> ce3d5eb104d19c3b4b223010ba2ede35f1616a5a
         </React.Fragment>
 
     );
