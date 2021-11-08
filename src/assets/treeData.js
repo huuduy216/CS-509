@@ -144,51 +144,51 @@ export const allData = [
                             {
                                 title: 'Implementations',
                                 key: '0-0-0-0',
-                                type: 'implementations',
+                                type: 'algorithm_implementations',
                                 children: [
                                     {
                                         title: 'Java',
                                         key: '0-0-0-0-0',
-                                        type: 'implementation',
+                                        type: 'algorithm_implementation',
                                         children: [
                                             {
                                                 title: 'Benchmarks',
                                                 key: '0-0-0-0-0-0',
-                                                type: 'benchmark',
+                                                type: 'algorithm_benchmark',
                                                 children: [
                                                     {
                                                         title: 'CPU',
                                                         key: '0-0-0-0-0-0-0',
-                                                        type: 'benchmark_Level1',
+                                                        type: 'algorithm_benchmark_Level1',
                                                         children: [
                                                             {
                                                                 title: 'Intel Core i9',
                                                                 key: '0-0-0-0-0-0-0-0',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
                                                                 children: [
                                                                     {
                                                                         title: '11900T',
                                                                         key: '0-0-0-0-0-0-0-0-0',
-                                                                        type: 'benchmark_Level3',
+                                                                        type: 'algorithm_benchmark_Level3',
 
                                                                     },
                                                                     {
                                                                         title: '11980HK',
                                                                         key: '0-0-0-0-0-0-0-0-1',
-                                                                        type: 'benchmark_Level3',
+                                                                        type: 'algorithm_benchmark_Level3',
                                                                     },
                                                                 ]
                                                             },
                                                             {
                                                                 title: 'Intel Core i7',
                                                                 key: '0-0-0-0-0-0-0-1',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
 
                                                             },
                                                             {
                                                                 title: 'Intel Core i5',
                                                                 key: '0-0-0-0-0-0-0-2',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
 
                                                             }
                                                         ]
@@ -197,29 +197,29 @@ export const allData = [
                                                     {
                                                         title: 'Catche',
                                                         key: '0-0-0-0-0-0-1',
-                                                        type: 'benchmark_Level1',
+                                                        type: 'algorithm_benchmark_Level1',
                                                         children: [
                                                             {
                                                                 title: 'L1 Cache',
                                                                 key: '0-0-0-0-0-0-1-0',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
                                                             },
                                                             {
                                                                 title: 'L2 Cache',
                                                                 key: '0-0-0-0-0-0-1-1',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
                                                             },
                                                             {
                                                                 title: 'Smart Cache',
                                                                 key: '0-0-0-0-0-0-1-2',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
                                                             },
                                                         ]
                                                     },
                                                     {
                                                         title: 'Core',
                                                         key: '0-0-0-0-0-0-2',
-                                                        type: 'benchmark_Level1',
+                                                        type: 'algorithm_benchmark_Level1',
                                                     }
                                                 ]
                                             }
@@ -228,45 +228,45 @@ export const allData = [
                                     {
                                         title: 'C',
                                         key: '0-0-0-0-1',
-                                        type: 'implementation',
+                                        type: 'algorithm_implementation',
                                         children: [
                                             {
                                                 title: 'Benchmarks',
                                                 key: '0-0-0-0-1-0',
-                                                type: 'benchmark',
+                                                type: 'algorithm_benchmark',
                                                 children: [
                                                     {
                                                         title: 'CPU',
                                                         key: '0-0-0-0-1-0-0',
-                                                        type: 'benchmark_Level1',
+                                                        type: 'algorithm_benchmark_Level1',
                                                         children: [
                                                             {
                                                                 title: 'Intel Core i9',
                                                                 key: '0-0-0-0-1-0-0-0',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
                                                                 children: [
                                                                     {
                                                                         title: '11900T',
                                                                         key: '0-0-0-0-1-0-0-0-0',
-                                                                        type: 'benchmark_Level3',
+                                                                        type: 'algorithm_benchmark_Level3',
 
                                                                     },
                                                                     {
                                                                         title: '11980HK',
                                                                         key: '0-0-0-0-1-0-0-0-1',
-                                                                        type: 'benchmark_Level3',
+                                                                        type: 'algorithm_benchmark_Level3',
                                                                     },
                                                                 ]
                                                             },
                                                             {
                                                                 title: 'Intel Core i7',
                                                                 key: '0-0-0-0-1-0-0-1',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
                                                             },
                                                             {
                                                                 title: 'Intel Core i5',
                                                                 key: '0-0-0-0-1-0-0-2',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
 
                                                             }
                                                         ]
@@ -275,26 +275,26 @@ export const allData = [
                                                     {
                                                         title: 'Catche',
                                                         key: '0-0-0-0-1-0-1',
-                                                        type: 'benchmark_Level1',
+                                                        type: 'algorithm_benchmark_Level1',
 
                                                         children: [
                                                             {
                                                                 title: 'L1 Cache',
                                                                 key: '0-0-0-0-1-0-1-0',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
 
 
                                                             },
                                                             {
                                                                 title: 'L2 Cache',
                                                                 key: '0-0-0-0-1-0-1-1',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
 
                                                             },
                                                             {
                                                                 title: 'Smart Cache',
                                                                 key: '0-0-0-0-1-0-1-2',
-                                                                type: 'benchmark_Level2',
+                                                                type: 'algorithm_benchmark_Level2',
 
                                                             },
                                                         ]
@@ -302,7 +302,7 @@ export const allData = [
                                                     {
                                                         title: 'Core',
                                                         key: '0-0-0-0-1-0-2',
-                                                        type: 'benchmark_Level1',
+                                                        type: 'algorithm_benchmark_Level1',
                                                     }
                                                 ]
                                             }
@@ -314,29 +314,29 @@ export const allData = [
                             {
                                 title: "Problem Instances",
                                 key: '0-0-0-1',
-                                type: 'problem',
+                                type: 'algorithm_problem',
                                 children: [
                                     {
                                         title: "Instance 1",
                                         key: '0-0-0-1-0',
-                                        type: 'problem_instance',
+                                        type: 'algorithm_problem_instance',
                                         children: [
                                             {
                                                 title: "Benchmarks",
                                                 key: '0-0-0-1-0-0',
-                                                type: 'benchmark',
+                                                type: 'algorithm_benchmark',
                                             },
                                         ]
                                     },
                                     {
                                         title: "Instance 2",
                                         key: '0-0-0-1-1',
-                                        type: 'problem_instance',
+                                        type: 'algorithm_problem_instance',
                                         children: [
                                             {
                                                 title: "Benchmarks",
                                                 key: '0-0-0-1-1-0',
-                                                type: 'benchmark',
+                                                type: 'algorithm_benchmark',
                                             },
                                         ]
                                     }
@@ -352,11 +352,11 @@ export const allData = [
                             {
                                 title: 'Implementations',
                                 key: '0-0-1-0',
-                                type: 'implementations',
+                                type: 'algorithm_implementations',
                                 children: [
 
-                                    { title: 'Java', key: '0-0-1-0-0', type: 'implementation' },
-                                    { title: 'C', key: '0-0-1-0-1', type: 'implementation' },
+                                    { title: 'Java', key: '0-0-1-0-0', type: 'algorithm_implementation' },
+                                    { title: 'C', key: '0-0-1-0-1', type: 'algorithm_implementation' },
                                 ]
                             },
                         ],

@@ -28,12 +28,20 @@ export const treeChildAdd = (treeData, id) => {
     }
 
     id = `${id.join("-")}-${changingNode.children.length}`;
+    //new item type
+    let new_type="sub_classification";
+    if(changingNode.children.length>0){
+        if(changingNode.children[0].type==="algorithm"){
+            new_type="algorithm_type";
+        }
+    }
+
     changingNode.children = [
         ...changingNode.children,
         {
             title: "New Item",
             key: id,
-            type: "new",
+            type:new_type,
             children: undefined,
         }];
     return {

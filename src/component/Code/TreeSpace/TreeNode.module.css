@@ -13,7 +13,7 @@
 
 .editButtonHidden{
     margin-right: 1%;
-    display: none;
+    visibility:hidden
 
 }
 
@@ -30,6 +30,14 @@
     font-size:12pt;
     font-weight: 500;
     color: black;
+    border:#e4eaee0e 1px solid;
+    width: 50%;
+}
+
+.editTitleAlgorithm{
+    font-size:12pt;
+    font-weight: 500;
+    color: rgb(255, 115, 0);
     border:#e4eaee0e 1px solid;
     width: 50%;
 }

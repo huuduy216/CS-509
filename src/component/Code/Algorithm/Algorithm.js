@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 
 import classes from './Algorithm.module.css';
 import { Button, Divider } from 'antd';
-import { AppstoreAddOutlined, FunctionOutlined, MergeCellsOutlined, SaveOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, MergeCellsOutlined, SaveOutlined, SelectOutlined } from '@ant-design/icons';
 import Tree from '../TreeSpace/Tree';
 
 
 
 
 const Algorithm = (props) => {
-   
+
     let role = localStorage.getItem('role');
 
     let Editbutton = (
@@ -19,17 +19,17 @@ const Algorithm = (props) => {
         </div>
     );
 
-    const saveClick=()=>{
-      console.log(props.treeData);
+    const saveClick = () => {
+        console.log(props.treeData);
     }
 
     if (role === "user") {
         Editbutton = (
             <div className={classes.headerRest}>
-                <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge Selected</Button>
-                <Button type="primary" className={classes.EditButton} icon={<FunctionOutlined />}>Add Algorithm</Button>
                 <Button type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
-                <Button onClick={saveClick} type="primary" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
+                <Button type="primary" className={classes.EditButton} icon={<SelectOutlined />}>Merge Selected</Button>
+                <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
+                <Button onClick={saveClick} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
             </div>
         );
     }
