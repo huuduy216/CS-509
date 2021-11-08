@@ -22,7 +22,12 @@ export const auth = (userName, password) => {
             .then(response => {
                 
                 let token = response.data;
-                if (token !== undefined) {
+                console.log(token)
+                if(token == "user not exist"){
+                    dispatch(authFail("Invalid credentials"));
+                }
+               
+                else {
                     if(response.data.role!=undefined){
                         dispatch(authAdminSuccess());
                     }
@@ -31,8 +36,6 @@ export const auth = (userName, password) => {
                   //  dispatch(authSuccess());
                     
                   //  dispatch(userGet(param.username,token));
-                }else{
-                    dispatch(authFail("Invalid credentials"));
                 }
             }).catch(error =>{
                 // console.log(console.error(error.status))

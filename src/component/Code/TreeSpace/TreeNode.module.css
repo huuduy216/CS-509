@@ -1,0 +1,34 @@
+.dFlex{
+    display: flex;
+    width: 100%;
+}
+
+.dTreeContainer{
+    list-style-type: none; 
+}
+
+.editButton{
+    margin-right: 1%;
+}
+
+.editButtonHidden{
+    margin-right: 1%;
+    display: none;
+
+}
+
+.editIcon{
+    margin-right: 1%;
+}
+.toggler{
+    width: 100%;
+    display: flex;
+    background-color: white;
+}
+
+.editTitle{
+    font-size:12pt;
+    font-weight: 500;
+    color: black;
+    border:#e4eaee0e 1px solid;
+}

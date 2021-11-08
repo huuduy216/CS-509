@@ -30,6 +30,16 @@
     margin-top: 5%;
 }
 
+.body{
+    /* background-color:#e4eaee; */
+    height: 1200px;
+    width: 80%;
+    padding-top: 100px;
+}
+   
+    
+
+
 .headerRest{
     background-color: white;
     height: 100%;
@@ -39,4 +49,8 @@
     align-items: center;
     text-align: center;
     margin-top: 3%;
+}
+
+.userButton{
+    margin-left: 5%;
 }

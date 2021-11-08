@@ -1,0 +1,51 @@
+.EditableItem {
+    height: 25px;
+}
+
+.EditableItem-Text {
+    height: 100%;
+    width: 150px;
+    border: none;
+    padding: 10px;
+    background-color: white;
+    border-bottom: 1px solid whitesmoke;
+    font-size: 10pt;
+}
+
+.EditableItem-Button {
+    height: 25px;
+    width: 25px;
+    background-color: white;
+    border-right: 1px solid whitesmoke;
+    border-bottom: 1px solid whitesmoke;
+    color: grey;
+    font-size: 10pt;
+}
+
+.EditableItem-Button_add:hover {
+    color: black;
+}
+
+.EditableItem-Button_remove:hover {
+    color: orangered;
+}
+
+.button{
+    margin-right: 1%;
+    
+}
+
+.invisibleButton{
+    margin-right: 1%;
+    display: none;
+}
+
+.normal_input{
+    border: none;
+    background-color: white;
+    font-size:12pt;
+    font-weight: 500;
+    color: black;
+    border:#e4eaee0e 1px solid;
+    width: 50%;
+}
