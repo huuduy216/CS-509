@@ -4,12 +4,9 @@ import { connect } from 'react-redux';
 import classes from './Algorithm.module.css';
 import { Button, Divider } from 'antd';
 import { AppstoreAddOutlined, FunctionOutlined, MergeCellsOutlined, SaveOutlined } from '@ant-design/icons';
-
-<<<<<<< HEAD
 import Tree from '../TreeSpace/Tree';
 
-const Algorithm = (props) => {
-=======
+
 
 
 const Algorithm = (props) => {
@@ -61,7 +58,6 @@ const Algorithm = (props) => {
           key: "0-2",
         },
       ];
->>>>>>> ce3d5eb104d19c3b4b223010ba2ede35f1616a5a
 
     let role = localStorage.getItem('role');
 

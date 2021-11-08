@@ -85,7 +85,7 @@ export const treeChildDelete = (treeData, id) => {
             ...changingNode.children.slice(index + 1),
         ];
         console.log(index)
-        console.log(newChildren[index].key)
+        console.log(newChildren)
         changingNode.children = newChildren;
         return {
             type: actionTypes.SET_TREE_CHILD_DELETE,
