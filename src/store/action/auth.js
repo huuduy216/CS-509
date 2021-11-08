@@ -21,18 +21,22 @@ export const auth = (userName, password) => {
         axios.post('/authentication/login', (param))
             .then(response => {
                 
-                let token = response.headers["token"];
+                let token = response.data;
                 if (token !== undefined) {
-                    localStorage.setItem('timesheettoken',token);
-                    //dispatch(authSuccess());
-
-                    dispatch(userGet(param.username,token));
+                    if(response.data.role!=undefined){
+                        dispatch(authAdminSuccess());
+                    }
+                    else{ dispatch(authUserSuccess());}
+                
+                  //  dispatch(authSuccess());
+                    
+                  //  dispatch(userGet(param.username,token));
                 }else{
-                    dispatch(authFail(response.data));
+                    dispatch(authFail("Invalid credentials"));
                 }
             }).catch(error =>{
                 // console.log(console.error(error.status))
-                console.log("----------")
+               
                 dispatch(callFail())
                });;
         return Promise.resolve();

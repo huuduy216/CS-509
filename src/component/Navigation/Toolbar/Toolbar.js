@@ -28,12 +28,12 @@ const Toolbar = (props) => {
 
 
 
-    let userInfo = (
-        <div className={classes.menuprofile}>
-            <p className={classes.menuname}>{localStorage['timesheetUsername']}</p>
-            <p className={classes.menumail}>{localStorage['timesheetuseremail']}</p>
-        </div>
-    );
+    // let userInfo = (
+    //     <div className={classes.menuprofile}>
+    //         <p className={classes.menuname}>{localStorage['timesheetUsername']}</p>
+    //         <p className={classes.menumail}>{localStorage['timesheetuseremail']}</p>
+    //     </div>
+    // );
 
 
     let logout = (
@@ -45,7 +45,7 @@ const Toolbar = (props) => {
     )
     const menu = (
         <Menu className={classes.menu}>
-            {userInfo}
+            {/* {userInfo} */}
             {/* {setting} */}
             {logout}
         </Menu>
