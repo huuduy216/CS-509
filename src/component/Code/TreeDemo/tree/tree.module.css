@@ -1,0 +1,17 @@
+.Tree {
+    display: flex;
+    width: 100%;
+    min-width: 800px;
+}
+
+.Tree-LeftSide {
+    width: 65%;
+}
+
+.Tree-RightSide {
+    width: 35%;
+}
+
+.ul{
+    list-style-type: none; 
+}

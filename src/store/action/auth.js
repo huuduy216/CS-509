@@ -5,46 +5,50 @@ import exp from 'constants';
 const querystring = require('querystring');
 
 export const auth = (userName, password) => {
-
+    
     const param = {
         username: userName,
         password: password
     }
     //send params instead of payload
-    
+   
 
     //test
    
     return (dispatch) => {
         dispatch(authStart())
-        if(userName==="admin" && password==="123"){
-            dispatch(authAdminSuccess());
+        // dispatch(authStart());
+        axios.post('/authentication/login', (param))
+            .then(response => {
+                
+                let token = response.data;
+                console.log(token)
+                if(token == "user not exist"){
+                    dispatch(authFail("Invalid credentials"));
+                }
+               
+                else {
+                    if(response.data.role!=undefined){
+                        dispatch(authAdminSuccess());
+                    }
+                    else{ dispatch(authUserSuccess());}
+                
+                  //  dispatch(authSuccess());
+                    
+                  //  dispatch(userGet(param.username,token));
+                }
+            }).catch(error =>{
+                // console.log(console.error(error.status))
+               
+                dispatch(callFail())
+               });;
+        return Promise.resolve();
 
-        }else if(userName==="demo1" && password==="123"){
-            dispatch(authUserSuccess());
-        }
-        else{
-            dispatch(authFail("Invalid credentials"));
-        }
+    
     }
     //----------------------
     // return (dispatch) => {
-    //     dispatch(authStart());
-    //     axios.post('/login', querystring.stringify(param))
-    //         .then(response => {
-                
-    //             let token = response.headers["token"];
-    //             if (token !== undefined) {
-    //                 localStorage.setItem('timesheettoken',token);
-    //                 dispatch(authSuccess());
-    //                 dispatch(userGet(param.username,token));
-    //             }else{
-    //                 dispatch(authFail(response.data));
-    //             }
-    //         });
-    //     return Promise.resolve();
-
-    // }
+   
 }
 export const refresh =() =>{
      return (dispatch) =>{
@@ -56,12 +60,18 @@ export const reg =(userName, password) =>{
         username: userName,
         password: password
     }
+   
     return (dispatch)=>{
         dispatch(authStart())
   
 
 
+<<<<<<< HEAD
         axios.post('/authentication/register',param)
+=======
+        axios.post('/authentication/register', (param)
+           )
+>>>>>>> ce3d5eb104d19c3b4b223010ba2ede35f1616a5a
             .then(response => {
                 
                 if (response.data!=="") {
