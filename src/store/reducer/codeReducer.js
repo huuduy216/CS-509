@@ -1,6 +1,7 @@
 import * as actionTypes from '../action/actionTypes';
 import * as update from '../../Utility/update'
 import * as treeData from '../../assets/treeData';
+import { act } from 'react-dom/test-utils';
 
 const initalState = {
     edit:"12",
@@ -31,6 +32,9 @@ const treeChildDelete=(state,action)=>{
 const treeFresh=(state,action)=>{
     return update.updateObject(state,{fresh:action.fresh});
 }
+const saveState =(state,action)=>{
+    return update.updateObject(state,{save:action.save})
+}
 
 const reducer = (state = initalState, action) => {
     switch (action.type) {
@@ -40,6 +44,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_CHILD_ADD:return(treeChildAdd(state,action));
         case actionTypes.SET_TREE_CHILD_DELETE:return(treeChildDelete(state,action));
         case actionTypes.SET_TREE_FRESH:return(treeFresh(state,action));
+        case actionTypes.SET_SAVE_STATE : return(saveState(state,action));
         default:
             return state;
     }

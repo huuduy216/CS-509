@@ -5,7 +5,7 @@ import classes from './Algorithm.module.css';
 import { Button, Divider } from 'antd';
 import { AppstoreAddOutlined, FunctionOutlined, MergeCellsOutlined, SaveOutlined } from '@ant-design/icons';
 import Tree from '../TreeSpace/Tree';
-
+import * as codeActions from "../../../store/action/code";
 
 
 
@@ -14,50 +14,58 @@ const Algorithm = (props) => {
     const [checkedKeys, setCheckedKeys] = useState(['0-0-0']);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
+     const sendSaveRequest = (values) => {
+   
+       return ()=>{
+      
+        props.save(values);
+       }
     
-    const treeData = [
-        {
-          title: "0-0",
-          key: "0-0",
-          children: [
-            {
-              title: "0-0-0",
-              key: "0-0-0",
-              children: [
-                { title: "0-0-0-0", key: "0-0-0-0" },
-                { title: "0-0-0-1", key: "0-0-0-1" },
-                { title: "0-0-0-2", key: "0-0-0-2" },
-              ],
-            },
-            {
-              title: "0-0-1",
-              key: "0-0-1",
-              children: [
-                { title: "0-0-1-0", key: "0-0-1-0" },
-                { title: "0-0-1-1", key: "0-0-1-1" },
-                { title: "0-0-1-2", key: "0-0-1-2" },
-              ],
-            },
-            {
-              title: "0-0-2",
-              key: "0-0-2",
-            },
-          ],
-        },
-        {
-          title: "0-1",
-          key: "0-1",
-          children: [
-            { title: "0-1-0-0", key: "0-1-0-0" },
-            { title: "0-1-0-1", key: "0-1-0-1" },
-            { title: "0-1-0-2", key: "0-1-0-2" },
-          ],
-        },
-        {
-          title: "0-2",
-          key: "0-2",
-        },
-      ];
+  }
+    
+    // const treeData = [
+    //     {
+    //       title: "0-0",
+    //       key: "0-0",
+    //       children: [
+    //         {
+    //           title: "0-0-0",
+    //           key: "0-0-0",
+    //           children: [
+    //             { title: "0-0-0-0", key: "0-0-0-0" },
+    //             { title: "0-0-0-1", key: "0-0-0-1" },
+    //             { title: "0-0-0-2", key: "0-0-0-2" },
+    //           ],
+    //         },
+    //         {
+    //           title: "0-0-1",
+    //           key: "0-0-1",
+    //           children: [
+    //             { title: "0-0-1-0", key: "0-0-1-0" },
+    //             { title: "0-0-1-1", key: "0-0-1-1" },
+    //             { title: "0-0-1-2", key: "0-0-1-2" },
+    //           ],
+    //         },
+    //         {
+    //           title: "0-0-2",
+    //           key: "0-0-2",
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       title: "0-1",
+    //       key: "0-1",
+    //       children: [
+    //         { title: "0-1-0-0", key: "0-1-0-0" },
+    //         { title: "0-1-0-1", key: "0-1-0-1" },
+    //         { title: "0-1-0-2", key: "0-1-0-2" },
+    //       ],
+    //     },
+    //     {
+    //       title: "0-2",
+    //       key: "0-2",
+    //     },
+    //   ];
 
     let role = localStorage.getItem('role');
 
@@ -73,7 +81,7 @@ const Algorithm = (props) => {
                 <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge Selected</Button>
                 <Button type="primary" className={classes.EditButton} icon={<FunctionOutlined />}>Add Algorithm</Button>
                 <Button type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
-                <Button type="primary" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
+                <Button type="primary" className={classes.EditButton} icon={<SaveOutlined />} onClick ={sendSaveRequest(props.treeData)}>Save</Button>
             </div>
         );
     }
@@ -102,5 +110,10 @@ const mapStateToProps = state => {
 
     };
 }
-
-export default connect(mapStateToProps, null)(Algorithm);
+const mapDispatchToProps = dispatch => {
+  return {
+      save: (treeData) => dispatch(codeActions.save(treeData)),
+      
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Algorithm);

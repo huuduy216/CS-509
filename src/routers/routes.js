@@ -7,7 +7,7 @@ import Auth from '../container/Auth'
 import AuthRegister from '../container/AuthReg'
 import Setting from '../container/Setting'
 import Loading from '../container/Loading';
-import Calendar from '../container/Calendar';
+//import Calendar from '../container/Calendar';
 
 //user router authoirzation
 import SafeRoute from './SafeRoute'
@@ -27,7 +27,7 @@ const Routes = (props) => {
             <SafeRoute path="/employee" component={Employee} exact/>
             <SafeRoute path="/setting" component={Setting} exact />
             <SafeRoute path="/loading" component={Loading} exact />
-            <SafeRoute path="/calendar" component={Calendar} exact />
+          
         </Switch>
 
     )

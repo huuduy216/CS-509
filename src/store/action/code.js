@@ -10,7 +10,29 @@ export const treeFresh = (fresh) => {
     }
 }
 
+export const save = (treeData)=>{
+    return (dispatch) => {
+        dispatch(startSave());
+        axios.post('/authentication/save', (treeData))
+        .then(response => {
+            
+            let token = response.data;
+            console.log(token)
+           
+        }).catch(error =>{
+          
+           });;
+    return Promise.resolve();
 
+
+    }
+}
+export const startSave =()=>{
+    return{
+        type:actionTypes.SET_SAVE_STATE,
+        save : "Saved"
+    }
+}
 //Click Add Tree
 export const treeChildAdd = (treeData, id) => {
     // let id = node.key;
