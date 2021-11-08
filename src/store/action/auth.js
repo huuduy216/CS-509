@@ -61,11 +61,10 @@ export const reg =(userName, password) =>{
   
 
 
-        axios.post('authentication/register', querystring.stringify(param))
+        axios.post('/authentication/register',param)
             .then(response => {
                 
-                
-                if (response!== undefined || response!=null) {
+                if (response.data!=="") {
                   
                     dispatch(regUserSuccess("Registered!! Login Now"));
                     
@@ -135,7 +134,7 @@ export const authLogout = () => {
     localStorage.removeItem('timesheettoken');
     localStorage.removeItem('timesheetUsername');
     localStorage.removeItem('timesheetisAuthenticated');
-    localStorage.removeItem('timesheetuseremail');
+    localStorage.removeItem('role');
     localStorage.removeItem('timesheeticonName');
     return {
         type: actionTypes.AUTH_LOGOUT

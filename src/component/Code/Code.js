@@ -9,25 +9,26 @@ import AlgorithmRead from './Algorithm/AlgorithmRead';
 
 const Code = (props) => {
 
+    let role = localStorage.getItem("role");
+
     let CodeBody = (
         <div className={classes.background}>
             <Algorithm />
         </div>);
   
-    if (props.role === "") {
+    if (role === null) {
         CodeBody = (
             <div className={classes.background}>
                 <AlgorithmRead />
             </div>);
     }
 
-    if (props.role === "user" || props.role === "admin") {
+    if (role === "user" || role === "admin") {
         CodeBody = (
             <div className={classes.background}>
                 <Algorithm />
             </div>);
     }
-
     return (
         <React.Fragment>
             {CodeBody}

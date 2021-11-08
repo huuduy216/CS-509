@@ -15,7 +15,6 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 
 const NormalLoginForm = (props) => {
-    console.log(props);
     const refresh =() =>{
         console.log("-----------")
         props.refresh();

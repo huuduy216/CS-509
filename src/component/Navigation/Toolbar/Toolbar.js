@@ -63,7 +63,7 @@ const Toolbar = (props) => {
     ///////////////logo
     let logo = (<NavLink to="/" className={classes.logo}></NavLink>);
     if(props.role==="admin"||props.role==="user"){
-        logo = (<NavLink className={classes.logo}></NavLink>);
+        logo = (<NavLink to="/" className={classes.logo}></NavLink>);
     }
     ///////////////toolbar     
     let toolbar = (

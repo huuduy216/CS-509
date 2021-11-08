@@ -27,21 +27,19 @@ const NormalLoginForm = (props) => {
  
     //test
     if (props.auth && props.role==="admin") {
-        console.log(props.role)
         localStorage.setItem('timesheetisAuthenticated', true);
         localStorage.setItem('timesheetUsername', props.user.username);
         localStorage.setItem('timesheetuseremail', props.user.email);
-        localStorage.setItem('timesheetuseremail',props.role);
+        localStorage.setItem('role','admin');
         iconName = 'AD';
         localStorage.setItem('timesheeticonName', iconName);
         authRedirect = <Redirect to="/employee" />
     }
     if (props.auth && props.role==="user") {
-        console.log(props.role)
         localStorage.setItem('timesheetisAuthenticated', true);
         localStorage.setItem('timesheetUsername', props.user.username);
         localStorage.setItem('timesheetuseremail', props.user.email);
-        localStorage.setItem('timesheetuseremail',props.role);
+        localStorage.setItem('role','user');
         iconName = 'USER';
         localStorage.setItem('timesheeticonName', iconName);
         authRedirect = <Redirect to="/employee" />
