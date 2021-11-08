@@ -10,23 +10,6 @@ export const treeFresh = (fresh) => {
     }
 }
 
-const initializedСopy=(nodes, location)=>{
-    const nodesCopy = [];
-    for (let i = 0; i < nodes.length; i++) {
-        const { children, title } = nodes[i];
-        const hasChildren = children !== undefined;
-        const id = location ? `${location}.${i + 1}` : `${i + 1}`;
-        nodesCopy[i] = { 
-                children: hasChildren ? this.initializedСopy(children, id) : undefined,
-                changeTitle: this.changeTitle(id),
-                removeNode: this.removeNode(id),
-                addChild: this.addChild(id),
-                id,
-                title,
-        };
-    }
-    return nodesCopy;
-}
 
 //Click Add Tree
 export const treeChildAdd = (treeData, id) => {
