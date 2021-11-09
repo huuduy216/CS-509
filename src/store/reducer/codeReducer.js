@@ -24,6 +24,14 @@ const treeChildAdd=(state,action)=>{
     return update.updateObject(state,{treeData:action.treeData});
 }
 
+const treeAlgorithmAdd=(state,action)=>{
+    return update.updateObject(state,{treeData:action.treeData});
+}
+
+const treeClassificationAdd=(state,action)=>{
+    return update.updateObject(state,{treeData:action.treeData});
+}
+
 const treeChildDelete=(state,action)=>{
     return update.updateObject(state,{treeData:action.treeData});
 }
@@ -45,6 +53,9 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_CHILD_DELETE:return(treeChildDelete(state,action));
         case actionTypes.SET_TREE_MODIFY:return(treeModify(state,action));
         case actionTypes.SET_TREE_FRESH:return(treeFresh(state,action));
+        case actionTypes.SET_TREE_ALGORITHM_ADD:return(treeAlgorithmAdd(state,action));
+        case actionTypes.SET_TREE_Classification_ADD:return(treeClassificationAdd(state,action));
+
         default:
             return state;
     }

@@ -6,6 +6,7 @@ import { Button, Divider } from 'antd';
 import { AppstoreAddOutlined, MergeCellsOutlined, SaveOutlined, SelectOutlined } from '@ant-design/icons';
 import Tree from '../TreeSpace/Tree';
 
+import * as CodeAction from '../../../store/action/code';
 
 
 
@@ -26,7 +27,7 @@ const Algorithm = (props) => {
     if (role === "user") {
         Editbutton = (
             <div className={classes.headerRest}>
-                <Button type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
+                <Button onClick={() => { props.addClass(props.treeData)}} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
                 <Button type="primary" className={classes.EditButton} icon={<SelectOutlined />}>Merge Selected</Button>
                 <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
                 <Button onClick={saveClick} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
@@ -59,4 +60,11 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, null)(Algorithm);
+const mapDispatchToProps = dispatch => {
+    return {
+        addClass: (treeData) => dispatch(CodeAction.treeClassificationAddClick(treeData)),
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Algorithm);
