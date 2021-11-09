@@ -12,7 +12,6 @@ import { SaveOutlined } from '@ant-design/icons';
 
 
 const Tree = (props) => {
-    
     return (
         <React.Fragment>
             

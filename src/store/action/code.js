@@ -50,12 +50,20 @@ export const treeChildAdd = (treeData, id) => {
     }
 
     id = `${id.join("-")}-${changingNode.children.length}`;
+    //new item type
+    let new_type="sub_classification";
+    if(changingNode.children.length>0){
+        if(changingNode.children[0].type==="algorithm"){
+            new_type="algorithm_type";
+        }
+    }
+
     changingNode.children = [
         ...changingNode.children,
         {
             title: "New Item",
             key: id,
-            type: "new",
+            type:new_type,
             children: undefined,
         }];
     return {
@@ -102,13 +110,22 @@ export const treeChildDelete = (treeData, id) => {
         // console.log(changingNode.children.slice(0, index-1))
         // console.log(changingNode.children.slice(index + 1))
         // console.log(id)
+        
         const newChildren = [
             ...changingNode.children.slice(0, index),
             ...changingNode.children.slice(index + 1),
         ];
-        console.log(index)
-        console.log(newChildren)
+        for(let i=0;i<newChildren.length;i++){
+            let key = (newChildren[i].key).split("-").map((str) => parseInt(str));
+            key[id.length-1]=i;
+            key = `${key.join("-")}`;
+            newChildren[i].key = key;
+        }
+    
+        
+    
         changingNode.children = newChildren;
+        console.log(treeData);
         return {
             type: actionTypes.SET_TREE_CHILD_DELETE,
             treeData:treeData
@@ -129,6 +146,23 @@ export const treeDeleteClick = (treeData, id) => {
     }
 }
 
+//tree modify
+export const treeModify = (treeData, id,newTitle) => { 
+    id = id.split("-").map((str) => parseInt(str));
+    let changingNode = treeData[0];
+
+    if (id.length > 1) {
+        for (let i = 1; i < id.length; i++) {
+            changingNode = changingNode.children[id[i]];
+        }
+    }
+    changingNode.title = newTitle;
+    return {
+        type: actionTypes.SET_TREE_MODIFY,
+        treeData:treeData
+    }
+    
+}
 export const algorithmEdit = () => {
     return {
         type: actionTypes.SET_Algorithm_BUTTON,
