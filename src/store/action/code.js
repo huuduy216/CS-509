@@ -158,12 +158,10 @@ export const treeChildDelete = (treeData, id) => {
 
 
     if (id.length === 1) {
-        console.log("id " + id[0])
         let newNodes = [];
         if (nodes.length > 1) {
             newNodes = [
                 ...nodes.slice(0, id[0]),
-                ...nodes.slice(id[0] + 1, nodes.length),
             ]
             
 
@@ -171,7 +169,7 @@ export const treeChildDelete = (treeData, id) => {
                 arr.map((item) => {
                     let newId = (item.key).split("-").map((str) => parseInt(str));
                     newId[0]=newId[0]-1;
-                    console.log(newId)
+                    item.key = `${newId.join("-")}`;
                     if (item.children && item.children.length > 0) {
                         changeId(item.children)
                     }
@@ -179,9 +177,12 @@ export const treeChildDelete = (treeData, id) => {
                 return arr;
             }
             let newNode_back = [...nodes.slice(id[0] + 1, nodes.length)];
-            console.log(newNode_back)
+            // console.log(newNode_back)
             newNode_back = changeId(newNode_back);
-            console.log(newNode_back)
+            newNodes=[
+                ...newNodes,
+                ...newNode_back,
+            ]
         }
 
 
