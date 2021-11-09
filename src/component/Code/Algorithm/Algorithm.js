@@ -17,12 +17,29 @@ const Algorithm = (props) => {
      const sendSaveRequest = (values) => {
    
        return ()=>{
-      
+        console.log(values)
         props.save(values);
        }
     
   }
+  const  addRootElement =()=> {
+    console.log(props);
+    const key = props.treeData.length ? `${props.treeData.length }` : "1";
+    const newNode = { 
+        children: undefined,
+        // changeTitle: this.changeTitle(id),
+        // removeNode: this.removeNode(id),
+        // addChild: this.addChild(id),
+        // addAlgorithm:this.addAlgorithmChildNode(id),
+         key,
+        title: "Classfifcation",
+    };
     
+    const treeData = [...props.treeData, newNode];
+    console.log(treeData)
+     props.addRoot(treeData,key);
+     
+}
     // const treeData = [
     //     {
     //       title: "0-0",
@@ -82,10 +99,11 @@ const Algorithm = (props) => {
     if (role === "user") {
         Editbutton = (
             <div className={classes.headerRest}>
-                <Button type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
-                <Button type="primary" className={classes.EditButton} icon={<SaveOutlined />} onClick ={sendSaveRequest(props.treeData)}>Save</Button>
+                <Button type="primary" className={classes.EditButton} onClick ={addRootElement} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
+            
                 <Button type="primary" className={classes.EditButton} icon={<SelectOutlined />}>Merge Selected</Button>
                 <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
+                <Button type="primary" className={classes.EditButton} icon={<SaveOutlined />} onClick ={sendSaveRequest(props.treeData)}>Save</Button>
             </div>
         );
     }
@@ -106,7 +124,7 @@ const Algorithm = (props) => {
     );
 };
 const mapStateToProps = state => {
-
+     console.log("sstttt",state)
     return {
         treeData: state.code.treeData,
         edit: state.code.edit,
@@ -117,6 +135,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       save: (treeData) => dispatch(codeActions.save(treeData)),
+      addRoot : (treeData,key) => dispatch(codeActions.addRoot(treeData,key))
       
   }
 }

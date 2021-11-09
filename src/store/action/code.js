@@ -71,7 +71,14 @@ export const treeChildAdd = (treeData, id) => {
         treeData: treeData
     }
 }
-
+export const addRoot = (treeData,key)=>{
+         return (dispatch)=>{
+             dispatch(treeFresh(true));
+             setTimeout(() => {
+                dispatch(treeFresh(false));
+            }, 10);
+         }
+}
 export const treeAddClick = (treeData, id) => {
 
     return (dispatch) => {
