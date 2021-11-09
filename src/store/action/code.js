@@ -3,7 +3,8 @@ import { userGet } from './user'
 import * as actionTypes from './actionTypes';
 import * as Db from '../../assets/treeData';
 import TreeNode from '../../component/Code/TreeSpace/TreeNode';
-import Tree from '../../component/Code/TreeSpace/Tree'
+import Tree from '../../component/Code/TreeSpace/Tree';
+import data from "../../assets/treeDataStub"
 export const treeFresh = (fresh) => {
     return {
         type: actionTypes.SET_TREE_FRESH,
@@ -11,7 +12,22 @@ export const treeFresh = (fresh) => {
     }
 }
 
+export const getTreeData =()=>{
+    return (dispatch)=>{
+        // axios.get("/treeDataStub.js").then(res =>{
+        //       dispatch(getUpdatedTreeData(res))
+        // }).catch(err =>{
 
+        // })
+        dispatch(getUpdatedTreeData(data));
+    }
+}
+export const getUpdatedTreeData=(res)=>{
+    return {
+        type: actionTypes.SET_UPDATED_TREE_DATA,
+        treeData : res
+    }
+}
 //Click Add Tree
 export const treeChildAdd = (treeData, id) => {
     // let id = node.key;

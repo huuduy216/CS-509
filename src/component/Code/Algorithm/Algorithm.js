@@ -11,10 +11,11 @@ import * as CodeAction from '../../../store/action/code';
 
 
 
+
 const Algorithm = (props) => {
 
     let role = localStorage.getItem('role');
-
+    props.getTreeData();
     let Editbutton = (
         <div className={classes.headerRest}>
             <Button type="primary" className={classes.EditButton} >Merge Selected</Button>
@@ -66,7 +67,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addClass: (treeData) => dispatch(CodeAction.treeClassificationAddClick(treeData)),
-
+        getTreeData : ()=> dispatch(CodeAction.getTreeData())
     }
 }
 

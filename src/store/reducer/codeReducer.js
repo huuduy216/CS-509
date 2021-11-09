@@ -2,6 +2,7 @@ import * as actionTypes from '../action/actionTypes';
 import * as update from '../../Utility/update'
 import * as treeData from '../../assets/treeData';
 
+
 const initalState = {
     edit:"12",
     treeData:treeData.allData,
@@ -39,7 +40,9 @@ const treeChildDelete=(state,action)=>{
 const treeModify=(state,action)=>{
     return update.updateObject(state,{treeData:action.treeData});
 }
-
+const getUpdatedTreeData =(state,action)=>{
+    return update.updateObject(state,{treeData:action.treeData})
+}
 const treeFresh=(state,action)=>{
     return update.updateObject(state,{fresh:action.fresh});
 }
@@ -55,7 +58,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_FRESH:return(treeFresh(state,action));
         case actionTypes.SET_TREE_ALGORITHM_ADD:return(treeAlgorithmAdd(state,action));
         case actionTypes.SET_TREE_Classification_ADD:return(treeClassificationAdd(state,action));
-
+        case actionTypes.SET_UPDATED_TREE_DATA: return(getUpdatedTreeData(state,action))
         default:
             return state;
     }
