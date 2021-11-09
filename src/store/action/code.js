@@ -242,7 +242,7 @@ export const treeDeleteClick = (treeData, id) => {
 //tree modify
 export const treeModify = (treeData, id, newTitle) => {
     id = id.split("-").map((str) => parseInt(str));
-    let changingNode = treeData[0];
+    let changingNode = treeData[id[0]];
 
     if (id.length > 1) {
         for (let i = 1; i < id.length; i++) {
