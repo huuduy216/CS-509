@@ -34,8 +34,8 @@ const Algorithm = (props) => {
                 <Button type="primary" className={classes.EditButton} icon={<SelectOutlined />}>Merge Selected</Button>
                 <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
                 <Button onClick={saveClick} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
-               <Upload  action={'/upload'} listType="picture-card"> <div  className = {classes.upload}>
-                   <Button>Uplaod</Button></div></Upload>
+               {/* <Upload  action={'/upload'} listType="picture-card"> <div  className = {classes.upload}>
+                   <Button>Uplaod</Button></div></Upload> */}
             </div>
         );
     }

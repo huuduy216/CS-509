@@ -6,7 +6,7 @@ import classes from './TreeNode.module.css';
 import { RightOutlined, PlusOutlined, DownOutlined, DeleteOutlined,FontColorsOutlined } from '@ant-design/icons';
 import Tree from './Tree';
 import { Button,Spin,Input } from 'antd';
-
+import { Upload } from 'antd';
 import * as CodeAction from '../../../store/action/code';
 
 
@@ -18,11 +18,11 @@ import * as CodeAction from '../../../store/action/code';
 
 const TreeNode = (props) => {
     const [childVisible, setChildVisibility] = useState(false);
-    const addButtonHidden = props.node.type!=="algorithm"&& (!props.node.type.includes('implementation'))&& (!props.node.type.includes('problem'))&& (!props.node.type.includes('benchmark'))? false : true;
+    const addButtonHidden = props.node.type!=="algorithm"&& (!props.node.type.includes('problem'))&& (!props.node.type.includes('benchmark'))? false : true;
     const hasChild = props.node.children ? true : false;
     const ClassificationItem = props.node.type.includes('classification')?true:false;
     const AlgorithmItem = props.node.type.includes('algorithm')?true:false;
-
+    const ImplementationItem = props.node.type==="algorithm_implementations"?true:false;
     const deleteButtonHidden = true;
     // const deleteButtonHidden = (!node.type.includes('benchmark'))? true : false;
 
@@ -32,12 +32,14 @@ const TreeNode = (props) => {
             <Button onClick={()=>props.addChild(props.treeData,props.node.key)} className={!AlgorithmItem&&hasChild&&!addButtonHidden||ClassificationItem?classes.editButton:classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
             <Button onClick={()=>props.addAlgor(props.treeData,props.node.key)} className={!AlgorithmItem&&!addButtonHidden?classes.editButton:classes.editButtonHidden} size="small" icon={<FontColorsOutlined/>} type="primary" danger ghost/>
             <Button onClick={()=>props.deleteChild(props.treeData,props.node.key)} className={deleteButtonHidden?classes.editButton:classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
-
+           
             {/* <p className={classes.editTitle}>{props.node.title}</p> */}
             <Input onChange={({ target: { value } })=>props.modifyTree(props.treeData,props.node.key,value)} className={AlgorithmItem?classes.editTitleAlgorithm:classes.editTitle} placeholder="Basic usage" defaultValue={props.node.title} size="small"/>
+             <div  className = {ImplementationItem? classes.upload:classes.hideUpload}><Upload className={classes.uploadButton} action={'/upload'} >
+            <Button>Uplaod</Button></Upload></div>
         </div>
     )
-
+   
     if(props.fresh){
         editItem=(<Spin/>);
     }

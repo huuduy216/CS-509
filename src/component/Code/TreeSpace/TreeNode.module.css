@@ -10,7 +10,18 @@
 .editButton{
     margin-right: 1%;
 }
+.upload{
+    /* margin-top: 70px; */
+    margin-left: 10px;
+}
+.hideUpload{
+    visibility:hidden;
+    margin-right: 1%;
 
+}
+.uploadButton{
+    height: 10px;
+}
 .editButtonHidden{
     margin-right: 1%;
     visibility:hidden
