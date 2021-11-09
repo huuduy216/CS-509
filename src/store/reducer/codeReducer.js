@@ -4,7 +4,7 @@ import * as treeData from '../../assets/treeData';
 
 const initalState = {
     edit:"12",
-    treeData:treeData.allData,
+    treeData:[],
     fresh:false
 };
 

@@ -29,8 +29,8 @@ const TreeNode = (props) => {
     let editItem = (
         <div className={classes.toggler + ' ' + (childVisible ? classes.active : '')}>
             <Button onClick={e => setChildVisibility(v => !v)} className={hasChild?classes.editButton:classes.editButtonHidden} size="small" icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
-            <Button onClick={()=>props.addChild(props.treeData,props.node.key)} className={!AlgorithmItem&&hasChild&&!addButtonHidden||ClassificationItem?classes.editButton:classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
-            <Button onClick={()=>props.addAlgor(props.treeData,props.node.key)} className={!AlgorithmItem&&!addButtonHidden?classes.editButton:classes.editButtonHidden} size="small" icon={<FontColorsOutlined/>} type="primary" danger ghost/>
+            <Button onClick={()=>props.addChild(props.treeData,props.node.key)} className={(((!AlgorithmItem)&&hasChild)&&(!addButtonHidden))||(ClassificationItem)?classes.editButton:classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
+            <Button onClick={()=>props.addAlgor(props.treeData,props.node.key)} className={(!AlgorithmItem)&&(!addButtonHidden)?classes.editButton:classes.editButtonHidden} size="small" icon={<FontColorsOutlined/>} type="primary" danger ghost/>
             <Button onClick={()=>props.deleteChild(props.treeData,props.node.key)} className={deleteButtonHidden?classes.editButton:classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
 
             {/* <p className={classes.editTitle}>{props.node.title}</p> */}

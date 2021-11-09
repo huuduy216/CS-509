@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 // import axios from '../../axios/axios-local';
@@ -10,7 +10,6 @@ import AlgorithmRead from './Algorithm/AlgorithmRead';
 const Code = (props) => {
 
     let role = localStorage.getItem("role");
-
     let CodeBody = (
         <div className={classes.background}>
             <Algorithm />

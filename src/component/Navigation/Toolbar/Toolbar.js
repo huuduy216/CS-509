@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import 'antd/dist/antd.css';
 import { Layout, Dropdown, Menu, Button } from 'antd';
-import { NotificationOutlined } from '@ant-design/icons';
 
 import classes from './Toolbar.module.css';
 import DrawerToggle from '../../DrawerToggle/DrawerToggle';

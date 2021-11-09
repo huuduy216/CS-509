@@ -1,5 +1,3 @@
-import axios from '../../axios/axios-local'
-import { userGet } from './user'
 import * as actionTypes from './actionTypes';
 import * as Db from '../../assets/treeData';
 
@@ -86,7 +84,8 @@ export const treeAlgorithmAdd = (treeData, id) => {
             item.key = id + '-' + item.key;
             if (item.children && item.children.length > 0) {
                 changeId(item.children)
-            }
+               
+            } return null;
         })
         return arr;
     }
@@ -173,6 +172,7 @@ export const treeChildDelete = (treeData, id) => {
                     if (item.children && item.children.length > 0) {
                         changeId(item.children)
                     }
+                    return null;
                 })
                 return arr;
             }

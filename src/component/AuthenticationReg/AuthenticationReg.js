@@ -15,10 +15,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 
 const NormalLoginForm = (props) => {
-    const refresh =() =>{
-        console.log("-----------")
-        props.refresh();
-    }
+    
     const OnFinish = (values) => {
         props.onAuth(values["username"], values["password"]);
     };

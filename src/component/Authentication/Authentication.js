@@ -44,25 +44,6 @@ const NormalLoginForm = (props) => {
         localStorage.setItem('timesheeticonName', iconName);
         authRedirect = <Redirect to="/employee" />
     }
-    //-------------------------------------
-    // if (props.auth && Object.keys(props.user).length !== 0) {
-    //     localStorage.setItem('timesheetisAuthenticated', true);
-    //     localStorage.setItem('timesheetUsername', props.user.username);
-    //     localStorage.setItem('timesheetuseremail', props.user.email);
-    //     iconName = (props.user.lastName.substr(0, 1) + props.user.firstName.substr(0, 1)).toUpperCase();
-    //     localStorage.setItem('timesheeticonName', iconName);
-    //     authRedirect = <Redirect to="/employee" />
-    // }
-    //--------------------------------------
-    //judge user is valid and info is loaded and localstorage auth and user and loading
-    if (props.auth && Object.keys(props.user).length !== 0) {
-        localStorage.setItem('timesheetisAuthenticated', true);
-        localStorage.setItem('timesheetUsername', props.user.username);
-        localStorage.setItem('timesheetuseremail', props.user.email);
-        iconName = (props.user.lastName.substr(0, 1) + props.user.firstName.substr(0, 1)).toUpperCase();
-        localStorage.setItem('timesheeticonName', iconName);
-        authRedirect = <Redirect to="/employee" />
-    }
 
     if (!props.auth && props.error !== "") {
         failedLogin = <p className={classes.failedLogin}>{props.error}</p>
