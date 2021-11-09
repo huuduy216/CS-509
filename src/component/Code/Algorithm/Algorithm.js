@@ -23,20 +23,21 @@ const Algorithm = (props) => {
     
   }
   const  addRootElement =()=> {
-    console.log(props);
-    const key = props.treeData.length ? `${props.treeData.length }` : "1";
+  
+    const key = props.treeData.length ? `${props.treeData.length +1 }` : "1";
     const newNode = { 
         children: undefined,
         // changeTitle: this.changeTitle(id),
         // removeNode: this.removeNode(id),
         // addChild: this.addChild(id),
         // addAlgorithm:this.addAlgorithmChildNode(id),
+        type :'classification',
          key,
         title: "Classfifcation",
     };
     
     const treeData = [...props.treeData, newNode];
-    console.log(treeData)
+   
      props.addRoot(treeData,key);
      
 }
@@ -124,7 +125,7 @@ const Algorithm = (props) => {
     );
 };
 const mapStateToProps = state => {
-     console.log("sstttt",state)
+    
     return {
         treeData: state.code.treeData,
         edit: state.code.edit,

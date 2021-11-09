@@ -39,7 +39,9 @@ const treeFresh=(state,action)=>{
 const saveState =(state,action)=>{
     return update.updateObject(state,{save:action.save})
 }
-
+const addRoot =(state,action)=>{
+    return update.updateObject(state,{treeData:action.treeData})
+}
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case actionTypes.SET_Algorithm_BUTTON:return (algorithmEdit(state,action));
@@ -50,6 +52,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_MODIFY:return(treeModify(state,action));
         case actionTypes.SET_TREE_FRESH:return(treeFresh(state,action));
         case actionTypes.SET_SAVE_STATE : return(saveState(state,action));
+        case actionTypes.SET_ROOT_CLASSIFICATION : return(addRoot(state,action))
         default:
             return state;
     }

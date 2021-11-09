@@ -26,38 +26,38 @@ export const auth = (userName, password) => {
     // }
     //test
    
-    // return (dispatch) => {
-    //     dispatch(authStart())
-    //     // dispatch(authStart());
-    //     axios.post('/authentication/login', (param))
-    //         .then(response => {
+    return (dispatch) => {
+        dispatch(authStart())
+        // dispatch(authStart());
+        axios.post('/authentication/login', (param))
+            .then(response => {
                 
-    //             let token = response.data;
-    //             console.log(token)
-    //             if(token == "user not exist"){
-    //                 dispatch(authFail("Invalid credentials"));
-    //             }
+                let token = response.data;
+                console.log(token)
+                if(token == "user not exist"){
+                    dispatch(authFail("Invalid credentials"));
+                }
                
-    //             else {
-    //                 if(response.data.role!=undefined){
-    //                     dispatch(authAdminSuccess());
-    //                 }
-    //                 else{ dispatch(authUserSuccess());}
+                else {
+                    if(response.data.role!=undefined){
+                        dispatch(authAdminSuccess());
+                    }
+                    else{ dispatch(authUserSuccess());}
                 
-    //               //  dispatch(authSuccess());
+                  //  dispatch(authSuccess());
                     
-    //               //  dispatch(userGet(param.username,token));
-    //             }
-    //         }).catch(error =>{
-    //             // console.log(console.error(error.status))
+                  //  dispatch(userGet(param.username,token));
+                }
+            }).catch(error =>{
+                // console.log(console.error(error.status))
                
-    //             dispatch(callFail())
-    //            });;
-    //     return Promise.resolve();
+                dispatch(callFail())
+               });;
+        return Promise.resolve();
 
     
-    // }
-    //----------------------
+    }
+    // ----------------------
     // return (dispatch) => {
    
 }

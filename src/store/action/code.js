@@ -72,12 +72,11 @@ export const treeChildAdd = (treeData, id) => {
     }
 }
 export const addRoot = (treeData,key)=>{
-         return (dispatch)=>{
-             dispatch(treeFresh(true));
-             setTimeout(() => {
-                dispatch(treeFresh(false));
-            }, 10);
-         }
+       console.log("inside add rooot", treeData)
+        return {
+            type: actionTypes.SET_ROOT_CLASSIFICATION,
+            treeData: treeData
+        }
 }
 export const treeAddClick = (treeData, id) => {
 
@@ -93,6 +92,7 @@ export const treeAddClick = (treeData, id) => {
 
 //Click Delete Tree
 export const treeChildDelete = (treeData, id) => { 
+    console.log("id inside key",id)
     id = id.split("-").map((str) => parseInt(str));
     const nodes = treeData;
 
