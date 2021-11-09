@@ -158,6 +158,7 @@ export const authLogout = () => {
     localStorage.removeItem('timesheetisAuthenticated');
     localStorage.removeItem('role');
     localStorage.removeItem('timesheeticonName');
+    localStorage.removeItem('token');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
