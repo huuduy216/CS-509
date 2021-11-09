@@ -24,6 +24,7 @@ const Algorithm = (props) => {
 
     const saveClick = () => {
         console.log(props.treeData);
+        props.save(props.treeData);
     }
 
     if (role === "user") {
@@ -67,7 +68,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addClass: (treeData) => dispatch(CodeAction.treeClassificationAddClick(treeData)),
-        getTreeData : ()=> dispatch(CodeAction.getTreeData())
+        getTreeData : ()=> dispatch(CodeAction.getTreeData()),
+        save: (treeData) => dispatch(CodeAction.save(treeData)),
     }
 }
 

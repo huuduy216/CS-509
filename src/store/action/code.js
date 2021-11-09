@@ -11,15 +11,30 @@ export const treeFresh = (fresh) => {
         fresh: fresh
     }
 }
+export const save = (treeData)=>{
+    return (dispatch) => {
+        
+        axios.post('/authentication/save', (treeData))
+        .then(response => {
+            
+            dispatch(getUpdatedTreeData(response))
+           
+        }).catch(error =>{
+          
+           });;
+    return Promise.resolve();
 
+
+    }
+}
 export const getTreeData =()=>{
     return (dispatch)=>{
-        // axios.get("/treeDataStub.js").then(res =>{
-        //       dispatch(getUpdatedTreeData(res))
-        // }).catch(err =>{
+        axios.get("/treeDataStub.js").then(res =>{
+              dispatch(getUpdatedTreeData(res))
+        }).catch(err =>{
 
-        // })
-        dispatch(getUpdatedTreeData(data));
+        })
+        //dispatch(getUpdatedTreeData(data));
     }
 }
 export const getUpdatedTreeData=(res)=>{
