@@ -2,7 +2,8 @@ import axios from '../../axios/axios-local'
 import { userGet } from './user'
 import * as actionTypes from './actionTypes';
 import * as Db from '../../assets/treeData';
-
+import TreeNode from '../../component/Code/TreeSpace/TreeNode';
+import Tree from '../../component/Code/TreeSpace/Tree'
 export const treeFresh = (fresh) => {
     return {
         type: actionTypes.SET_TREE_FRESH,
@@ -93,16 +94,21 @@ export const treeAlgorithmAdd = (treeData, id) => {
 
     let newBenchmark = Db.BENCH_MARKS;
     let newProblem = Db.PROBLEM_INSTANCE;
+    let newImplementation = Db.IMPLEMENTATIONS;
     newBenchmark = changeId(newBenchmark);
+    newImplementation = changeId(newImplementation)
     newProblem = changeId(newProblem);
-
+    //let children1 = <Tree treeData= {newBenchmark[0] } type = "benchmark"/>;
+   // let children2 = <Tree treeData = {newProblem[0]} type ="implementation"/>;
     changingNode.children = [
         ...changingNode.children,
         {
             title: "New Algorithm",
             key: id,
             type: new_type,
-            children: [newBenchmark[0], newProblem[0]],
+           children: [newImplementation[0], newProblem[0]],
+           
+         //  children : [{children1}, {children2}]
         }];
     return {
         type: actionTypes.SET_TREE_CHILD_ADD,

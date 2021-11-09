@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import classes from './Algorithm.module.css';
 import { Button, Divider } from 'antd';
 import { AppstoreAddOutlined, MergeCellsOutlined, SaveOutlined, SelectOutlined } from '@ant-design/icons';
+import { Upload } from 'antd';
 import Tree from '../TreeSpace/Tree';
-
+import {Icon} from 'antd';
 import * as CodeAction from '../../../store/action/code';
 
 
@@ -31,6 +32,8 @@ const Algorithm = (props) => {
                 <Button type="primary" className={classes.EditButton} icon={<SelectOutlined />}>Merge Selected</Button>
                 <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
                 <Button onClick={saveClick} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
+               <Upload  action={'/upload'} > <div  className = {classes.upload}>
+                   <Button>Uplaod</Button></div></Upload>
             </div>
         );
     }
