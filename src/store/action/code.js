@@ -13,8 +13,12 @@ export const treeFresh = (fresh) => {
 }
 export const save = (treeData)=>{
     return (dispatch) => {
-        
-        axios.post('/authentication/save', (treeData))
+        let token = localStorage.getItem("token");
+        let body ={
+            treeData : treeData,
+            token : token
+        }
+        axios.post('/authentication/save', (body))
         .then(response => {
             
             dispatch(getUpdatedTreeData(response))
@@ -23,7 +27,7 @@ export const save = (treeData)=>{
           
            });;
     return Promise.resolve();
-
+  
 
     }
 }

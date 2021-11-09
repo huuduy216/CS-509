@@ -37,8 +37,13 @@ export const auth = (userName, password) => {
                 if(token == "user not exist"){
                     dispatch(authFail("Invalid credentials"));
                 }
+               else if(token=="password not correct"){
+                    dispatch(authFail("Invalid credentials"));
+                }
                
                 else {
+                    localStorage.setItem('token', token);
+
                     if(response.data.role!=undefined){
                         dispatch(authAdminSuccess());
                     }
