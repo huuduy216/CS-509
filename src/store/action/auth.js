@@ -1,6 +1,6 @@
 import axios from '../../axios/axios-local'
 import * as actionTypes from './actionTypes';
-
+import * as CodeAction from './code';
 
 export const auth = (userName, password) => {
 
@@ -163,6 +163,7 @@ export const authLogout = () => {
 
 export const authLogoutNew = () => {
     return (dispatch) => {
+        dispatch(CodeAction.setCodeStateClear())
         dispatch(authLogout());
     }
 }

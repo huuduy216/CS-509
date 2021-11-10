@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+
 import 'antd/dist/antd.css';
 import { Layout, Dropdown, Menu, Button } from 'antd';
 
@@ -36,10 +37,10 @@ const Toolbar = (props) => {
 
 
     let logout = (
-        <Menu.Item >
-            <a href="/" onClick={handleClickLogout}>
+        <Menu.Item>
+            <NavLink to='/' onClick={handleClickLogout}>
                 Logout
-            </a>
+            </NavLink>
         </Menu.Item>
     )
     const menu = (
@@ -61,7 +62,7 @@ const Toolbar = (props) => {
     // );
     ///////////////logo
     let logo = (<NavLink to="/" className={classes.logo}></NavLink>);
-    if(props.role==="admin"||props.role==="user"){
+    if (props.role === "admin" || props.role === "user") {
         logo = (<NavLink to="/" className={classes.logo}></NavLink>);
     }
     ///////////////toolbar     
@@ -110,7 +111,7 @@ const mapStateToProps = state => {
         role: state.auth.role,
         user: state.user.user,
         loginstate: state.user.userLoginState,
-        
+
     };
 }
 

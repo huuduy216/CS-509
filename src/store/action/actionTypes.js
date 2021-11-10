@@ -35,6 +35,7 @@ export const SET_SAVE_BUTTON = 'SET_SAVE_BUTTON';
 export const SET_CREATE_BUTTON = 'SET_CREATE_BUTTON';
 
 //Code
+export const SET_CODE_CLEAR = 'SET_CODE_CLEAR';
 export const SET_Algorithm_BUTTON = 'SET_Algorithm_BUTTON';
 export const SET_Home_BUTTON = 'SET_Home_BUTTON';
 export const SET_BENCHMARK_BUTTON = 'SET_BENCHMARK_BUTTON';

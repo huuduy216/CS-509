@@ -309,3 +309,9 @@ export const benchmarkEdit = () => {
     }
 }
 
+
+export const setCodeStateClear = () => {
+    return {
+        type: actionTypes.SET_CODE_CLEAR,
+    }
+}
