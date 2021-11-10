@@ -61,7 +61,7 @@ export const treeChildAdd = (treeData, id) => {
             title: "New Item",
             key: id,
             type: new_type,
-            children: undefined,
+            children: [],
         }];
     return {
         type: actionTypes.SET_TREE_CHILD_ADD,
@@ -120,12 +120,12 @@ export const treeAlgorithmAdd = (treeData, id) => {
         title: "Problem Instances",
         key: id+"-"+1,
         type: 'algorithm_problem',
-        children:undefined}
+        children:[]}
     let implementation ={
         title: "Implementations",
         key: id+"-"+0,
         type: 'algorithm_implementations',
-        children:undefined
+        children:[]
     }
     changingNode.children = [
         ...changingNode.children,
@@ -161,7 +161,7 @@ export const treeClassificationAdd = (treeData) => {
         title: "New Classification",
         key: id,
         type: "classification",
-        children: undefined,
+        children: [],
     };
 
     const newtreeData = [...treeData, newNode];
