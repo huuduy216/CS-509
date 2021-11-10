@@ -2,7 +2,6 @@ import axios from '../../axios/axios-local'
 import * as actionTypes from './actionTypes';
 
 
-
 export const auth = (userName, password) => {
 
     const param = {
@@ -85,7 +84,7 @@ export const reg = (userName, password) => {
             .then(response => {
 
                 if (response.data !== "") {
-                   
+
                     dispatch(regUserSuccess(""));
 
                 } else {
@@ -159,6 +158,12 @@ export const authLogout = () => {
     localStorage.removeItem('tree');
     return {
         type: actionTypes.AUTH_LOGOUT
+    }
+}
+
+export const authLogoutNew = () => {
+    return (dispatch) => {
+        dispatch(authLogout());
     }
 }
 

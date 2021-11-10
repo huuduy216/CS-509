@@ -36,8 +36,8 @@ const Toolbar = (props) => {
 
 
     let logout = (
-        <Menu.Item onClick={handleClickLogout}>
-            <a href="/">
+        <Menu.Item >
+            <a href="/" onClick={handleClickLogout}>
                 Logout
             </a>
         </Menu.Item>
@@ -109,14 +109,16 @@ const mapStateToProps = state => {
         auth: state.auth.authorization,
         role: state.auth.role,
         user: state.user.user,
-        loginstate: state.user.userLoginState
+        loginstate: state.user.userLoginState,
+        
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout: () => dispatch(authActions.authLogout()),
-        getuser: (username) => dispatch(userActions.userGet(username))
+        logout: () => dispatch(authActions.authLogoutNew()),
+        getuser: (username) => dispatch(userActions.userGet(username)),
+        loadingtime: (time) => dispatch(authActions.setLoadingTime(time)),
     }
 }
 
