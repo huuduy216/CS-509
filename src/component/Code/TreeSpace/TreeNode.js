@@ -10,7 +10,7 @@ import { Upload } from 'antd';
 import * as CodeAction from '../../../store/action/code';
 
 
-
+import { UploadFile } from 'antd';
 
 
 
@@ -22,7 +22,7 @@ const TreeNode = (props) => {
     const hasChild = props.node.children ? true : false;
     const ClassificationItem = props.node.type.includes('classification')?true:false;
     const AlgorithmItem = props.node.type.includes('algorithm')?true:false;
-    const ImplementationItem = props.node.type==="algorithm_implementations"?true:false;
+    const ImplementationItem = props.node.type==="algorithm_implementations"||props.node.type==="algorithm_problem"?true:false;
     const deleteButtonHidden = true;
     // const deleteButtonHidden = (!node.type.includes('benchmark'))? true : false;
 
@@ -35,8 +35,8 @@ const TreeNode = (props) => {
            
             {/* <p className={classes.editTitle}>{props.node.title}</p> */}
             <Input onChange={({ target: { value } })=>props.modifyTree(props.treeData,props.node.key,value)} className={AlgorithmItem?classes.editTitleAlgorithm:classes.editTitle} placeholder="Basic usage" defaultValue={props.node.title} size="small"/>
-             <div  className = {ImplementationItem? classes.upload:classes.hideUpload}><Upload className={classes.uploadButton} action={'/upload'} >
-            <Button>Uplaod</Button></Upload></div>
+             <div  className = {ImplementationItem? classes.upload:classes.hideUpload}><Upload className={classes.uploadButton} action={'/upload'}  >
+             <Button>Upload</Button></Upload></div>
         </div>
     )
    

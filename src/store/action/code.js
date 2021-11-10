@@ -5,12 +5,19 @@ import * as Db from '../../assets/treeData';
 import TreeNode from '../../component/Code/TreeSpace/TreeNode';
 import Tree from '../../component/Code/TreeSpace/Tree';
 import data from "../../assets/treeDataStub"
+import AWS from 'aws-sdk'
+const S3_BUCKET ='cs-509-implementations';
+const REGION ='us-east-2';
 export const treeFresh = (fresh) => {
     return {
         type: actionTypes.SET_TREE_FRESH,
         fresh: fresh
     }
 }
+AWS.config.update({
+    accessKeyId: 'AKIA3A3ZLIWMVDBHYMNK',
+    secretAccessKey: '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'
+})
 export const save = (treeData)=>{
     return (dispatch) => {
         let token = localStorage.getItem("token");
@@ -133,6 +140,17 @@ export const treeAlgorithmAdd = (treeData, id) => {
     newBenchmark = changeId(newBenchmark);
     newImplementation = changeId(newImplementation)
     newProblem = changeId(newProblem);
+    let probleminstance =  {
+        title: "Problem Instances",
+        key: id+"-"+1,
+        type: 'algorithm_problem',
+        children:undefined}
+    let implementation ={
+        title: "Implementations",
+        key: id+"-"+0,
+        type: 'algorithm_implementations',
+        children:undefined
+    }
     //let children1 = <Tree treeData= {newBenchmark[0] } type = "benchmark"/>;
    // let children2 = <Tree treeData = {newProblem[0]} type ="implementation"/>;
     changingNode.children = [
@@ -141,7 +159,7 @@ export const treeAlgorithmAdd = (treeData, id) => {
             title: "New Algorithm",
             key: id,
             type: new_type,
-           children: [newImplementation[0], newProblem[0]],
+           children: [implementation,probleminstance],
            
          //  children : [{children1}, {children2}]
         }];
