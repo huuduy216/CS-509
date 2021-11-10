@@ -1,5 +1,26 @@
 import * as actionTypes from './actionTypes';
 import * as Db from '../../assets/treeData';
+import axios from '../../axios/axios-local';
+
+//post tree
+export const postTree = (treeData) => {
+    let tranData = {
+        title: "root",
+        key: '-1',
+        type: 'root',
+        children: [...treeData]
+    };
+    return (dispatch) => {
+        axios.post('/normal/codetree', tranData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+            })
+        return Promise.resolve();
+    }
+}
 
 export const treeFresh = (fresh) => {
     return {
@@ -84,7 +105,7 @@ export const treeAlgorithmAdd = (treeData, id) => {
             item.key = id + '-' + item.key;
             if (item.children && item.children.length > 0) {
                 changeId(item.children)
-               
+
             } return null;
         })
         return arr;
@@ -155,19 +176,23 @@ export const treeChildDelete = (treeData, id) => {
 
     const nodes = treeData;
 
+    let treeDataEmpty = false;
 
     if (id.length === 1) {
         let newNodes = [];
+        if(nodes.length===1){
+            treeDataEmpty = true;
+        }
         if (nodes.length > 1) {
             newNodes = [
                 ...nodes.slice(0, id[0]),
             ]
-            
+
 
             let changeId = (arr) => {
                 arr.map((item) => {
                     let newId = (item.key).split("-").map((str) => parseInt(str));
-                    newId[0]=newId[0]-1;
+                    newId[0] = newId[0] - 1;
                     item.key = `${newId.join("-")}`;
                     if (item.children && item.children.length > 0) {
                         changeId(item.children)
@@ -179,7 +204,7 @@ export const treeChildDelete = (treeData, id) => {
             let newNode_back = [...nodes.slice(id[0] + 1, nodes.length)];
             // console.log(newNode_back)
             newNode_back = changeId(newNode_back);
-            newNodes=[
+            newNodes = [
                 ...newNodes,
                 ...newNode_back,
             ]
@@ -189,7 +214,8 @@ export const treeChildDelete = (treeData, id) => {
 
         return {
             type: actionTypes.SET_TREE_CHILD_DELETE,
-            treeData: newNodes
+            treeData: newNodes,
+            treeDataEmpty:treeDataEmpty
 
         }
     } else {
@@ -256,6 +282,7 @@ export const treeModify = (treeData, id, newTitle) => {
     }
 
 }
+
 export const algorithmEdit = () => {
     return {
         type: actionTypes.SET_Algorithm_BUTTON,

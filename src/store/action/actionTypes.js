@@ -44,6 +44,8 @@ export const SET_TREE_Classification_ADD = 'SET_TREE_Classification_ADD';
 export const SET_TREE_CHILD_DELETE = 'SET_TREE_CHILD_DELETE';
 export const SET_TREE_MODIFY = 'SET_TREE_MODIFY';
 export const SET_TREE_FRESH = 'SET_TREE_FRESH';
+export const SET_TREE_SET = 'SET_TREE_SET';
+
 
 
 

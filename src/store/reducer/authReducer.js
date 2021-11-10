@@ -26,7 +26,7 @@ const authFail=(state,action)=>{
 }
 
 const authLoading=(state,action)=>{
-    return update.updateObject(state,{loading:true});
+    return update.updateObject(state,{loading:action.loading});
 }
 
 const authLogout=(state,action)=>{

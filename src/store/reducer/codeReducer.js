@@ -1,10 +1,10 @@
 import * as actionTypes from '../action/actionTypes';
 import * as update from '../../Utility/update'
-import * as treeData from '../../assets/treeData';
 
 const initalState = {
     edit:"12",
     treeData:[],
+    treeDataEmpty:false,
     fresh:false
 };
 
@@ -21,23 +21,27 @@ const benchmarkEdit=(state,action)=>{
 }
 
 const treeChildAdd=(state,action)=>{
-    return update.updateObject(state,{treeData:action.treeData});
+    return update.updateObject(state,{treeData:action.treeData,treeDataEmpty:false});
 }
 
 const treeAlgorithmAdd=(state,action)=>{
-    return update.updateObject(state,{treeData:action.treeData});
+    return update.updateObject(state,{treeData:action.treeData,treeDataEmpty:false});
 }
 
 const treeClassificationAdd=(state,action)=>{
-    return update.updateObject(state,{treeData:action.treeData});
+    return update.updateObject(state,{treeData:action.treeData,treeDataEmpty:false});
 }
 
 const treeChildDelete=(state,action)=>{
-    return update.updateObject(state,{treeData:action.treeData});
+    return update.updateObject(state,{treeData:action.treeData,treeDataEmpty:action.treeDataEmpty});
 }
 
 const treeModify=(state,action)=>{
-    return update.updateObject(state,{treeData:action.treeData});
+    return update.updateObject(state,{treeData:action.treeData,treeDataEmpty:false});
+}
+
+const treeSet=(state,action)=>{
+    return update.updateObject(state,{treeData:action.treeData,treeDataEmpty:false});
 }
 
 const treeFresh=(state,action)=>{
@@ -55,7 +59,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_FRESH:return(treeFresh(state,action));
         case actionTypes.SET_TREE_ALGORITHM_ADD:return(treeAlgorithmAdd(state,action));
         case actionTypes.SET_TREE_Classification_ADD:return(treeClassificationAdd(state,action));
-
+        case actionTypes.SET_TREE_SET:return(treeSet(state,action))
         default:
             return state;
     }

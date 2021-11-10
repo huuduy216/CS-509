@@ -1,8 +1,8 @@
 .background{   
-    height: 100%;
+    height: 1000px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;   
+    justify-content: center;  
 }

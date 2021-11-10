@@ -1,6 +1,8 @@
 import axios from '../../axios/axios-local'
 import * as actionTypes from './actionTypes';
 
+
+
 export const auth = (userName, password) => {
 
     const param = {
@@ -34,18 +36,20 @@ export const auth = (userName, password) => {
                 else {
                     localStorage.setItem('token', response.data.token);
                     // localStorage.setItem('Authenticated', true);
-                   
+
                     if (response.data.role[0].authority === 'ROLE_ADMIN') {
                         // localStorage.setItem('role', 'admin');
                         // localStorage.setItem('iconName', 'AD');
+                        dispatch(getTree());
                         dispatch(authAdminSuccess());
                     }
                     else {
                         // localStorage.setItem('role', 'user');
                         // localStorage.setItem('iconName', 'USER');
+                        dispatch(getTree());
                         dispatch(authUserSuccess());
                     }
-                    
+
                 }
             }).catch(error => {
                 // console.log(console.error(error.status))
@@ -147,19 +151,51 @@ export const regFail = (regError) => {
     }
 }
 export const authLogout = () => {
-    localStorage.removeItem('timesheettoken');
+    localStorage.removeItem('token');
     localStorage.removeItem('timesheetUsername');
     localStorage.removeItem('timesheetisAuthenticated');
     localStorage.removeItem('role');
     localStorage.removeItem('timesheeticonName');
+    localStorage.removeItem('tree');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
 }
 
-export const authLoading = () => {
-    return {
-        type: actionTypes.AUTH_LOADING,
+export const setLoadingTime = (time) => {
+    return (dispatch) => {
+        dispatch(authLoading(true))
+        setTimeout(() => {
+            dispatch(authLoading(false));
+        }, time);
     }
 }
 
+export const authLoading = (loading) => {
+    return {
+        type: actionTypes.AUTH_LOADING,
+        loading: loading
+    }
+}
+
+//post tree
+export const getTree = () => {
+    return (dispatch) => {
+        axios.get('/normal/getcodetree', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+                dispatch(changeTree(response.data.children))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const changeTree = (treeData) => {
+    return {
+        type: actionTypes.SET_TREE_SET,
+        treeData: treeData
+    }
+}
