@@ -50,17 +50,17 @@ const TreeNode = (props) => {
         </div>
     )
 
-    // let auth = localStorage.getItem('timesheetisAuthenticated');
-    // if (!auth) {
-    //     editItem = (
-    //         <div className={classes.toggler + ' ' + (childVisible ? classes.active : '')}>
-    //             <Button onClick={e => setChildVisibility(v => !v)} className={hasChild ? classes.editButton : classes.editButtonHidden} icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
-    //             {/* <p className={classes.editTitle}>{props.node.title}</p> */}
-    //             {/* <Input disabled onChange={({ target: { value } }) => props.modifyTree(props.treeData, props.node.key, value)} className={AlgorithmItem ? classes.editTitleAlgorithm : classes.editTitle} placeholder="Basic usage" defaultValue={props.node.title} size="small" /> */}
-    //             <Title level={3}>{props.node.title}</Title>
-    //         </div>
-    //     )
-    // }
+    let auth = localStorage.getItem('timesheetisAuthenticated');
+    if (!auth) {
+        editItem = (
+            <div className={classes.toggler + ' ' + (childVisible ? classes.active : '')}>
+                <Button onClick={e => setChildVisibility(v => !v)} className={hasChild ? classes.editButton : classes.editButtonHidden} icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
+                {/* <p className={classes.editTitle}>{props.node.title}</p> */}
+                {/* <Input disabled onChange={({ target: { value } }) => props.modifyTree(props.treeData, props.node.key, value)} className={AlgorithmItem ? classes.editTitleAlgorithm : classes.editTitle} placeholder="Basic usage" defaultValue={props.node.title} size="small" /> */}
+                <Title level={3}>{props.node.title}</Title>
+            </div>
+        )
+    }
 
     if (props.fresh) {
         editItem = (<Spin />);

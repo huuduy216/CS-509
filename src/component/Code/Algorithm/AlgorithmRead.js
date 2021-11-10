@@ -12,7 +12,6 @@ import Tree from '../TreeSpace/Tree';
 
 const AlgorithmRead = (props) => {
 
-
     // if (Object.prototype.isPrototypeOf(props.treeData) && Object.keys(props.treeData).length === 0) {
     //     props.getTree()
     // }
@@ -21,7 +20,7 @@ const AlgorithmRead = (props) => {
             {/* <div className={classes.header}>
                 <p className={classes.p}>Top Class</p> */}
             <div className={classes.body}>
-                <Tree treeData={props.treeData} />
+                <Tree treeData={props.spaceTreeData} />
             </div>
 
         </React.Fragment>
