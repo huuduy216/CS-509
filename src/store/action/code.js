@@ -207,7 +207,7 @@ export const treeUrlAdd = (treeData, id,url) => {
             title: url,
             key: id,
             type: "url",
-            children: undefined,
+            children: [],
         }];
     return {
         type: actionTypes.SET_TREE_ADDURL,

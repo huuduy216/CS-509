@@ -32,8 +32,14 @@ const TreeNode = (props) => {
     const ImplementationItem = props.node.type === "algorithm_implementations" || props.node.type === "algorithm_problem" ? true : false;
     const S3_BUCKET = 'cs-509-implementations';
     const REGION = 'us-east-2';
+
     const clickAddButton = () => {
         props.addChild(props.treeData, props.node.key);
+        setChildVisibility(true);
+    }
+
+    const clickAddAlgorButton = () => {
+        props.addAlgor(props.treeData, props.node.key);
         setChildVisibility(true);
     }
     AWS.config.update({
@@ -85,7 +91,9 @@ const TreeNode = (props) => {
             );
         }
     } else {
-        inputClass = (<NavLink to={props.node.title}>{props.node.title}</NavLink>);
+        let lastIndex = (props.node.title).lastIndexOf("/");
+        let fileName = (props.node.title).substring(lastIndex+1);
+        inputClass = (<a style={{fontSize:"15pt"}} href={props.node.title}> {fileName}</a>);
     }
 
 
@@ -93,8 +101,8 @@ const TreeNode = (props) => {
         <div className={classes.toggler + ' ' + (childVisible ? classes.active : '')}>
             <Button onClick={e => setChildVisibility(v => !v)} className={hasChild ? classes.editButton : classes.editButtonHidden} size="small" icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
             <Button onClick={() => clickAddButton()} className={(((((!AlgorithmItem) && hasChild) && (!addButtonHidden)) || (ClassificationItem)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
-            <Button onClick={() => props.addAlgor(props.treeData, props.node.key)} className={(((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
-            <Button onClick={() => props.deleteChild(props.treeData, props.node.key)} className={deleteButtonHidden && (!props.editButton) ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
+            <Button onClick={() => clickAddAlgorButton(props.treeData, props.node.key)} className={(((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
+            <Button onClick={() => props.deleteChild(props.treeData, props.node.key)} className={(deleteButtonHidden && (!props.editButton))&& (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
             {inputClass}
             <div className={ImplementationItem ? classes.upload : classes.hideUpload}>
                 <input type="file" onChange={handleFileInput} />
