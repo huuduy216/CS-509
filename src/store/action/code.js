@@ -5,19 +5,13 @@ import * as Db from '../../assets/treeData';
 import TreeNode from '../../component/Code/TreeSpace/TreeNode';
 import Tree from '../../component/Code/TreeSpace/Tree';
 import data from "../../assets/treeDataStub"
-import AWS from 'aws-sdk'
-const S3_BUCKET ='cs-509-implementations';
-const REGION ='us-east-2';
 export const treeFresh = (fresh) => {
     return {
         type: actionTypes.SET_TREE_FRESH,
         fresh: fresh
     }
 }
-AWS.config.update({
-    accessKeyId: 'AKIA3A3ZLIWMVDBHYMNK',
-    secretAccessKey: '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'
-})
+
 export const save = (treeData)=>{
     return (dispatch) => {
         let token = localStorage.getItem("token");
