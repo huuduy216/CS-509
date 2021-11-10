@@ -26,8 +26,8 @@ const Algorithm = (props) => {
     const saveClick = () => {
         console.log(props.treeData);
         props.postTree(props.treeData);
-        // let tree = JSON.parse(localStorage.getItem('tree'))
         props.loadingtime(2000);
+        window.location.reload(false);
 
     }
 
@@ -43,7 +43,6 @@ const Algorithm = (props) => {
     }
 
     if (Object.prototype.isPrototypeOf(props.treeData) && Object.keys(props.treeData).length === 0 && !props.treeDataEmpty) {
-        console.log("sldk")
         props.getTree()
     }
 

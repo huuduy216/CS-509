@@ -19,17 +19,21 @@ import * as CodeAction from '../../../store/action/code';
 const TreeNode = (props) => {
     const [childVisible, setChildVisibility] = useState(false);
     const addButtonHidden = props.node.type!=="algorithm"&& (!props.node.type.includes('implementation'))&& (!props.node.type.includes('problem'))&& (!props.node.type.includes('benchmark'))? false : true;
-    const hasChild = props.node.children ? true : false;
+    const hasChild = (props.node.children)&&!(Object.prototype.isPrototypeOf(props.node.children) && Object.keys(props.node.children).length === 0) ? true : false;
     const ClassificationItem = props.node.type.includes('classification')?true:false;
     const AlgorithmItem = props.node.type.includes('algorithm')?true:false;
-
     const deleteButtonHidden = true;
     // const deleteButtonHidden = (!node.type.includes('benchmark'))? true : false;
+
+    const clickAddButton=()=>{
+        props.addChild(props.treeData,props.node.key);
+        setChildVisibility(true);
+    }
 
     let editItem = (
         <div className={classes.toggler + ' ' + (childVisible ? classes.active : '')}>
             <Button onClick={e => setChildVisibility(v => !v)} className={hasChild?classes.editButton:classes.editButtonHidden} size="small" icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
-            <Button onClick={()=>props.addChild(props.treeData,props.node.key)} className={(((!AlgorithmItem)&&hasChild)&&(!addButtonHidden))||(ClassificationItem)?classes.editButton:classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
+            <Button onClick={()=>clickAddButton()} className={(((!AlgorithmItem)&&hasChild)&&(!addButtonHidden))||(ClassificationItem)?classes.editButton:classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
             <Button onClick={()=>props.addAlgor(props.treeData,props.node.key)} className={(!AlgorithmItem)&&(!addButtonHidden)?classes.editButton:classes.editButtonHidden} size="small" icon={<FontColorsOutlined/>} type="primary" danger ghost/>
             <Button onClick={()=>props.deleteChild(props.treeData,props.node.key)} className={deleteButtonHidden?classes.editButton:classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
 

@@ -21,7 +21,6 @@ const Employee = (props) => {
             const response = await axios.get('/normal/getcodetree', config);
             let tree = JSON.stringify(response.data)
             localStorage.setItem('tree', tree);
-            console.log(response.data)
         }
         fetchData();
     }, [])
