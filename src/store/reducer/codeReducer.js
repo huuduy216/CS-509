@@ -40,6 +40,10 @@ const treeClassificationAdd = (state, action) => {
     return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: false });
 }
 
+
+const setTreeAddUrl = (state, action) => {
+    return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: false });
+}
 const treeChildDelete = (state, action) => {
     return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: action.treeDataEmpty });
 }
@@ -71,6 +75,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_FRESH: return (treeFresh(state, action));
         case actionTypes.SET_TREE_ALGORITHM_ADD: return (treeAlgorithmAdd(state, action));
         case actionTypes.SET_TREE_Classification_ADD: return (treeClassificationAdd(state, action));
+        case actionTypes.SET_TREE_ADDURL: return (setTreeAddUrl(state, action))
         case actionTypes.SET_TREE_SET: return (treeSet(state, action))
         case actionTypes.SET_TREE_EDITABLE: return (treeEditable(state, action))
         case actionTypes.SET_CODE_CLEAR: return (setCodeClear(state, action))

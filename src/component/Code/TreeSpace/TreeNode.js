@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import AWS from 'aws-sdk'
@@ -22,74 +23,83 @@ const TreeNode = (props) => {
     const hasChild = (props.node.children) && !(Object.prototype.isPrototypeOf(props.node.children) && Object.keys(props.node.children).length === 0) ? true : false;
     const ClassificationItem = props.node.type.includes('classification') ? true : false;
     const AlgorithmItem = props.node.type.includes('algorithm') ? true : false;
+    const UrlItem = props.node.type === "url" ? true : false;
+
     const deleteButtonHidden = true;
     // const deleteButtonHidden = (!node.type.includes('benchmark'))? true : false;
-    const [progress , setProgress] = useState(0);
+    // const [progress, setProgress] = useState(0);
     const [selectedFile, setSelectedFile] = useState(null);
-    const ImplementationItem = props.node.type==="algorithm_implementations"||props.node.type==="algorithm_problem"?true:false;
-    const S3_BUCKET ='cs-509-implementations';
-    const REGION ='us-east-2';
+    const ImplementationItem = props.node.type === "algorithm_implementations" || props.node.type === "algorithm_problem" ? true : false;
+    const S3_BUCKET = 'cs-509-implementations';
+    const REGION = 'us-east-2';
     const clickAddButton = () => {
         props.addChild(props.treeData, props.node.key);
         setChildVisibility(true);
     }
     AWS.config.update({
-        accessKeyId: 'AKIA3A3Z************',
-        secretAccessKey: '86WxkHcq6*************'
+        accessKeyId: 'AKIA3A3ZLIWMX4LOEHVJ',
+        secretAccessKey: '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'
     })
 
     const myBucket = new AWS.S3({
-        params: { Bucket: S3_BUCKET},
+        params: { Bucket: S3_BUCKET },
         region: REGION,
     })
-        let handleFileInput =(e)=>{
-            setSelectedFile(e.target.files[0]);
-        }
-        const uploadFile = (file, treeData,key) => {
-    
-            const params = {
-                ACL: 'public-read',
-                Body: file,
-                Bucket: S3_BUCKET,
-                Key: file.name
-            };
-    
-            myBucket.putObject(params)
-                .on('httpUploadProgress', (evt) => {
-                    setProgress(Math.round((evt.loaded / evt.total) * 100))
-                    
-                    if(evt.loaded==100)
+    let handleFileInput = (e) => {
+        setSelectedFile(e.target.files[0]);
+    }
+    const uploadFile = (file, treeData, key) => {
+
+        const params = {
+            ACL: 'public-read',
+            Body: file,
+            Bucket: S3_BUCKET,
+            Key: file.name
+        };
+
+        myBucket.putObject(params)
+            .on('httpUploadProgress', (evt) => {
+                // setProgress(Math.round((evt.loaded / evt.total) * 100))
+
+                if (evt.loaded === 100)
                     console.log("done")
-                })
-                .send((err) => {
-                    if (!err) {
-                        console.log("done deplo")
-                 let   url = "https://" + S3_BUCKET+".s3." + REGION  + ".amazonaws.com/"+ encodeURI(file.name)
-                    console.log(url)}
-                  //  props.addImplementationChild(treeData,key, url);
-                })
-        }
+            })
+            .send((err) => {
+                if (!err) {
+                    console.log("done deplo")
+                    let url = "https://" + S3_BUCKET + ".s3." + REGION + ".amazonaws.com/" + encodeURI(file.name)
+                    props.addurl(props.treeData, props.node.key, url);
+                    console.log(url)
+                }
+                //  props.addImplementationChild(treeData,key, url);
+            })
+    }
     //input set
     let inputClass;
-    if (!props.editButton) {
-        inputClass = (<Input  onChange={({ target: { value } }) => props.modifyTree(props.treeData, props.node.key, value)} className={AlgorithmItem ? classes.editTitleAlgorithm : classes.editTitle} placeholder="Basic usage" defaultValue={props.node.title} size="small" />
-        );
+    if (!UrlItem) {
+        if (!props.editButton) {
+            inputClass = (<Input onChange={({ target: { value } }) => props.modifyTree(props.treeData, props.node.key, value)} className={AlgorithmItem || ImplementationItem ? classes.editTitleAlgorithm : classes.editTitle} placeholder="Basic usage" defaultValue={props.node.title} size="small" />
+            );
+        } else {
+            inputClass = (<Title level={5}>{props.node.title}</Title>
+            );
+        }
     } else {
-        inputClass = (<Title level={5}>{props.node.title}</Title>
-        );
+        inputClass = (<NavLink to={props.node.title}>{props.node.title}</NavLink>);
     }
+
 
     let editItem = (
         <div className={classes.toggler + ' ' + (childVisible ? classes.active : '')}>
             <Button onClick={e => setChildVisibility(v => !v)} className={hasChild ? classes.editButton : classes.editButtonHidden} size="small" icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
-            <Button onClick={() => clickAddButton()} className={((((!AlgorithmItem) && hasChild) && (!addButtonHidden)) || (ClassificationItem)) && (!props.editButton) ? classes.editButton : classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
-            <Button onClick={() => props.addAlgor(props.treeData, props.node.key)} className={((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
+            <Button onClick={() => clickAddButton()} className={(((((!AlgorithmItem) && hasChild) && (!addButtonHidden)) || (ClassificationItem)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
+            <Button onClick={() => props.addAlgor(props.treeData, props.node.key)} className={(((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
             <Button onClick={() => props.deleteChild(props.treeData, props.node.key)} className={deleteButtonHidden && (!props.editButton) ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
             {inputClass}
-            <div  className = {ImplementationItem? classes.upload:classes.hideUpload}>
-            <input type="file" onChange={handleFileInput}/>
-           <button onClick={() => uploadFile(selectedFile, props.treeData,props.key)}> Upload to S3</button>
-             </div>
+            <div className={ImplementationItem ? classes.upload : classes.hideUpload}>
+                <input type="file" onChange={handleFileInput} />
+                <button onClick={() => uploadFile(selectedFile, props.treeData, props.key)}> Upload to S3</button>
+            </div>
         </div>
     )
 
@@ -120,7 +130,7 @@ const TreeNode = (props) => {
                 {
                     hasChild && childVisible && <div className={classes.dTreeContent}>
                         <ul className={classes.dTreeContainer}>
-                            <Tree treeData={props.node.children} editButton={props.editButton}/>
+                            <Tree treeData={props.node.children} editButton={props.editButton} />
                         </ul>
                     </div>
                 }
@@ -146,6 +156,7 @@ const mapDispatchToProps = dispatch => {
         addAlgor: (node, id) => dispatch(CodeAction.treeAddAlgorClick(node, id)),
         deleteChild: (node, id) => dispatch(CodeAction.treeDeleteClick(node, id)),
         modifyTree: (node, id, newTitle) => dispatch(CodeAction.treeModify(node, id, newTitle)),
+        addurl: (node, id, url) => dispatch(CodeAction.treeUrlAddClick(node, id, url)),
     }
 }
 

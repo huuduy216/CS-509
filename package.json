@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.3.0",
     "antd": "^4.9.1",
+    "aws-sdk": "^2.1026.0",
     "axios": "^0.21.0",
     "particles-bg": "^2.5.5",
     "react": "^17.0.1",

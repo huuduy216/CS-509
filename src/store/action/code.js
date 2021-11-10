@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import * as Db from '../../assets/treeData';
+// import * as Db from '../../assets/treeData';
 import axios from '../../axios/axios-local';
 
 //post tree
@@ -101,21 +101,21 @@ export const treeAlgorithmAdd = (treeData, id) => {
     //new item type
     let new_type = "algorithm_type";
 
-    let changeId = (arr) => {
-        arr.map((item) => {
-            item.key = id + '-' + item.key;
-            if (item.children && item.children.length > 0) {
-                changeId(item.children)
+    // let changeId = (arr) => {
+    //     arr.map((item) => {
+    //         item.key = id + '-' + item.key;
+    //         if (item.children && item.children.length > 0) {
+    //             changeId(item.children)
 
-            } return null;
-        })
-        return arr;
-    }
+    //         } return null;
+    //     })
+    //     return arr;
+    // }
 
-    let newBenchmark = Db.BENCH_MARKS;
-    let newProblem = Db.PROBLEM_INSTANCE;
-    newBenchmark = changeId(newBenchmark);
-    newProblem = changeId(newProblem);
+    // let newBenchmark = Db.BENCH_MARKS;
+    // let newProblem = Db.PROBLEM_INSTANCE;
+    // newBenchmark = changeId(newBenchmark);
+    // newProblem = changeId(newProblem);
     let probleminstance =  {
         title: "Problem Instances",
         key: id+"-"+1,
@@ -182,6 +182,51 @@ export const treeClassificationAddClick = (treeData) => {
 
     }
 }
+
+//Click Add Classification
+export const treeUrlAdd = (treeData, id,url) => {
+    id = id.split("-").map((str) => parseInt(str));
+    let changingNode = treeData[id[0]];
+
+    if (id.length > 1) {
+        for (let i = 1; i < id.length; i++) {
+            changingNode = changingNode.children[id[i]];
+        }
+    }
+
+    if (changingNode.children === undefined) {
+        changingNode.children = [];
+    }
+ 
+    id = `${id.join("-")}-${changingNode.children.length}`;
+ 
+    //new url type
+    changingNode.children = [
+        ...changingNode.children,
+        {
+            title: url,
+            key: id,
+            type: "url",
+            children: undefined,
+        }];
+    return {
+        type: actionTypes.SET_TREE_ADDURL,
+        treeData:treeData
+    }
+}
+
+export const treeUrlAddClick = (treeData, id,url) => {
+
+    return (dispatch) => {
+        dispatch(treeUrlAdd(treeData, id,url));
+        dispatch(treeFresh(true));
+        setTimeout(() => {
+            dispatch(treeFresh(false));
+        }, 10);
+
+    }
+}
+
 //Click Delete Tree
 export const treeChildDelete = (treeData, id) => {
     id = id.split("-").map((str) => parseInt(str));
