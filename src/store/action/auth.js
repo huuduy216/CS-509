@@ -85,8 +85,8 @@ export const reg = (userName, password) => {
             .then(response => {
 
                 if (response.data !== "") {
-
-                    dispatch(regUserSuccess("Registered!! Login Now"));
+                   
+                    dispatch(regUserSuccess(""));
 
                 } else {
                     dispatch(regFail("User Exists try different username"));

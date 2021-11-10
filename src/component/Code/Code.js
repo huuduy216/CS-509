@@ -12,20 +12,20 @@ const Code = (props) => {
     let role = localStorage.getItem("role");
     let CodeBody = (
         <div className={classes.background}>
-            <Algorithm/>
+            <Algorithm spaceTreeData={props.spaceTreeData}/>
         </div>);
   
     if (role === null) {
         CodeBody = (
             <div className={classes.background}>
-                <AlgorithmRead/>
+                <AlgorithmRead spaceTreeData={props.spaceTreeData}/>
             </div>);
     }
 
     if (role === "user" || role === "admin") {
         CodeBody = (
             <div className={classes.background}>
-                <Algorithm/>
+                <Algorithm spaceTreeData={props.spaceTreeData}/>
             </div>);
     }
     return (

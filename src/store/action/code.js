@@ -72,6 +72,7 @@ export const treeChildAdd = (treeData, id) => {
 export const treeAddClick = (treeData, id) => {
 
     return (dispatch) => {
+        
         dispatch(treeChildAdd(treeData, id));
         dispatch(treeFresh(true));
         setTimeout(() => {
@@ -244,7 +245,6 @@ export const treeChildDelete = (treeData, id) => {
 
 
         changingNode.children = newChildren;
-        console.log(treeData);
         return {
             type: actionTypes.SET_TREE_CHILD_DELETE,
             treeData: treeData
@@ -267,6 +267,7 @@ export const treeDeleteClick = (treeData, id) => {
 
 //tree modify
 export const treeModify = (treeData, id, newTitle) => {
+
     id = id.split("-").map((str) => parseInt(str));
     let changingNode = treeData[id[0]];
 
@@ -282,6 +283,13 @@ export const treeModify = (treeData, id, newTitle) => {
     }
 
 }
+//tree editable
+export const treeEditable = () => {
+    return {
+        type: actionTypes.SET_TREE_EDITABLE,
+    }
+}
+
 
 export const algorithmEdit = () => {
     return {

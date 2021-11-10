@@ -2,6 +2,7 @@ import * as actionTypes from '../action/actionTypes';
 import * as update from '../../Utility/update'
 
 const initalState = {
+    registered:false,
     isAuthenticated:false,
     loginError:"",
     loading:false,
@@ -33,7 +34,7 @@ const authLogout=(state,action)=>{
     return update.updateObject(state,{isAuthenticated:false,role:""})
 }
 const regUserSuccess= (state,action)=>{
-    return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:""});
+    return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:"",registered:true});
 
 }
 const callFail = (state,action)=>{

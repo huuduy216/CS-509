@@ -5,7 +5,8 @@ const initalState = {
     edit:"12",
     treeData:[],
     treeDataEmpty:false,
-    fresh:false
+    fresh:false,
+    changeTreeEnable:false
 };
 
 const algorithmEdit=(state,action)=>{
@@ -48,6 +49,10 @@ const treeFresh=(state,action)=>{
     return update.updateObject(state,{fresh:action.fresh});
 }
 
+const treeEditable=(state,action)=>{
+    return update.updateObject(state,{ changeTreeEnable:true});
+}
+
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case actionTypes.SET_Algorithm_BUTTON:return (algorithmEdit(state,action));
@@ -60,6 +65,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_ALGORITHM_ADD:return(treeAlgorithmAdd(state,action));
         case actionTypes.SET_TREE_Classification_ADD:return(treeClassificationAdd(state,action));
         case actionTypes.SET_TREE_SET:return(treeSet(state,action))
+        case actionTypes.SET_TREE_EDITABLE:return(treeEditable(state,action))
         default:
             return state;
     }

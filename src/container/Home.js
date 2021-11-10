@@ -8,7 +8,7 @@ function Index(){
         <React.Fragment>
             <Toolbar/>
             <Code/>
-            <ParticlesBg type="circle" bg={true} />
+            <ParticlesBg type="cobweb" bg={true} />
 
         </React.Fragment>
     )

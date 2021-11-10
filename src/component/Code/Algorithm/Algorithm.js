@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Algorithm.module.css';
 import { Button, Divider } from 'antd';
-import { AppstoreAddOutlined, MergeCellsOutlined, SaveOutlined, SelectOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, MergeCellsOutlined, SaveOutlined, EditOutlined,EyeOutlined} from '@ant-design/icons';
 import Tree from '../TreeSpace/Tree';
 import Loading from '../../../UI/Loading/Loading';
 
@@ -22,22 +22,36 @@ const Algorithm = (props) => {
             <Button type="primary" className={classes.EditButton} >Merge Selected</Button>
         </div>
     );
-
+//save Button
     const saveClick = () => {
-        console.log(props.treeData);
         props.postTree(props.treeData);
-        props.loadingtime(2000);
-        window.location.reload(false);
+        props.loadingtime(1000);
 
+    }
+
+    //eidtButton
+    const ClickEditButton=()=>{
+        SetEditButton(!editButton);
+        if(!props.changeTreeEnable){
+            props.changeTree(props.spaceTreeData);
+            props.treeEditEnable();
+        }
+    }
+    const [editButton, SetEditButton] = useState(true);
+    let EditButton;
+    if (editButton) {
+        EditButton = (<Button onClick={ClickEditButton} type="primary" className={classes.EditButton} icon={<EditOutlined />}>Edit</Button>);
+    } else {
+        EditButton = (<Button onClick={ClickEditButton} className={classes.EditButton} icon={<EyeOutlined />}>View</Button>);
     }
 
     if (role === "user") {
         Editbutton = (
             <div className={classes.headerRest}>
-                <Button onClick={() => { props.addClass(props.treeData) }} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
-                <Button onClick={() => { console.log(props.treeDataEmpty) }} type="primary" className={classes.EditButton} icon={<SelectOutlined />}>Merge Selected</Button>
-                <Button type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
-                <Button onClick={() => saveClick()} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
+                {EditButton}
+                <Button disabled={editButton} onClick={() => { props.addClass(props.treeData) }} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
+                <Button disabled={editButton} type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
+                <Button disabled={!props.changeTreeEnable} onClick={() => saveClick()} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
             </div>
         );
     }
@@ -46,13 +60,19 @@ const Algorithm = (props) => {
     //     props.getTree()
     // }
 
+    let treeStatus = props.spaceTreeData;
+    if (props.changeTreeEnable) {
+
+        treeStatus = props.treeData;
+    }
+
     let algor = (
         <div className={classes.background}>
             <div className={classes.header}>
                 {Editbutton}
             </div>
             <Divider />
-            <Tree treeData={props.treeData} />
+            <Tree treeData={treeStatus} editButton={editButton}/>
         </div>
     )
 
@@ -74,7 +94,8 @@ const mapStateToProps = state => {
         edit: state.code.edit,
         role: state.auth.role,
         loading: state.auth.loading,
-        treeDataEmpty: state.code.treeDataEmpty
+        treeDataEmpty: state.code.treeDataEmpty,
+        changeTreeEnable: state.code.changeTreeEnable
     };
 }
 
@@ -84,7 +105,8 @@ const mapDispatchToProps = dispatch => {
         postTree: (treeData) => dispatch(CodeAction.postTree(treeData)),
         changeTree: (treeData) => dispatch(AuthAction.changeTree(treeData)),
         loadingtime: (time) => dispatch(AuthAction.setLoadingTime(time)),
-        getTree: () => dispatch(AuthAction.getTree())
+        getTree: () => dispatch(AuthAction.getTree()),
+        treeEditEnable:() =>dispatch(CodeAction.treeEditable())
     }
 }
 

@@ -15,7 +15,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 
 const NormalLoginForm = (props) => {
-    
+
     const OnFinish = (values) => {
         props.onAuth(values["username"], values["password"]);
     };
@@ -23,24 +23,24 @@ const NormalLoginForm = (props) => {
     let authRedirect = null;
     let failedLogin = null;
     let iconName = null;
- 
+
     //test
-    if (props.auth && props.role==="admin") {
+    if (props.auth && props.role === "admin") {
         console.log(props.role)
         localStorage.setItem('timesheetisAuthenticated', true);
         localStorage.setItem('timesheetUsername', props.user.username);
         localStorage.setItem('timesheetuseremail', props.user.email);
-        localStorage.setItem('timesheetuseremail',props.role);
+        localStorage.setItem('timesheetuseremail', props.role);
         iconName = 'AD';
         localStorage.setItem('timesheeticonName', iconName);
         authRedirect = <Redirect to="/employee" />
     }
-    if (props.auth && props.role==="user") {
+    if (props.auth && props.role === "user") {
         console.log(props.role)
         localStorage.setItem('timesheetisAuthenticated', true);
         localStorage.setItem('timesheetUsername', props.user.username);
         localStorage.setItem('timesheetuseremail', props.user.email);
-        localStorage.setItem('timesheetuseremail',props.role);
+        localStorage.setItem('timesheetuseremail', props.role);
         iconName = 'USER';
         localStorage.setItem('timesheeticonName', iconName);
         authRedirect = <Redirect to="/employee" />
@@ -68,6 +68,16 @@ const NormalLoginForm = (props) => {
     if (!props.auth && props.error !== "") {
         failedLogin = <p className={classes.failedLogin}>{props.error}</p>
     }
+
+    if (props.registered) {
+        failedLogin = (
+            <div>
+                <p className={classes.failedLogin}>Registered!!</p>
+                <NavLink to="/login">Log in now?</NavLink>
+            </div>
+        )
+    }
+
 
     //form
     let form = (
@@ -104,8 +114,8 @@ const NormalLoginForm = (props) => {
             {failedLogin}
         </Form>)
 
-    let bar=(
-        <div className={classes.bar} onClick={e =>  props.refresh() }>
+    let bar = (
+        <div className={classes.bar} onClick={e => props.refresh()}>
             <NavLink to="/" className={classes.logo}></NavLink>
         </div>
     );
@@ -126,18 +136,19 @@ const NormalLoginForm = (props) => {
 const mapStateToProps = state => {
 
     return {
+        registered: state.auth.registered,
         auth: state.auth.isAuthenticated,
         error: state.auth.loginError,
         load: state.auth.loading,
         user: state.user.user,
-        role:state.auth.role
+        role: state.auth.role
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (name, pwd) => dispatch(authActions.reg(name, pwd)),
-        refresh : ()=> dispatch(authActions.refresh())
+        refresh: () => dispatch(authActions.refresh())
     }
 }
 

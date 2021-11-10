@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { connect } from 'react-redux';
 import * as AuthAction from '../store/action/auth';
@@ -6,11 +6,12 @@ import * as AuthAction from '../store/action/auth';
 import axios from '../axios/axios-local'
 import Toolbar from '../component/Navigation/Toolbar/Toolbar'
 import Code from '../component/Code/Code'
+import ParticlesBg from 'particles-bg'
 
 
 const Employee = (props) => {
 
-   
+    const [spaceTreeData, SetSpaceTreeData] = useState([]);
 
     useEffect(() => {
         let config = {
@@ -23,18 +24,20 @@ const Employee = (props) => {
             let tree = JSON.stringify(response.data)
             localStorage.setItem('tree', tree);
             // console.log(response.data.children)
-            props.changeTree(response.data.children);
+            // props.changeTree(response.data.children);
+            SetSpaceTreeData(response.data.children)
         }
-        
+
         fetchData();
     }, [])
-
 
 
     return (
         <React.Fragment>
             <Toolbar />
-            <Code/>
+            <Code spaceTreeData={spaceTreeData} />
+            <ParticlesBg type="cobweb" bg={true} />
+
         </React.Fragment>
     )
 }
@@ -43,9 +46,9 @@ const Employee = (props) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-      
+
         changeTree: (treeData) => dispatch(AuthAction.changeTree(treeData)),
-     
+
     }
 }
 
