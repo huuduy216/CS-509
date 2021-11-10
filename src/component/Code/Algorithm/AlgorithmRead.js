@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import * as AuthAction from '../../../store/action/auth';
 import classes from './AlgorithmRead.module.css';
-
+import Tree from '../TreeSpace/Tree';
 
 
 
@@ -11,17 +13,32 @@ import classes from './AlgorithmRead.module.css';
 const AlgorithmRead = (props) => {
 
 
-
+    if (Object.prototype.isPrototypeOf(props.treeData) && Object.keys(props.treeData).length === 0) {
+        props.getTree()
+    }
     return (
         <React.Fragment>
             {/* <div className={classes.header}>
                 <p className={classes.p}>Top Class</p> */}
             <div className={classes.body}>
+                <Tree treeData={props.treeData} />
             </div>
 
         </React.Fragment>
 
     );
 };
+const mapStateToProps = state => {
 
-export default AlgorithmRead;
+    return {
+        treeData: state.code.treeData,
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getTree: () => dispatch(AuthAction.getTree())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AlgorithmRead);

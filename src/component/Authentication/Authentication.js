@@ -29,7 +29,6 @@ const NormalLoginForm = (props) => {
     if (props.auth && props.role==="admin") {
         localStorage.setItem('timesheetisAuthenticated', true);
         localStorage.setItem('timesheetUsername', props.user.username);
-        localStorage.setItem('timesheetuseremail', props.user.email);
         localStorage.setItem('role','admin');
         iconName = 'AD';
         localStorage.setItem('timesheeticonName', iconName);
@@ -38,7 +37,6 @@ const NormalLoginForm = (props) => {
     if (props.auth && props.role==="user") {
         localStorage.setItem('timesheetisAuthenticated', true);
         localStorage.setItem('timesheetUsername', props.user.username);
-        localStorage.setItem('timesheetuseremail', props.user.email);
         localStorage.setItem('role','user');
         iconName = 'USER';
         localStorage.setItem('timesheeticonName', iconName);
