@@ -7,21 +7,25 @@ import axios from '../axios/axios-local'
 import Toolbar from '../component/Navigation/Toolbar/Toolbar'
 import Code from '../component/Code/Code'
 
+
 const Employee = (props) => {
 
    
 
-    useEffect((props) => {
+    useEffect(() => {
         let config = {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }
-        async function fetchData(props) {
+        async function fetchData() {
             const response = await axios.get('/normal/getcodetree', config);
             let tree = JSON.stringify(response.data)
             localStorage.setItem('tree', tree);
+            // console.log(response.data.children)
+            props.changeTree(response.data.children);
         }
+        
         fetchData();
     }, [])
 

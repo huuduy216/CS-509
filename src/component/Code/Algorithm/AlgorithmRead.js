@@ -13,9 +13,9 @@ import Tree from '../TreeSpace/Tree';
 const AlgorithmRead = (props) => {
 
 
-    if (Object.prototype.isPrototypeOf(props.treeData) && Object.keys(props.treeData).length === 0) {
-        props.getTree()
-    }
+    // if (Object.prototype.isPrototypeOf(props.treeData) && Object.keys(props.treeData).length === 0) {
+    //     props.getTree()
+    // }
     return (
         <React.Fragment>
             {/* <div className={classes.header}>

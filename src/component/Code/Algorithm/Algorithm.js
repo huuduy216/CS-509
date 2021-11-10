@@ -42,9 +42,9 @@ const Algorithm = (props) => {
         );
     }
 
-    if (Object.prototype.isPrototypeOf(props.treeData) && Object.keys(props.treeData).length === 0 && !props.treeDataEmpty) {
-        props.getTree()
-    }
+    // if (Object.prototype.isPrototypeOf(props.treeData) && Object.keys(props.treeData).length === 0 && !props.treeDataEmpty) {
+    //     props.getTree()
+    // }
 
     let algor = (
         <div className={classes.background}>
