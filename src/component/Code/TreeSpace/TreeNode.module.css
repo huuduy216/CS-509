@@ -16,7 +16,15 @@
     visibility:hidden
 
 }
+.upload{
+    margin-right: 1%;
+}
 
+.hideUpload{
+    margin-right: 1%;
+    visibility:hidden
+
+}
 .editIcon{
     margin-right: 1%;
 }

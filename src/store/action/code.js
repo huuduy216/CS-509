@@ -116,14 +116,25 @@ export const treeAlgorithmAdd = (treeData, id) => {
     let newProblem = Db.PROBLEM_INSTANCE;
     newBenchmark = changeId(newBenchmark);
     newProblem = changeId(newProblem);
-
+    let probleminstance =  {
+        title: "Problem Instances",
+        key: id+"-"+1,
+        type: 'algorithm_problem',
+        children:undefined}
+    let implementation ={
+        title: "Implementations",
+        key: id+"-"+0,
+        type: 'algorithm_implementations',
+        children:undefined
+    }
     changingNode.children = [
         ...changingNode.children,
         {
             title: "New Algorithm",
             key: id,
             type: new_type,
-            children: [newBenchmark[0], newProblem[0]],
+           // children: [newBenchmark[0], newProblem[0]],
+           children: [implementation,probleminstance],
         }];
     return {
         type: actionTypes.SET_TREE_CHILD_ADD,
