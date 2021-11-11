@@ -71,8 +71,8 @@ const Toolbar = (props) => {
             <DrawerToggle display={"none"} />
             {logo}
             <nav className={classes.des}>
-                <Login link="/login" exact >LOGIN </Login>
-                <Register link="/register" exact >REGISTER </Register>
+                <Login link="/login" exact >SIGN IN </Login>
+                <Register link="/register" exact >SIGN UP </Register>
             </nav>
         </Header>
     );
