@@ -1,0 +1,12 @@
+.inputNumber{
+    background-color:white;
+    width: 12%;
+    height: 40px;
+    border-bottom: 1px #90a4ae solid;
+    border-right: 1px #90a4ae solid;
+    color:#1890ff;
+    font-size: 17pt;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+}

@@ -1,0 +1,93 @@
+.background{
+    width: 100%;
+    height: 40px;
+    display: flex;
+
+}
+
+.projectShow{
+    display: flex;
+    font-size: 12pt;
+    font-weight: 500;
+    color:#1890ff;
+    background-color: transparent;
+}
+
+.projectShow:hover {
+    background-color: transparent;
+    color: #90a4ae;
+  }
+
+.projectShow:focus{
+    color:#1890ff;
+    background-color: transparent;
+}
+
+.popover{
+    display: flex;
+}
+
+.content{
+    font-size: 10pt;
+    font-weight: 350;
+}
+
+
+
+.projectTitle{
+    background-color:white;
+    width: 12%;
+    height: 100%;
+    border-left: 1px #90a4ae solid;
+    border-bottom: 1px #90a4ae solid;
+    border-right: 1px #90a4ae solid;
+    color:#607d8b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.total{
+    background-color:#bfe6ff;
+    width: 12%;
+    height: 100%;
+    font-size: 14pt;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.totalNumber{
+    background-color:#bfe6ff;
+    width: 12%;
+    height: 100%;
+    color:rgb(0, 0, 0);
+    font-size: 18pt;
+    font-weight: 700;
+    display: flex;    
+    align-items: center;
+    padding-left: 12px;
+}
+
+.choice{
+    width: 4%;
+    border-right:  1px #90a4ae solid;
+    border-bottom: 1px #90a4ae solid;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.choiceNoUse{
+    background-color:#bfe6ff;
+    width: 4%;
+  
+}
+
+.dividing{
+    width: 100%;
+    height: 3px;
+    background-color: black;
+    margin-top: 30px;
+}
+

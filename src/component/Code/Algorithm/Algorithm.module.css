@@ -1,0 +1,54 @@
+.background{
+    /* background-color: red; */
+    height: 100%;
+    width: 100%;
+}
+.header{
+    /* background-color:#e4eaee; */
+    background-color:white;
+    width: 95%;
+    height: 10%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-top: 5%;
+}
+
+
+.p{
+    background-color: white;
+    font-size: 30pt;
+    font-weight: 500;
+    color: #607d8b;
+    height: 100%;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top: 3%;
+}
+
+.headerRest{
+    background-color: white;
+    height: 100%;
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    margin-top: 3%;
+}
+
+.tree{
+    background-color: #e4eaee;
+    width: 80%;
+    font-size:12pt;
+    font-weight: 500;
+    color: black;
+    border:#e4eaee0e 1px solid;
+}
+
+.EditButton{
+   margin-left: 3%;
+   margin-top: 7%;
+}

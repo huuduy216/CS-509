@@ -1,0 +1,16 @@
+.NavigationItems{
+    margin:0;
+    padding:0;
+    list-style: none;
+    display:flex;
+    flex-flow: column;
+    height:100%;
+    background-color: red;
+}
+
+.NavigationItems li{
+    list-style: none;
+    display: inline;
+    background-color: green;
+    
+}

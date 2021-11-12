@@ -1,0 +1,17 @@
+.button{
+    width: 256px;
+    height: 60px;
+    margin-left: -14px;
+    
+}
+
+.drawerBody{
+    
+    margin-top: -24px;
+    margin-left: -10px;
+    width: 256px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: #a4dbde 1px dotted;
+    margin-bottom: 23px;
+}

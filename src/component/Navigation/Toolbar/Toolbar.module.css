@@ -1,0 +1,72 @@
+.header{
+  height:56px;
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:#ffffff;
+    outline:1px #a4dbde solid;
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding:0 20px;
+    box-sizing: border-box;
+    z-index: 90;
+}
+
+.logo {
+  background-image: url("../../../assets/GroupIcon.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 300px;
+  height: 100%;
+  margin-left: 10px;
+}
+
+
+
+.header nav{
+  height:100%;
+  width: 100%;
+  flex:1;
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.profilepic{
+  background-color: #1890ff;
+  margin-left: 10px;
+}
+
+.menu{
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.menuname{
+  font-size: 10pt;
+  margin-left: 12px;
+  margin-top: 3px;
+  font-weight: bold;
+}
+
+.menumail{
+  font-size: 8pt;
+  margin-left: 12px;
+  margin-top: -10px;
+}
+
+.menuprofile{
+  border-bottom: #a4dbde 1px dotted;
+}
+
+.loginButton{
+  height: 100%;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+

@@ -1,0 +1,75 @@
+.p{
+    /* background-color: red; */
+    font-size: 15pt;
+    font-weight: 500;
+    color: #607d8b;
+    height: 30%;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1%;
+    margin-left: 1%;
+}
+
+.body{
+    /* background-color: blue; */
+    width: 80%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 4px;
+    padding-right: 3px;
+}
+
+.addButton{
+    height: 80%;
+    font-weight: 500;
+    font-size: 10pt;
+    display: flex;
+    align-items: center;
+    margin-right: 0.5%;
+}
+
+.saveButton{
+    height: 80%;
+    font-weight: 500;
+    font-size: 10pt;
+    display: flex;
+    align-items: center;
+    margin-right: 1.8%;
+}
+
+.deleteButton{
+
+}
+
+.datePicker{
+    height: 90%;
+    margin-left: 10px;
+    width: 160px;
+}
+
+.modal{
+    
+    background-color: red;
+}
+
+.unit{
+    /* background-color: red; */
+    font-size: 13pt;
+    font-weight: 500;
+    color: #607d8b;
+    height: 30%;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3%;
+    margin-right: -29%;
+}
+
+.warningDelete{
+    font-size: 13pt;
+    font-weight: 500;
+    color: rgba(22, 22, 22, 0.705);
+}

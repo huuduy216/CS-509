@@ -1,0 +1,43 @@
+.background{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+   
+}
+.project{
+    width: 10%;
+}
+
+.emptyBacground{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.noRecord{
+    font-size: 30pt;
+    margin-top: 10%;
+    color: #90a4ae;
+}
+
+.loading{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e4eaee;
+    opacity: 0.5;
+}
+.totalSpace{
+    height: 100px;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+}

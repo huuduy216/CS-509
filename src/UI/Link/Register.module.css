@@ -1,0 +1,33 @@
+.divReg{
+    background:linear-gradient(#d3dfe0c4,transparent);
+    width: 70px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;   
+    height: 100%;
+
+}
+
+.divReg:hover{
+    background-color: white;
+    background:white;
+
+}
+
+  
+.NavigationItem{
+    box-sizing: border-box;
+    color:#13757a;
+    display: flex;
+    justify-content: center; 
+    align-items: center;   
+    font-weight: 500;
+}
+.NavigationItem:hover{
+    color: #000;
+    font-weight: 700;
+
+}
+
+
+

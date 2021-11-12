@@ -1,0 +1,22 @@
+.background{
+    width: 100%;
+    height: 12%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.body{
+    width: 150px;
+    height: 100%;
+    color:black;
+    font-size: 18pt;
+    font-weight: 700;
+}
+
+.number{
+    width: 130px;
+    height: 100%;
+    color:red;
+    font-size: 18pt;
+    font-weight: 700;
+}
