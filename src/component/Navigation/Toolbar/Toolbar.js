@@ -97,6 +97,8 @@ const Toolbar = (props) => {
             </Header>)
     };
 
+
+
     return (
         <Layout className="layout">
             {toolbar}
@@ -111,7 +113,7 @@ const mapStateToProps = state => {
         role: state.auth.role,
         user: state.user.user,
         loginstate: state.user.userLoginState,
-
+        userlogout: state.auth.logout,
     };
 }
 
