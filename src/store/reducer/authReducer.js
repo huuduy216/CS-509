@@ -4,6 +4,7 @@ import * as update from '../../Utility/update'
 const initalState = {
     registered:false,
     isAuthenticated:false,
+    logout:false,
     loginError:"",
     loading:false,
     redirect:"",
@@ -11,38 +12,38 @@ const initalState = {
 };
 
 const authStart=(state,action)=>{
-    return update.updateObject(state,{isAuthenticated:false,loginError:"",loading:false,redirect:"",role:""});
+    return update.updateObject(state,{isAuthenticated:false,loginError:"",loading:false,redirect:"",role:"",logout:false});
 }
 
 const authAdminSuccess=(state,action)=>{
-    return update.updateObject(state,{isAuthenticated:true,role:"admin"});
+    return update.updateObject(state,{isAuthenticated:true,role:"admin",logout:false});
 }
 
 const authUserSuccess=(state,action)=>{
-    return update.updateObject(state,{isAuthenticated:true,role:"user"});
+    return update.updateObject(state,{isAuthenticated:true,role:"user",logout:false});
 }
 
 const authFail=(state,action)=>{
-    return update.updateObject(state,{loginError:action.loginError,isAuthenticated:false,loading:false,role:""});
+    return update.updateObject(state,{loginError:action.loginError,isAuthenticated:false,loading:false,role:"",logout:false});
 }
 
 const authLoading=(state,action)=>{
-    return update.updateObject(state,{loading:action.loading});
+    return update.updateObject(state,{loading:action.loading,logout:false});
 }
 
 const authLogout=(state,action)=>{
-    return update.updateObject(state,{isAuthenticated:false,role:""})
+    return update.updateObject(state,{isAuthenticated:false,role:"",logout:true})
 }
 const regUserSuccess= (state,action)=>{
-    return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:"",registered:true});
+    return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:"",registered:true,logout:false});
 
 }
 const callFail = (state,action)=>{
-    return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:""});
+    return update.updateObject(state,{loginError:action.loginMsg,isAuthenticated:false,loading:false,role:"",logout:false});
 
 }
 const regFail=(state,action)=>{
-    return update.updateObject(state,{loginError:action.loginError,isAuthenticated:false,loading:false,role:""});
+    return update.updateObject(state,{loginError:action.loginError,isAuthenticated:false,loading:false,role:"",logout:false});
 }
 
 

@@ -24,6 +24,7 @@ const Toolbar = (props) => {
 
     const handleClickLogout = () => {
         props.logout();
+        // window.location.reload(false);
     }
 
 
@@ -76,7 +77,8 @@ const Toolbar = (props) => {
             </nav>
         </Header>
     );
-    if (localStorage['timesheetisAuthenticated']) {
+    
+    if (props.user.logout||localStorage['timesheetisAuthenticated']) {
         toolbar = (
             <Header className={classes.header}>
                 <DrawerToggle />
@@ -111,7 +113,7 @@ const mapStateToProps = state => {
         role: state.auth.role,
         user: state.user.user,
         loginstate: state.user.userLoginState,
-
+        userlogout:state.auth.logout,
     };
 }
 
