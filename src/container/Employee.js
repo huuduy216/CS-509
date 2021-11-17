@@ -6,7 +6,9 @@ import * as AuthAction from '../store/action/auth';
 import axios from '../axios/axios-local'
 import Toolbar from '../component/Navigation/Toolbar/Toolbar'
 import Code from '../component/Code/Code'
+import CodeDrawer from '../component/Code/CodeDrawer/CodeDrawer'
 import ParticlesBg from 'particles-bg'
+import { Drawer } from 'antd';
 
 
 const Employee = (props) => {
@@ -36,6 +38,7 @@ const Employee = (props) => {
         <React.Fragment>
             <Toolbar />
             <Code spaceTreeData={spaceTreeData} />
+            <CodeDrawer/>
             <ParticlesBg type="cobweb" bg={true} />
 
         </React.Fragment>

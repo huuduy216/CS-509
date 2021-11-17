@@ -8,7 +8,6 @@ import 'antd/dist/antd.css';
 import { Layout, Dropdown, Menu, Button } from 'antd';
 
 import classes from './Toolbar.module.css';
-import DrawerToggle from '../../DrawerToggle/DrawerToggle';
 import Login from '../../../UI/Link/Login';
 import Register from '../../../UI/Link/Register';
 import * as authActions from '../../../store/action/auth';
@@ -68,7 +67,6 @@ const Toolbar = (props) => {
     ///////////////toolbar     
     let toolbar = (
         <Header className={classes.header}>
-            <DrawerToggle display={"none"} />
             {logo}
             <nav className={classes.des}>
                 <Login link="/login" exact >SIGN IN </Login>
@@ -79,7 +77,6 @@ const Toolbar = (props) => {
     if (localStorage['timesheetisAuthenticated']) {
         toolbar = (
             <Header className={classes.header}>
-                <DrawerToggle />
                 <NavLink to="/employee" className={classes.logo}></NavLink>
                 <nav className={classes.des}>
                     <Login link="/login" exact displayLogin={"none"}>LOGIN </Login>

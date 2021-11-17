@@ -1,9 +1,10 @@
 import React, { useEffect, useState }  from 'react'
 import Toolbar from '../component/Navigation/Toolbar/Toolbar'
 import Code from '../component/Code/Code'
+import CodeDrawer from '../component/Code/CodeDrawer/CodeDrawer'
 import axios from '../axios/axios-local'
-
 import ParticlesBg from 'particles-bg'
+
 function Index(){
     const [spaceTreeData, SetSpaceTreeData] = useState([]);
 
@@ -29,8 +30,8 @@ function Index(){
         <React.Fragment>
             <Toolbar/>
             <Code spaceTreeData={spaceTreeData}/>
+            <CodeDrawer/>
             <ParticlesBg type="cobweb" bg={true} />
-
         </React.Fragment>
     )
 }

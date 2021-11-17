@@ -72,7 +72,7 @@ export const treeChildAdd = (treeData, id) => {
 export const treeAddClick = (treeData, id) => {
 
     return (dispatch) => {
-        
+
         dispatch(treeChildAdd(treeData, id));
         dispatch(treeFresh(true));
         setTimeout(() => {
@@ -116,16 +116,17 @@ export const treeAlgorithmAdd = (treeData, id) => {
     // let newProblem = Db.PROBLEM_INSTANCE;
     // newBenchmark = changeId(newBenchmark);
     // newProblem = changeId(newProblem);
-    let probleminstance =  {
+    let probleminstance = {
         title: "Problem Instances",
-        key: id+"-"+1,
+        key: id + "-" + 1,
         type: 'algorithm_problem',
-        children:[]}
-    let implementation ={
+        children: []
+    }
+    let implementation = {
         title: "Implementations",
-        key: id+"-"+0,
+        key: id + "-" + 0,
         type: 'algorithm_implementations',
-        children:[]
+        children: []
     }
     changingNode.children = [
         ...changingNode.children,
@@ -133,8 +134,8 @@ export const treeAlgorithmAdd = (treeData, id) => {
             title: "New Algorithm",
             key: id,
             type: new_type,
-           // children: [newBenchmark[0], newProblem[0]],
-           children: [implementation,probleminstance],
+            // children: [newBenchmark[0], newProblem[0]],
+            children: [implementation, probleminstance],
         }];
     return {
         type: actionTypes.SET_TREE_CHILD_ADD,
@@ -184,7 +185,7 @@ export const treeClassificationAddClick = (treeData) => {
 }
 
 //Click Add Classification
-export const treeUrlAdd = (treeData, id,url) => {
+export const treeUrlAdd = (treeData, id, url) => {
     id = id.split("-").map((str) => parseInt(str));
     let changingNode = treeData[id[0]];
 
@@ -197,9 +198,9 @@ export const treeUrlAdd = (treeData, id,url) => {
     if (changingNode.children === undefined) {
         changingNode.children = [];
     }
- 
+
     id = `${id.join("-")}-${changingNode.children.length}`;
- 
+
     //new url type
     changingNode.children = [
         ...changingNode.children,
@@ -211,14 +212,14 @@ export const treeUrlAdd = (treeData, id,url) => {
         }];
     return {
         type: actionTypes.SET_TREE_ADDURL,
-        treeData:treeData
+        treeData: treeData
     }
 }
 
-export const treeUrlAddClick = (treeData, id,url) => {
+export const treeUrlAddClick = (treeData, id, url) => {
 
     return (dispatch) => {
-        dispatch(treeUrlAdd(treeData, id,url));
+        dispatch(treeUrlAdd(treeData, id, url));
         dispatch(treeFresh(true));
         setTimeout(() => {
             dispatch(treeFresh(false));
@@ -237,7 +238,7 @@ export const treeChildDelete = (treeData, id) => {
 
     if (id.length === 1) {
         let newNodes = [];
-        if(nodes.length===1){
+        if (nodes.length === 1) {
             treeDataEmpty = true;
         }
         if (nodes.length > 1) {
@@ -272,7 +273,7 @@ export const treeChildDelete = (treeData, id) => {
         return {
             type: actionTypes.SET_TREE_CHILD_DELETE,
             treeData: newNodes,
-            treeDataEmpty:treeDataEmpty
+            treeDataEmpty: treeDataEmpty
 
         }
     } else {
@@ -339,6 +340,25 @@ export const treeModify = (treeData, id, newTitle) => {
     }
 
 }
+
+//tree analyse
+// export const treeAnalyse = (treeData, id) => {
+
+    // id = id.split("-").map((str) => parseInt(str));
+    // let changingNode = (JSON.parse(localStorage["tree"])).children[0]
+    // if (id.length > 1) {
+    //     for (let i = 1; i < id.length; i++) {
+    //         changingNode = changingNode.children[id[i]];
+    //     }
+    // }
+    // console.log(changingNode)
+    // console.log(id);
+
+//     return {
+//         type: actionTypes.SET_CODEDRAWER,
+//     }
+// }
+
 //tree editable
 export const treeEditable = () => {
     return {
@@ -371,3 +391,32 @@ export const setCodeStateClear = () => {
         type: actionTypes.SET_CODE_CLEAR,
     }
 }
+
+//code drawer
+export const setCodeDrawerDisplay = (drawerVisible) => {
+    return {
+        type: actionTypes.SET_CODEDRAWER_DISPLAY,
+        drawerDisplay: drawerVisible
+    }
+}
+
+export const setDrawerData = (treeData,id) => {
+    id = id.split("-").map((str) => parseInt(str));
+    let changingNode = (JSON.parse(localStorage["tree"])).children[id[0]]
+    // let changingNode = treeDataAll[id[0]];
+
+    if (id.length > 1) {
+        for (let i = 1; i < id.length; i++) {
+            changingNode = changingNode.children[id[i]];
+        }
+    }
+    let drawdata = {};
+    drawdata["nodeTitle"] = changingNode.title
+    drawdata["nodeType"] = changingNode.type
+
+    return {
+        type: actionTypes.SET_CODEDRAWER_DATA,
+        drawdata:drawdata
+    }
+}
+

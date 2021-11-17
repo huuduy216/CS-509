@@ -6,7 +6,9 @@ const initalState = {
     treeData: [],
     treeDataEmpty: false,
     fresh: false,
-    changeTreeEnable: false
+    changeTreeEnable: false,
+    codeDrawerDisplay:false,
+    codeDrawData:{}
 };
 const setCodeClear = (state, action) => {
     return update.updateObject(state, {
@@ -64,6 +66,14 @@ const treeEditable = (state, action) => {
     return update.updateObject(state, { changeTreeEnable: true });
 }
 
+const codeDrawVisible = (state, action) => {
+    return update.updateObject(state, { codeDrawerDisplay: action.drawerDisplay });
+}
+
+const codeDrawData = (state, action) => {
+    return update.updateObject(state, { codeDrawData: action.drawdata });
+} 
+
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case actionTypes.SET_Algorithm_BUTTON: return (algorithmEdit(state, action));
@@ -75,10 +85,12 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_TREE_FRESH: return (treeFresh(state, action));
         case actionTypes.SET_TREE_ALGORITHM_ADD: return (treeAlgorithmAdd(state, action));
         case actionTypes.SET_TREE_Classification_ADD: return (treeClassificationAdd(state, action));
-        case actionTypes.SET_TREE_ADDURL: return (setTreeAddUrl(state, action))
-        case actionTypes.SET_TREE_SET: return (treeSet(state, action))
-        case actionTypes.SET_TREE_EDITABLE: return (treeEditable(state, action))
-        case actionTypes.SET_CODE_CLEAR: return (setCodeClear(state, action))
+        case actionTypes.SET_TREE_ADDURL: return (setTreeAddUrl(state, action));
+        case actionTypes.SET_TREE_SET: return (treeSet(state, action));
+        case actionTypes.SET_TREE_EDITABLE: return (treeEditable(state, action));
+        case actionTypes.SET_CODE_CLEAR: return (setCodeClear(state, action));
+        case actionTypes.SET_CODEDRAWER_DISPLAY: return (codeDrawVisible(state, action));
+        case actionTypes.SET_CODEDRAWER_DATA: return (codeDrawData(state,action));
         default:
             return state;
     }
