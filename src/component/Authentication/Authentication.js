@@ -28,19 +28,29 @@ const NormalLoginForm = (props) => {
     //test
     if (props.auth && props.role==="admin") {
         localStorage.setItem('timesheetisAuthenticated', true);
-        localStorage.setItem('timesheetUsername', props.user.username);
         localStorage.setItem('role','admin');
-        iconName = 'AD';
+        let username = localStorage.getItem('username');
+        if(username.length===1){
+            iconName = username[0];
+        }else{
+            iconName = username[0]+username[1];
+        }
+        iconName = iconName.toUpperCase();
         localStorage.setItem('timesheeticonName', iconName);
-        authRedirect = <Redirect to="/employee" />
+        authRedirect = <Redirect to="/userhome" />
     }
     if (props.auth && props.role==="user") {
         localStorage.setItem('timesheetisAuthenticated', true);
-        localStorage.setItem('timesheetUsername', props.user.username);
         localStorage.setItem('role','user');
-        iconName = 'USER';
+        let username = localStorage.getItem('username');
+        if(username.length===1){
+            iconName = username[0];
+        }else{
+            iconName = username[0]+username[1];
+        }
+        iconName = iconName.toUpperCase();
         localStorage.setItem('timesheeticonName', iconName);
-        authRedirect = <Redirect to="/employee" />
+        authRedirect = <Redirect to="/userhome" />
     }
 
     if (!props.auth && props.error !== "") {

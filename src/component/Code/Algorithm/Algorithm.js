@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Algorithm.module.css';
-import { Button, Divider } from 'antd';
-import { AppstoreAddOutlined, MergeCellsOutlined, SaveOutlined, EditOutlined,EyeOutlined} from '@ant-design/icons';
+import { Button, PageHeader } from 'antd';
+import { AppstoreAddOutlined, MergeCellsOutlined, SaveOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import Tree from '../TreeSpace/Tree';
 import Loading from '../../../UI/Loading/Loading';
 
@@ -22,7 +22,7 @@ const Algorithm = (props) => {
             <Button type="primary" className={classes.EditButton} >Merge Selected</Button>
         </div>
     );
-//save Button
+    //save Button
     const saveClick = () => {
         props.postTree(props.treeData);
         props.loadingtime(1000);
@@ -30,9 +30,9 @@ const Algorithm = (props) => {
     }
 
     //eidtButton
-    const ClickEditButton=()=>{
+    const ClickEditButton = () => {
         SetEditButton(!editButton);
-        if(!props.changeTreeEnable){
+        if (!props.changeTreeEnable) {
             props.changeTree(props.spaceTreeData);
             props.treeEditEnable();
         }
@@ -51,7 +51,7 @@ const Algorithm = (props) => {
                 {EditButton}
                 <Button disabled={editButton} onClick={() => { props.addClass(props.treeData) }} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
                 <Button disabled={editButton} type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
-                <Button disabled={!props.changeTreeEnable} onClick={() => saveClick()} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
+                <Button disabled={editButton} onClick={() => saveClick()} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
             </div>
         );
     }
@@ -68,11 +68,21 @@ const Algorithm = (props) => {
 
     let algor = (
         <div className={classes.background}>
-            <div className={classes.header}>
+            {/* <div className={classes.header}>
                 {Editbutton}
+            </div> */}
+            {/* <Divider /> */}
+            <div className={classes.header}>
+                <PageHeader
+                    className={classes.pageheader}
+                    onBack={() => window.history.back()}
+                    title="Structure"
+                    subTitle="Edit structure"
+                >
+                    {Editbutton}
+                </PageHeader>
             </div>
-            <Divider />
-            <Tree treeData={treeStatus} editButton={editButton}/>
+            <Tree treeData={treeStatus} editButton={editButton} />
         </div>
     )
 
@@ -106,7 +116,7 @@ const mapDispatchToProps = dispatch => {
         changeTree: (treeData) => dispatch(AuthAction.changeTree(treeData)),
         loadingtime: (time) => dispatch(AuthAction.setLoadingTime(time)),
         getTree: () => dispatch(AuthAction.getTree()),
-        treeEditEnable:() =>dispatch(CodeAction.treeEditable())
+        treeEditEnable: () => dispatch(CodeAction.treeEditable())
     }
 }
 

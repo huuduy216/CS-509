@@ -8,7 +8,11 @@ const initalState = {
     fresh: false,
     changeTreeEnable: false,
     codeDrawerDisplay:false,
-    codeDrawData:{}
+    //content
+    codeDrawData:{},
+    codeDrawDataSubtitle:"",
+    codeDrawDataBodytext:"",
+    codeDrawDataType:""
 };
 const setCodeClear = (state, action) => {
     return update.updateObject(state, {
@@ -71,7 +75,20 @@ const codeDrawVisible = (state, action) => {
 }
 
 const codeDrawData = (state, action) => {
-    return update.updateObject(state, { codeDrawData: action.drawdata });
+    return update.updateObject(state, { codeDrawData: action.codeDrawData });
+} 
+
+const setSubtitle = (state, action) => {
+    
+    return update.updateObject(state, { codeDrawDataSubtitle:action.subtitle });
+} 
+
+const setTextBody = (state, action) => {
+    return update.updateObject(state, { codeDrawDataBodytext: action.textbody });
+} 
+
+const setContentType = (state, action) => {
+    return update.updateObject(state, { codeDrawDataType: action.ContentType });
 } 
 
 const reducer = (state = initalState, action) => {
@@ -91,6 +108,9 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_CODE_CLEAR: return (setCodeClear(state, action));
         case actionTypes.SET_CODEDRAWER_DISPLAY: return (codeDrawVisible(state, action));
         case actionTypes.SET_CODEDRAWER_DATA: return (codeDrawData(state,action));
+        case actionTypes.SET_SUBTITLE: return (setSubtitle(state,action));
+        case actionTypes.SET_TEXTBODY: return (setTextBody(state,action));
+        case actionTypes.SET_CONTENTTYPE: return (setContentType(state,action));
         default:
             return state;
     }

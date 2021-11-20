@@ -1,5 +1,5 @@
 .divReg{
-    background:linear-gradient(#d3dfe0c4,transparent);
+    background:linear-gradient(rgba(0, 0, 0, 0.911),transparent);
     width: 70px;
     display: flex;
     justify-content: center; 
@@ -17,11 +17,12 @@
   
 .NavigationItem{
     box-sizing: border-box;
-    color:#13757a;
+    color:white;
     display: flex;
     justify-content: center; 
     align-items: center;   
     font-weight: 500;
+    font-size: 12pt;
 }
 .NavigationItem:hover{
     color: #000;

@@ -46,7 +46,7 @@ export const auth = (userName, password) => {
                         // localStorage.setItem('role', 'user');
                         // localStorage.setItem('iconName', 'USER');
                         dispatch(getTree());
-                        dispatch(authUserSuccess());
+                        dispatch(authUserSuccess(param.username));
                     }
 
                 }
@@ -125,7 +125,8 @@ export const callFail = () => {
         loginMsg: "Contact Admin"
     }
 }
-export const authUserSuccess = () => {
+export const authUserSuccess = (username) => {
+    localStorage.setItem('username', username);
     return {
         type: actionTypes.AUTH_USERSUCCESS,
     }
@@ -153,6 +154,7 @@ export const authLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('timesheetUsername');
     localStorage.removeItem('timesheetisAuthenticated');
+    localStorage.removeItem('username');
     localStorage.removeItem('role');
     localStorage.removeItem('timesheeticonName');
     localStorage.removeItem('tree');

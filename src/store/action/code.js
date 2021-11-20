@@ -341,24 +341,6 @@ export const treeModify = (treeData, id, newTitle) => {
 
 }
 
-//tree analyse
-// export const treeAnalyse = (treeData, id) => {
-
-    // id = id.split("-").map((str) => parseInt(str));
-    // let changingNode = (JSON.parse(localStorage["tree"])).children[0]
-    // if (id.length > 1) {
-    //     for (let i = 1; i < id.length; i++) {
-    //         changingNode = changingNode.children[id[i]];
-    //     }
-    // }
-    // console.log(changingNode)
-    // console.log(id);
-
-//     return {
-//         type: actionTypes.SET_CODEDRAWER,
-//     }
-// }
-
 //tree editable
 export const treeEditable = () => {
     return {
@@ -400,23 +382,91 @@ export const setCodeDrawerDisplay = (drawerVisible) => {
     }
 }
 
-export const setDrawerData = (treeData,id) => {
-    id = id.split("-").map((str) => parseInt(str));
-    let changingNode = (JSON.parse(localStorage["tree"])).children[id[0]]
-    // let changingNode = treeDataAll[id[0]];
-
-    if (id.length > 1) {
-        for (let i = 1; i < id.length; i++) {
-            changingNode = changingNode.children[id[i]];
-        }
-    }
-    let drawdata = {};
-    drawdata["nodeTitle"] = changingNode.title
-    drawdata["nodeType"] = changingNode.type
+export const setDrawerData = (codeDrawData) => {
 
     return {
         type: actionTypes.SET_CODEDRAWER_DATA,
-        drawdata:drawdata
+        codeDrawData: codeDrawData
     }
 }
 
+//set Content
+export const postClassificationContent = (key, subtitle, textbody) => {
+    let classcontent = {
+        "key": key,
+        "subtitle": subtitle,
+        "textbody": textbody,
+    }
+    return (dispatch) => {
+        axios.post('/normal/classification', classcontent, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+            })
+        return Promise.resolve();
+    }
+}
+
+export const getClassificationContent = (treeData) => {
+    let codeDrawData = {
+        "nodeType": treeData.type,
+        "nodeTitle": treeData.title
+    };
+
+    let Nodekey = { "key": treeData.key };
+    return (dispatch) => {
+        axios.post('/all/getclassification', Nodekey
+        )
+            .then(response => {
+                // console.log(response.data)
+                codeDrawData = {
+                    ...codeDrawData,
+                    "subtitle": response.data.subtitle,
+                    "textbody": response.data.textbody,
+                }
+                dispatch(setDrawerData(codeDrawData))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const editClassificationContent = (key) => {
+
+    let Nodekey = { "key": key };
+
+    return (dispatch) => {
+        axios.post('/all/getclassification', Nodekey
+        )
+            .then(response => {
+                dispatch(changeSubtitle(response.data.subtitle))
+                dispatch(changeTextBody(response.data.textbody))
+                
+                dispatch(changeContentType(response.data.type))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const changeSubtitle = (subtitle) => {
+    return {
+        type: actionTypes.SET_SUBTITLE,
+        subtitle: subtitle
+    }
+}
+
+export const changeContentType = (ContentType) => {
+    return {
+        type: actionTypes.SET_CONTENTTYPE,
+        ContentType: ContentType
+    }
+}
+
+
+export const changeTextBody = (textbody) => {
+    return {
+        type: actionTypes.SET_TEXTBODY,
+        textbody: textbody
+    }
+}

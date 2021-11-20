@@ -1,32 +1,42 @@
 import React from 'react';
 import classes from './CodeDrawer.module.css';
-import { Drawer, Divider, Select, Input } from 'antd';
+import { Drawer, Divider, Select } from 'antd';
 import { connect } from 'react-redux';
 import * as CodeAction from '../../../store/action/code';
 
 
-
-
-
-
-
-
 const CodeDrawer = (props) => {
 
+    // console.log(props.codeDrawData)
 
     const onClose = () => {
         props.setDrawerDisplay(false);
     };
 
-    console.log(props.codeDrawData)
-
     //drawer body
     let body = (<div className={classes.body}></div>);
     //implementation
     const { Option } = Select;
-    const { TextArea } = Input;
+
+
+
+    // let auth = localStorage.getItem('timesheetisAuthenticated');
+
+    if (props.codeDrawData.nodeType === "classification") {
+        body = (
+            <div>
+                <p className="site-description-item-profile-p">{props.codeDrawData.subtitle}</p>
+                <Divider />
+                <div className={classes.textbody}>
+                    <p>{props.codeDrawData.textbody}</p>
+                </div>
+            </div>);
+    }
+    // if (props.codeDrawData.nodeType === "algorithm_type")
+    // if (props.codeDrawData.nodeType === "sub_classification")
+
+    // implementation details
     function onChange(value) {
-        console.log(`selected ${value}`);
     }
 
     function onBlur() {
@@ -41,25 +51,6 @@ const CodeDrawer = (props) => {
         console.log('search:', val);
     }
 
-    let auth = localStorage.getItem('timesheetisAuthenticated');
-
-    if (props.codeDrawData.nodeType === "classification") {
-        body = (
-            <div className={classes.textbody}>
-                <p>In mathematics and computer science, an algorithm is a finite sequence of well-defined instructions, typically used to solve a class of specific problems or to perform a computation.[1] Algorithms are used as specifications for performing calculations, data processing, automated reasoning, automated decision-making and other tasks. In contrast, a heuristic is an approach to problem solving that may not be fully specified or may not guarantee correct or optimal results, especially in problem domains where there is no well-defined correct or optimal result.</p>
-            </div>
-        )
-        if (auth) {
-            body = (
-                <div className={classes.textbody}>
-                    <TextArea rows={20} style={{ marginTop: "10px" }} />
-
-                </div>
-            )
-        }
-    }
-    // if (props.codeDrawData.nodeType === "algorithm_type")
-    // if (props.codeDrawData.nodeType === "sub_classification")
     if (props.codeDrawData.nodeType === "algorithm_implementations")
         body = (
             <div className={classes.body}>
@@ -80,7 +71,6 @@ const CodeDrawer = (props) => {
                     <Option value="C++">C++</Option>
                     <Option value="Java">Java</Option>
                 </Select>
-                <TextArea rows={10} style={{ marginTop: "10px" }} />
             </div>
         )
 
@@ -112,8 +102,6 @@ const CodeDrawer = (props) => {
                 <p className="site-description-item-profile-p" style={{ fontFamily: "Verdana", fontSize: "20pt" }}>
                     {props.codeDrawData.nodeTitle}
                 </p>
-                <p className="site-description-item-profile-p">Last Updated : 28 Jun, 2021</p>
-                <Divider />
                 {body}
             </Drawer>
         </React.Fragment>

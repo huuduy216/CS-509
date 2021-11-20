@@ -61,10 +61,11 @@
   }
   
   .logo {
-    background-image: url("../../assets/GroupIcon.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 300px;
-    height: 100%;
-    margin-left: -20px;
-  }
+        /* background-image: url("../../../assets/GroupIcon.png"); */
+        background-image: url("../../assets/CodeSpaceIcon.png");
+        background-size: 80%;
+        background-repeat: no-repeat;
+        width: 200px;
+        height: 100%;
+        margin-top: 25px;
+}

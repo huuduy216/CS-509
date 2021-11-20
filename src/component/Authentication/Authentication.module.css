@@ -59,12 +59,14 @@
       box-sizing: border-box;
       z-index: 90;
   }
-  
-  .logo {
-    background-image: url("../../assets/GroupIcon.png");
-    background-size: cover;
+.logo {
+    /* background-image: url("../../../assets/GroupIcon.png"); */
+    background-image: url("../../assets/CodeSpaceIcon.png");
+    background-size: 80%;
     background-repeat: no-repeat;
-    width: 300px;
+    width: 200px;
     height: 100%;
-    margin-left: -20px;
-  }
+    /* margin-left: -20px; */
+    margin-top: 25px;
+}
+

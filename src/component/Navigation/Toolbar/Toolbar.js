@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import 'antd/dist/antd.css';
 import { Layout, Dropdown, Menu, Button } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 import classes from './Toolbar.module.css';
 import Login from '../../../UI/Link/Login';
@@ -50,15 +51,21 @@ const Toolbar = (props) => {
         </Menu>
     );
     /////////////////// notification menu
-    // const notificationMenu = (
-    //     <Menu className={classes.menu}>
 
-    //         <p> 1st menu item</p>
-    //         <p> 2st menu item</p>
-    //         <p> 3st menu item</p>
+    const handleMenuClick = () => {
 
-    //     </Menu>
-    // );
+    }
+
+    const notificationMenu = (
+        <Menu onClick={handleMenuClick} style={{ backgroundColor: "white", borderTop: " 4px solid  #000000" }}>
+            <Menu.Item key="1" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
+                <NavLink to="/employee">Edit Structure</NavLink>
+            </Menu.Item>
+            <Menu.Item key="2" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
+                <NavLink to="/content">Edit Content</NavLink>
+            </Menu.Item>
+        </Menu>
+    );
     ///////////////logo
     let logo = (<NavLink to="/" className={classes.logo}></NavLink>);
     if (props.role === "admin" || props.role === "user") {
@@ -74,18 +81,20 @@ const Toolbar = (props) => {
             </nav>
         </Header>
     );
+    ///////////////registered user
     if (localStorage['timesheetisAuthenticated']) {
         toolbar = (
             <Header className={classes.header}>
-                <NavLink to="/employee" className={classes.logo}></NavLink>
+                <NavLink to="/userhome" className={classes.logo}></NavLink>
+                <Dropdown overlay={notificationMenu} trigger={["click"]}>
+                    <Button type='ghost' style={{ height: "80%", border: "none", marginLeft: "2px", fontWeight: "600", fontSize: "12pt", fontStyle: "Fantasy" }}>
+                        Edit Mode<DownOutlined />
+                    </Button>
+                </Dropdown>
+
                 <nav className={classes.des}>
                     <Login link="/login" exact displayLogin={"none"}>LOGIN </Login>
                     <div className={classes.loginButton}>
-
-                        {/* <Dropdown overlay={notificationMenu} placement="bottomLeft" trigger="click">
-                            <Button type="link" icon={<NotificationOutlined />} size="middle"></Button>
-                        </Dropdown> */}
-
                         <Dropdown overlay={menu} placement="bottomLeft" trigger="click">
                             <Button size="middle" type="primary" shape="circle" className={classes.profilepic}>{localStorage['timesheeticonName']}</Button>
                         </Dropdown>

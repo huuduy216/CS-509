@@ -18,7 +18,7 @@ const Tree = (props) => {
             <div className={classes.dTree}>
                 <ul className={classes.ul}>
                     {props.treeData.map(tree =>
-                        <TreeNode key={tree.key} node={tree} editButton={props.editButton}/>
+                        <TreeNode key={tree.key} node={tree} editButton={props.editButton} readMode={props.readMode}/>
                  
                     )}
                 </ul>

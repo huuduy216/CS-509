@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-
 import { connect } from 'react-redux';
 import * as AuthAction from '../store/action/auth';
 
-import axios from '../axios/axios-local'
 import Toolbar from '../component/Navigation/Toolbar/Toolbar'
-import Code from '../component/Code/Code'
-import CodeDrawer from '../component/Code/CodeDrawer/CodeDrawer'
+import Loading from '../UI/Loading/Loading';
+import axios from '../axios/axios-local'
 import ParticlesBg from 'particles-bg'
+import CodeContent from '../component/CodeContent/CodeContent'
 
-
-const Employee = (props) => {
-
+const Content = (props) => {
     const [spaceTreeData, SetSpaceTreeData] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         let config = {
@@ -26,24 +24,31 @@ const Employee = (props) => {
             localStorage.setItem('tree', tree);
             // console.log(response.data.children)
             // props.changeTree(response.data.children);
-            SetSpaceTreeData(response.data.children)
+            SetSpaceTreeData(response.data)
         }
 
         fetchData();
     }, [])
+    let content = (
+        <div>
+            <Toolbar />
+            <CodeContent spaceTreeData={spaceTreeData} setLoading={setLoading}/>
+            <ParticlesBg type="cobweb" bg={true} />
+        </div>)
 
+    if (loading) {
+        content = (
+            <div>
+                <Loading />
+            </div>);
+    }
 
     return (
         <React.Fragment>
-            <Toolbar />
-            <Code spaceTreeData={spaceTreeData} />
-            <CodeDrawer/>
-            <ParticlesBg type="cobweb" bg={true} />
-
+            {content}
         </React.Fragment>
     )
 }
-
 
 
 const mapDispatchToProps = dispatch => {
@@ -54,4 +59,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Employee);
+export default connect(null, mapDispatchToProps)(Content);

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import AWS from 'aws-sdk'
 import classes from './TreeNode.module.css';
-import { RightOutlined, PlusOutlined, DownOutlined, DeleteOutlined, FontColorsOutlined, UploadOutlined, CloudDownloadOutlined,MoreOutlined } from '@ant-design/icons';
+import { RightOutlined, PlusOutlined, DownOutlined, DeleteOutlined, FontColorsOutlined, UploadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
 import Tree from './Tree';
 import { Button, Spin, Input, Typography, Upload } from 'antd';
 
@@ -42,8 +42,12 @@ const TreeNode = (props) => {
     }
 
     const clickDrawDisplay = () => {
-        props.setDrawData(props.treeData, props.node.key);
-        props.setDrawerDisplay(true);
+        if(props.node.type==="classification"){
+            props.getClassificationContent(props.node)
+        }
+        setTimeout(() => {
+            props.setDrawerDisplay(true);
+        }, 150);
         
         // console.log(Object.keys(props.codeDrawData).length === 0 && Object.getPrototypeOf(props.codeDrawData) === Object.prototype);
     }
@@ -98,7 +102,7 @@ const TreeNode = (props) => {
             inputClass = (<Input onChange={({ target: { value } }) => props.modifyTree(props.treeData, props.node.key, value)} className={AlgorithmItem || ImplementationItem ? classes.editTitleAlgorithm : classes.editTitle} placeholder="Basic usage" defaultValue={props.node.title} size="small" />
             );
         } else {
-            inputClass = (<Title level={5} style={{marginLeft:"3px",marginTop:"3px"}}>{props.node.title}</Title>);
+            inputClass = (<Title level={5} style={{ marginLeft: "3px", marginTop: "3px" }}>{props.node.title}</Title>);
             if (!auth) {
                 inputClass = (<Button onClick={() => { clickDrawDisplay(props.treeData, props.node.key) }} style={{ lineHeight: "10pt", border: "none", backgroundColor: "transparent", fontFamily: "Arial Black", fontSize: "15pt" }}>{props.node.title}</Button>);
             }
@@ -116,7 +120,6 @@ const TreeNode = (props) => {
             <Button onClick={() => clickAddButton()} className={(((((!AlgorithmItem) && hasChild) && (!addButtonHidden)) || (ClassificationItem)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
             <Button onClick={() => clickAddAlgorButton(props.treeData, props.node.key)} className={(((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
             <Button onClick={() => props.deleteChild(props.treeData, props.node.key)} className={(deleteButtonHidden && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
-            <Button className={(!props.editButton)? classes.editButton : classes.editButtonHidden} size="small" icon={<MoreOutlined />} />
             {inputClass}
             <div className={ImplementationItem ? classes.upload : classes.hideUpload}>
                 <Upload {...Fileprops} >
@@ -154,7 +157,7 @@ const TreeNode = (props) => {
                 {
                     hasChild && childVisible && <div className={classes.dTreeContent}>
                         <ul className={classes.dTreeContainer}>
-                            <Tree treeData={props.node.children} editButton={props.editButton} />
+                            <Tree treeData={props.node.children} editButton={props.editButton} readMode={props.readMode} />
                         </ul>
                     </div>
                 }
@@ -183,7 +186,7 @@ const mapDispatchToProps = dispatch => {
         modifyTree: (node, id, newTitle) => dispatch(CodeAction.treeModify(node, id, newTitle)),
         addurl: (node, id, url) => dispatch(CodeAction.treeUrlAddClick(node, id, url)),
         setDrawerDisplay: (drawvisible) => dispatch(CodeAction.setCodeDrawerDisplay(drawvisible)),
-        setDrawData: (node, id) => dispatch(CodeAction.setDrawerData(node, id)),
+        getClassificationContent: (key) => dispatch(CodeAction.getClassificationContent(key))
     }
 }
 

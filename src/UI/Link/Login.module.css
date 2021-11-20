@@ -11,15 +11,18 @@
 
 .NavigationItem{
     box-sizing: border-box;
-    color:#1fc7cf;
+    color:black;
     display: flex;
     justify-content: center; 
     align-items: center;   
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 12pt;
+    width: 100%;
 }
 .NavigationItem:hover{
     color: #000;
     font-weight: 700;
+    background:linear-gradient(rgba(0, 0, 0, 0.137),transparent);
 
 }
 

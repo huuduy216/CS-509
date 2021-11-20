@@ -4,8 +4,8 @@
     position:fixed;
     top:0;
     left:0;
-    background-color:#ffffff;
-    outline:1px #a4dbde solid;
+    background-color:white;
+    outline:1px black solid;
     display:flex;
     justify-content: flex-start;
     align-items: center;
@@ -15,12 +15,14 @@
 }
 
 .logo {
-  background-image: url("../../../assets/GroupIcon.png");
-  background-size: cover;
+  /* background-image: url("../../../assets/GroupIcon.png"); */
+  background-image: url("../../../assets/CodeSpaceIcon.png");
+  background-size: 80%;
   background-repeat: no-repeat;
-  width: 300px;
+  width: 200px;
   height: 100%;
-  margin-left: -20px;
+  /* margin-left: -20px; */
+  margin-top: 25px;
 }
 
 

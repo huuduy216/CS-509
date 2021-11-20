@@ -17,10 +17,8 @@ const AlgorithmRead = (props) => {
     // }
     return (
         <React.Fragment>
-            {/* <div className={classes.header}>
-                <p className={classes.p}>Top Class</p> */}
             <div className={classes.body}>
-                <Tree treeData={props.spaceTreeData} />
+                <Tree treeData={props.spaceTreeData} readMode={true}/>
             </div>
 
         </React.Fragment>
