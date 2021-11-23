@@ -44,6 +44,12 @@ const TreeNode = (props) => {
     const clickDrawDisplay = () => {
         if(props.node.type==="classification"){
             props.getClassificationContent(props.node)
+        }else if(props.node.type==="sub_classification"){
+            props.getSubClassificationContent(props.node)
+        }else if(props.node.type==="algorithm_type"){
+            props.getAlgorithmContent(props.node)
+        }else{
+            props.setContentClear()
         }
         setTimeout(() => {
             props.setDrawerDisplay(true);
@@ -157,7 +163,7 @@ const TreeNode = (props) => {
                 {
                     hasChild && childVisible && <div className={classes.dTreeContent}>
                         <ul className={classes.dTreeContainer}>
-                            <Tree treeData={props.node.children} editButton={props.editButton} readMode={props.readMode} />
+                            <Tree treeData={props.node.children} editButton={props.editButton} readMode={props.readMode}/>
                         </ul>
                     </div>
                 }
@@ -186,7 +192,11 @@ const mapDispatchToProps = dispatch => {
         modifyTree: (node, id, newTitle) => dispatch(CodeAction.treeModify(node, id, newTitle)),
         addurl: (node, id, url) => dispatch(CodeAction.treeUrlAddClick(node, id, url)),
         setDrawerDisplay: (drawvisible) => dispatch(CodeAction.setCodeDrawerDisplay(drawvisible)),
-        getClassificationContent: (key) => dispatch(CodeAction.getClassificationContent(key))
+        getClassificationContent: (node) => dispatch(CodeAction.getClassificationContent(node)),
+        getSubClassificationContent:(node)=>dispatch(CodeAction.getSubClassificationContent(node)),
+        getAlgorithmContent:(node) => dispatch(CodeAction.getAlgorithmContent(node)),
+        setContentClear:()=>dispatch(CodeAction.setContentClear())
+
     }
 }
 

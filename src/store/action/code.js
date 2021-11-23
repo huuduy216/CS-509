@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-// import * as Db from '../../assets/treeData';
 import axios from '../../axios/axios-local';
 
 //post tree
@@ -10,8 +9,10 @@ export const postTree = (treeData) => {
         type: 'root',
         children: [...treeData]
     };
+    let Data=[{...tranData}]
+    
     return (dispatch) => {
-        axios.post('/normal/codetree', tranData, {
+        axios.post('/normal/codetree', Data, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -32,6 +33,7 @@ export const treeFresh = (fresh) => {
 
 //Click Add Tree
 export const treeChildAdd = (treeData, id) => {
+
     // let id = node.key;
     id = id.split("-").map((str) => parseInt(str));
     let changingNode = treeData[id[0]];
@@ -47,6 +49,7 @@ export const treeChildAdd = (treeData, id) => {
     }
 
     id = `${id.join("-")}-${changingNode.children.length}`;
+
     //new item type
     let new_type = "sub_classification";
     if (changingNode.children.length > 0) {
@@ -62,10 +65,11 @@ export const treeChildAdd = (treeData, id) => {
             key: id,
             type: new_type,
             children: [],
+            dbId:"+1",
         }];
     return {
         type: actionTypes.SET_TREE_CHILD_ADD,
-        treeData: treeData
+        treeData: treeData,
     }
 }
 
@@ -112,21 +116,19 @@ export const treeAlgorithmAdd = (treeData, id) => {
     //     return arr;
     // }
 
-    // let newBenchmark = Db.BENCH_MARKS;
-    // let newProblem = Db.PROBLEM_INSTANCE;
-    // newBenchmark = changeId(newBenchmark);
-    // newProblem = changeId(newProblem);
     let probleminstance = {
         title: "Problem Instances",
         key: id + "-" + 1,
         type: 'algorithm_problem',
-        children: []
+        children: [],
+        dbId:"+1",
     }
     let implementation = {
         title: "Implementations",
         key: id + "-" + 0,
         type: 'algorithm_implementations',
-        children: []
+        children: [],
+        dbId:"+1",
     }
     changingNode.children = [
         ...changingNode.children,
@@ -134,12 +136,13 @@ export const treeAlgorithmAdd = (treeData, id) => {
             title: "New Algorithm",
             key: id,
             type: new_type,
+            dbId:"+1",
             // children: [newBenchmark[0], newProblem[0]],
             children: [implementation, probleminstance],
         }];
     return {
         type: actionTypes.SET_TREE_CHILD_ADD,
-        treeData: treeData
+        treeData: treeData,
     }
 }
 
@@ -162,13 +165,14 @@ export const treeClassificationAdd = (treeData) => {
         title: "New Classification",
         key: id,
         type: "classification",
+        dbId:"+1",
         children: [],
     };
-
+ 
     const newtreeData = [...treeData, newNode];
     return {
         type: actionTypes.SET_TREE_Classification_ADD,
-        treeData: newtreeData
+        treeData: newtreeData,
     }
 }
 
@@ -230,6 +234,8 @@ export const treeUrlAddClick = (treeData, id, url) => {
 
 //Click Delete Tree
 export const treeChildDelete = (treeData, id) => {
+   
+    //add treeData
     id = id.split("-").map((str) => parseInt(str));
 
     const nodes = treeData;
@@ -273,8 +279,7 @@ export const treeChildDelete = (treeData, id) => {
         return {
             type: actionTypes.SET_TREE_CHILD_DELETE,
             treeData: newNodes,
-            treeDataEmpty: treeDataEmpty
-
+            treeDataEmpty: treeDataEmpty,
         }
     } else {
         let changingNode = treeData[id[0]];
@@ -304,7 +309,7 @@ export const treeChildDelete = (treeData, id) => {
         changingNode.children = newChildren;
         return {
             type: actionTypes.SET_TREE_CHILD_DELETE,
-            treeData: treeData
+            treeData: treeData,
         }
     }
 
@@ -374,6 +379,7 @@ export const setCodeStateClear = () => {
     }
 }
 
+
 //code drawer
 export const setCodeDrawerDisplay = (drawerVisible) => {
     return {
@@ -391,6 +397,7 @@ export const setDrawerData = (codeDrawData) => {
 }
 
 //set Content
+//set Content classification
 export const postClassificationContent = (key, subtitle, textbody) => {
     let classcontent = {
         "key": key,
@@ -442,7 +449,7 @@ export const editClassificationContent = (key) => {
             .then(response => {
                 dispatch(changeSubtitle(response.data.subtitle))
                 dispatch(changeTextBody(response.data.textbody))
-                
+
                 dispatch(changeContentType(response.data.type))
             })
         return Promise.resolve();
@@ -468,5 +475,129 @@ export const changeTextBody = (textbody) => {
     return {
         type: actionTypes.SET_TEXTBODY,
         textbody: textbody
+    }
+}
+//set Content
+//set Content subclassification
+export const getSubClassificationContent = (treeData) => {
+    let codeDrawData = {
+        "nodeType": treeData.type,
+        "nodeTitle": treeData.title
+    };
+
+    let Nodekey = { "key": treeData.key };
+    return (dispatch) => {
+        axios.post('/all/getsubclassification', Nodekey
+        )
+            .then(response => {
+                // console.log(response.data)
+                codeDrawData = {
+                    ...codeDrawData,
+                    "subtitle": response.data.subtitle,
+                    "textbody": response.data.textbody,
+                }
+                dispatch(setDrawerData(codeDrawData))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const postSubClassificationContent = (key, subtitle, textbody) => {
+    let subclasscontent = {
+        "key": key,
+        "subtitle": subtitle,
+        "textbody": textbody,
+    }
+    return (dispatch) => {
+        axios.post('/normal/subclassification', subclasscontent, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+            })
+        return Promise.resolve();
+    }
+}
+
+export const editSubClassificationContent = (key) => {
+
+    let Nodekey = { "key": key };
+
+    return (dispatch) => {
+        axios.post('/all/getsubclassification', Nodekey
+        )
+            .then(response => {
+                dispatch(changeSubtitle(response.data.subtitle))
+                dispatch(changeTextBody(response.data.textbody))
+
+                dispatch(changeContentType(response.data.type))
+            })
+        return Promise.resolve();
+    }
+}
+//set Content
+//set Content algorithm
+export const getAlgorithmContent = (treeData) => {
+    let codeDrawData = {
+        "nodeType": treeData.type,
+        "nodeTitle": treeData.title
+    };
+
+    let Nodekey = { "key": treeData.key };
+    return (dispatch) => {
+        axios.post('/all/getalgorithm', Nodekey
+        )
+            .then(response => {
+                // console.log(response.data)
+                codeDrawData = {
+                    ...codeDrawData,
+                    "subtitle": response.data.subtitle,
+                    "textbody": response.data.textbody,
+                }
+                dispatch(setDrawerData(codeDrawData))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const postAlgorithmContent = (key, subtitle, textbody) => {
+    let algorithmcontent = {
+        "key": key,
+        "subtitle": subtitle,
+        "textbody": textbody,
+    }
+    return (dispatch) => {
+        axios.post('/normal/algorithm', algorithmcontent, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+            })
+        return Promise.resolve();
+    }
+}
+
+
+export const editAlgorithmContent = (key) => {
+
+    let Nodekey = { "key": key };
+    return (dispatch) => {
+        axios.post('/all/getalgorithm', Nodekey
+        )
+            .then(response => {
+                dispatch(changeSubtitle(response.data.subtitle))
+                dispatch(changeTextBody(response.data.textbody))
+
+                dispatch(changeContentType(response.data.type))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const setContentClear = () => {
+    return {
+        type: actionTypes.SET_CONTENT_CLEAR
     }
 }

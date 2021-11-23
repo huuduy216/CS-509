@@ -26,7 +26,7 @@ const Algorithm = (props) => {
     const saveClick = () => {
         props.postTree(props.treeData);
         props.loadingtime(1000);
-
+        window.location.reload(false);
     }
 
     //eidtButton
@@ -36,6 +36,13 @@ const Algorithm = (props) => {
             props.changeTree(props.spaceTreeData);
             props.treeEditEnable();
         }
+    } 
+    const ClickMerge = ()=>{
+        console.log(props.treeData)
+    }
+    //add classification
+    const AddClass=()=>{
+        props.addClass(props.treeData);
     }
     const [editButton, SetEditButton] = useState(true);
     let EditButton;
@@ -49,8 +56,8 @@ const Algorithm = (props) => {
         Editbutton = (
             <div className={classes.headerRest}>
                 {EditButton}
-                <Button disabled={editButton} onClick={() => { props.addClass(props.treeData) }} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
-                <Button disabled={editButton} type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
+                <Button disabled={editButton} onClick={() => { AddClass() }} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
+                <Button disabled={editButton} onClick={ClickMerge} type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
                 <Button disabled={editButton} onClick={() => saveClick()} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
             </div>
         );
@@ -62,7 +69,6 @@ const Algorithm = (props) => {
 
     let treeStatus = props.spaceTreeData;
     if (props.changeTreeEnable) {
-
         treeStatus = props.treeData;
     }
 
@@ -82,7 +88,7 @@ const Algorithm = (props) => {
                     {Editbutton}
                 </PageHeader>
             </div>
-            <Tree treeData={treeStatus} editButton={editButton} />
+            <Tree treeData={treeStatus} editButton={editButton}/>
         </div>
     )
 
@@ -105,7 +111,7 @@ const mapStateToProps = state => {
         role: state.auth.role,
         loading: state.auth.loading,
         treeDataEmpty: state.code.treeDataEmpty,
-        changeTreeEnable: state.code.changeTreeEnable
+        changeTreeEnable: state.code.changeTreeEnable,
     };
 }
 

@@ -16,11 +16,11 @@ function Index(){
         }
         async function fetchData() {
             const response = await axios.get('/normal/getcodetree', config);
-            let tree = JSON.stringify(response.data)
+            let tree = JSON.stringify(response.data.tree)
             localStorage.setItem('tree', tree);
-            // console.log(response.data.children)
+            // console.log(response.data.DB)
             // props.changeTree(response.data.children);
-            SetSpaceTreeData(response.data.children)
+            SetSpaceTreeData(response.data.tree.children)
         }
 
         fetchData();

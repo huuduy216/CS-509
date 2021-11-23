@@ -22,7 +22,7 @@ const CodeDrawer = (props) => {
 
     // let auth = localStorage.getItem('timesheetisAuthenticated');
 
-    if (props.codeDrawData.nodeType === "classification") {
+    if (props.codeDrawData.nodeType === "classification" || props.codeDrawData.nodeType === "sub_classification" || props.codeDrawData.nodeType === "algorithm_type") {
         body = (
             <div>
                 <p className="site-description-item-profile-p">{props.codeDrawData.subtitle}</p>
@@ -31,9 +31,11 @@ const CodeDrawer = (props) => {
                     <p>{props.codeDrawData.textbody}</p>
                 </div>
             </div>);
+    } else {
+        body = (<div className={classes.body}></div>);
     }
     // if (props.codeDrawData.nodeType === "algorithm_type")
-    // if (props.codeDrawData.nodeType === "sub_classification")
+
 
     // implementation details
     function onChange(value) {
@@ -52,6 +54,7 @@ const CodeDrawer = (props) => {
     }
 
     if (props.codeDrawData.nodeType === "algorithm_implementations")
+
         body = (
             <div className={classes.body}>
                 <Select

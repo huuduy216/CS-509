@@ -14,19 +14,37 @@ const Employee = (props) => {
 
     const [spaceTreeData, SetSpaceTreeData] = useState([]);
 
+
+
     useEffect(() => {
         let config = {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }
+
         async function fetchData() {
             const response = await axios.get('/normal/getcodetree', config);
-            let tree = JSON.stringify(response.data)
-            localStorage.setItem('tree', tree);
-            // console.log(response.data.children)
+            // console.log(response.data.tree.children)
             // props.changeTree(response.data.children);
-            SetSpaceTreeData(response.data.children)
+            let DB = response.data.DB;
+            console.log(response.data)
+            let AddDbId = (arr) => {
+                arr.map((item) => {
+                    // item.key = id + '-' + item.key;
+                    item["dbId"]=DB[item.key]
+                    if (item.children && item.children.length > 0) {
+                        AddDbId(item.children)
+
+                    } return null;
+                })
+                return arr;
+            }
+            
+            let tree = AddDbId(response.data.tree.children)
+            localStorage.setItem('tree', JSON.stringify(tree));
+            
+            SetSpaceTreeData(response.data.tree.children)
         }
 
         fetchData();
@@ -37,7 +55,7 @@ const Employee = (props) => {
         <React.Fragment>
             <Toolbar />
             <Code spaceTreeData={spaceTreeData} />
-            <CodeDrawer/>
+            <CodeDrawer />
             <ParticlesBg type="cobweb" bg={true} />
 
         </React.Fragment>

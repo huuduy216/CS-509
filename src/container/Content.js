@@ -20,11 +20,11 @@ const Content = (props) => {
         }
         async function fetchData() {
             const response = await axios.get('/normal/getcodetree', config);
-            let tree = JSON.stringify(response.data)
+            let tree = JSON.stringify(response.data.tree)
             localStorage.setItem('tree', tree);
             // console.log(response.data.children)
             // props.changeTree(response.data.children);
-            SetSpaceTreeData(response.data)
+            SetSpaceTreeData(response.data.tree)
         }
 
         fetchData();

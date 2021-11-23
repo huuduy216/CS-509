@@ -35,7 +35,7 @@ const benchmarkEdit = (state, action) => {
 }
 
 const treeChildAdd = (state, action) => {
-    return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: false });
+    return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: false,treeDB:action.treeDB });
 }
 
 const treeAlgorithmAdd = (state, action) => {
@@ -43,7 +43,7 @@ const treeAlgorithmAdd = (state, action) => {
 }
 
 const treeClassificationAdd = (state, action) => {
-    return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: false });
+    return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: false,treeDB:action.treeDB });
 }
 
 
@@ -51,7 +51,7 @@ const setTreeAddUrl = (state, action) => {
     return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: false });
 }
 const treeChildDelete = (state, action) => {
-    return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: action.treeDataEmpty });
+    return update.updateObject(state, { treeData: action.treeData, treeDataEmpty: action.treeDataEmpty,treeDB:action.treeDB});
 }
 
 const treeModify = (state, action) => {
@@ -91,6 +91,11 @@ const setContentType = (state, action) => {
     return update.updateObject(state, { codeDrawDataType: action.ContentType });
 } 
 
+const setContentClear = (state,action)=>{
+    return update.updateObject(state,{codeDrawDataSubtitle:"",codeDrawDataBodytext:"",codeDrawDataType:"",codeDrawData:{}})
+}
+
+
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case actionTypes.SET_Algorithm_BUTTON: return (algorithmEdit(state, action));
@@ -111,6 +116,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_SUBTITLE: return (setSubtitle(state,action));
         case actionTypes.SET_TEXTBODY: return (setTextBody(state,action));
         case actionTypes.SET_CONTENTTYPE: return (setContentType(state,action));
+        case actionTypes.SET_CONTENT_CLEAR: return(setContentClear(state,action));
         default:
             return state;
     }

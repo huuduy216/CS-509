@@ -9,10 +9,12 @@ import ContentBody from './CodeContentBody/ContentBody'
 const CodeContent = (props) => {
 
 
+    let treelist ={};
     //transfer datatree
     let changeId = (arr) => {
         arr.map((item) => {
             item.value = item.key
+            treelist[item.value] = item.type
             if (item.children && item.children.length > 0) {
                 changeId(item.children)
             }
@@ -24,8 +26,16 @@ const CodeContent = (props) => {
     //select tree
     const [value, setValue] = useState(undefined);
     const onChange = (value) => {
+        if(treelist[value]==="classification"){
+            props.editClassificationContent(value);
+        }else if(treelist[value]==="sub_classification"){
+            props.editSubClassificationContent(value);
+        }else if(treelist[value]==="algorithm_type"){
+            props.editAlgorithmContent(value);
+        }else{
+            props.setContentClear()
+        }
         
-        props.editClassificationContent(value);
         setValue(value);
     };
 
@@ -38,25 +48,27 @@ const CodeContent = (props) => {
                     title="Content"
                     subTitle="Edit content"
                 >
-                    <TreeSelect
-                        style={{ width: '50%', marginLeft: "3%", marginTop: "6%" }}
-                        value={value}
-                        dropdownStyle={{ maxHeight: 4000, overflow: 'auto' }}
-                        treeData={spaceTreeData}
-                        placeholder="Please select"
-                        treeDefaultExpandAll
-                        onChange={onChange}
-                    />
+
                 </PageHeader>
+
             </div>
             {/* <Divider/> */}
             <div className={classes.body}>
-                <ContentBody NodeValue={value} spaceTreeData={spaceTreeData} setLoading={props.setLoading}/>
+                <TreeSelect
+                    style={{ width: '50%', marginTop: "6%" ,marginLeft:"13%"}}
+                    value={value}
+                    dropdownStyle={{ maxHeight: 4000, overflow: 'auto' }}
+                    treeData={spaceTreeData}
+                    placeholder="Please select"
+                    treeDefaultExpandAll
+                    onChange={onChange}
+                />
+                <ContentBody  NodeValue={value} spaceTreeData={spaceTreeData} setLoading={props.setLoading} />
             </div>
         </div>
     );
 
-  
+
     return (
         <React.Fragment>
             {codeContent}
@@ -76,6 +88,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         editClassificationContent: (key) => dispatch(codeActions.editClassificationContent(key)),
+        editSubClassificationContent: (key) => dispatch(codeActions.editSubClassificationContent(key)),
+        editAlgorithmContent: (key) => dispatch(codeActions.editAlgorithmContent(key)),
+        setContentClear:()=>dispatch(codeActions.setContentClear()),
     }
 }
 
