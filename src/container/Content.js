@@ -8,6 +8,8 @@ import axios from '../axios/axios-local'
 import ParticlesBg from 'particles-bg'
 import CodeContent from '../component/CodeContent/CodeContent'
 
+
+
 const Content = (props) => {
     const [spaceTreeData, SetSpaceTreeData] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -36,7 +38,7 @@ const Content = (props) => {
             <ParticlesBg type="cobweb" bg={true} />
         </div>)
 
-    if (loading) {
+    if (loading || props.loading) {
         content = (
             <div>
                 <Loading />
@@ -51,6 +53,13 @@ const Content = (props) => {
 }
 
 
+const mapStateToProps = state => {
+
+    return {
+        loading:state.auth.loading,
+    };
+}
+
 const mapDispatchToProps = dispatch => {
     return {
 
@@ -59,4 +68,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Content);
+export default connect(mapStateToProps, mapDispatchToProps)(Content);

@@ -60,6 +60,12 @@ export const SET_CONTENT_CLEAR = 'SET_CONTENT_CLEAR'
 export const SET_SUBTITLE = 'SET_SUBTITLE'
 export const SET_TEXTBODY = 'SET_TEXTBODY'
 export const SET_CONTENTTYPE = 'SET_CONTENTTYPE'
+export const SET_TITLE = 'SET_TITLE'
+export const SET_CODE_BODY = 'SET_CODE_BODY'
+export const SET_CODE_LANGUAGE = 'SET_CODE_LANGUAGE'
+
+
+
 
 
 

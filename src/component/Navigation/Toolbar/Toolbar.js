@@ -21,24 +21,13 @@ const Toolbar = (props) => {
 
     //////////////// personal info menu
 
-
     const handleClickLogout = () => {
         props.logout();
     }
 
-
-
-    // let userInfo = (
-    //     <div className={classes.menuprofile}>
-    //         <p className={classes.menuname}>{localStorage['timesheetUsername']}</p>
-    //         <p className={classes.menumail}>{localStorage['timesheetuseremail']}</p>
-    //     </div>
-    // );
-
-
     let logout = (
         <Menu.Item>
-            <NavLink to='/' onClick={handleClickLogout}>
+            <NavLink to='/' onClick={handleClickLogout} style={{textAlign:"center",fontWeight:"bold"}}>
                 Logout
             </NavLink>
         </Menu.Item>
@@ -95,7 +84,7 @@ const Toolbar = (props) => {
                 <nav className={classes.des}>
                     <Login link="/login" exact displayLogin={"none"}>LOGIN </Login>
                     <div className={classes.loginButton}>
-                        <Dropdown overlay={menu} placement="bottomLeft" trigger="click">
+                        <Dropdown overlay={menu} placement="bottomCenter" trigger="click">
                             <Button size="middle" type="primary" shape="circle" className={classes.profilepic}>{localStorage['timesheeticonName']}</Button>
                         </Dropdown>
                     </div>

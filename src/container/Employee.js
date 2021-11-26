@@ -28,7 +28,6 @@ const Employee = (props) => {
             // console.log(response.data.tree.children)
             // props.changeTree(response.data.children);
             let DB = response.data.DB;
-            console.log(response.data)
             let AddDbId = (arr) => {
                 arr.map((item) => {
                     // item.key = id + '-' + item.key;

@@ -4,8 +4,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 1200px;
+    /* height: 3800px; */
     width: 100%;
+    margin-top: -8px;
 }
 
 .header{
@@ -13,9 +14,10 @@
     background-color:transparent;
     /* display: flex;
     flex-direction: row; */
-    height: 18%;
+    height: 270px;
     width: 100%;
     padding-top: 5%;
+    
 }
 
 .pageheader{
@@ -31,5 +33,5 @@
     flex-direction: column;
     height: 80%;
     width: 100%;
-    margin-top: 1%;
+    /* margin-top: 1%; */
 }

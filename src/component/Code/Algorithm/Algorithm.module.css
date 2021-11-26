@@ -7,11 +7,12 @@
     /* background-color:#e4eaee; */
     background-color:transparent;
     width: 100%;
-    height: 12%;
+    height: 200px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 57px;
+    margin-bottom: 50px;
 }
 
 .pageheader{
@@ -31,6 +32,7 @@
     align-items: center;
     text-align: center;
     margin-top: 3%;
+
 }
 
 .headerRest{
@@ -41,12 +43,13 @@
     justify-content: flex;
     align-items: center;
     text-align: center;
-    margin-left: 60%;
+    margin-left: 52%;
 }
 
 .tree{
-    background-color: #e4eaee;
+    /* background-color: #e4eaee; */
     width: 80%;
+    
     font-size:12pt;
     font-weight: 500;
     color: black;

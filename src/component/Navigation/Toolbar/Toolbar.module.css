@@ -42,10 +42,13 @@
 }
 
 .menu{
-  width: 180px;
+  width: 80px;
   display: flex;
   flex-direction: column;
-  
+  /* border:1px rgb(224, 224, 224) solid; */
+  margin-top: 7px;
+  margin-right: 40px;
+  border-top: 4px black solid;
 }
 
 .menuname{
@@ -70,5 +73,6 @@
   display:flex;
   justify-content: flex-start;
   align-items: center;
+  margin-right: 2%;
 }
 

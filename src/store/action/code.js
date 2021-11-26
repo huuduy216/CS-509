@@ -449,7 +449,7 @@ export const editClassificationContent = (key) => {
             .then(response => {
                 dispatch(changeSubtitle(response.data.subtitle))
                 dispatch(changeTextBody(response.data.textbody))
-
+                dispatch(changeTitle(response.data.title))
                 dispatch(changeContentType(response.data.type))
             })
         return Promise.resolve();
@@ -475,6 +475,27 @@ export const changeTextBody = (textbody) => {
     return {
         type: actionTypes.SET_TEXTBODY,
         textbody: textbody
+    }
+}
+
+export const changeTitle = (title) => {
+    return {
+        type: actionTypes.SET_TITLE,
+        title: title
+    }
+}
+
+export const changeCodeBody = (codeBody) => {
+    return {
+        type: actionTypes.SET_CODE_BODY,
+        codeBody: codeBody
+    }
+}
+
+export const changeCodeLanguage = (language) => {
+    return {
+        type: actionTypes.SET_CODE_LANGUAGE,
+        language: language
     }
 }
 //set Content
@@ -530,7 +551,7 @@ export const editSubClassificationContent = (key) => {
             .then(response => {
                 dispatch(changeSubtitle(response.data.subtitle))
                 dispatch(changeTextBody(response.data.textbody))
-
+                dispatch(changeTitle(response.data.title))
                 dispatch(changeContentType(response.data.type))
             })
         return Promise.resolve();
@@ -589,8 +610,63 @@ export const editAlgorithmContent = (key) => {
             .then(response => {
                 dispatch(changeSubtitle(response.data.subtitle))
                 dispatch(changeTextBody(response.data.textbody))
-
+                dispatch(changeTitle(response.data.title))
                 dispatch(changeContentType(response.data.type))
+            })
+        return Promise.resolve();
+    }
+}
+//set Content
+//set Content implementation
+
+export const getImplementationContent = (key,language) => {
+    let newKey =key.substring(0,key.length-2);
+    let ImpleFkAndLanguage = { "fatherKey": newKey,"language": language};
+    return (dispatch) => {
+        axios.post('/all/getimplementation', ImpleFkAndLanguage
+        )
+            .then(response => {
+            //    let codeDrawData = {
+            //         "subtitle": "",
+            //         "textbody": "",
+            //         "code": ""
+            //     }
+                dispatch(changeCodeBody(response.data.code))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const editImplementationContent = (key,language) => {
+    let newKey =key.substring(0,key.length-2);
+    let ImpleFkAndLanguage = { "fatherKey": newKey,"language": language};
+    return (dispatch) => {
+        axios.post('/all/getimplementation', ImpleFkAndLanguage
+        )
+            .then(response => {
+                dispatch(changeSubtitle(response.data.subtitle))
+                dispatch(changeTextBody(response.data.textbody))
+                dispatch(changeCodeBody(response.data.code))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const postImplementationContent = (key, language, codebody) => {
+
+    let newKey =key.substring(0,key.length-2);
+    let implcontent = {
+        "key": newKey,
+        "language": language,
+        "codebody": codebody,
+    }
+    return (dispatch) => {
+        axios.post('/normal/implementation', implcontent, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
             })
         return Promise.resolve();
     }

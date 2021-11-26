@@ -74,10 +74,6 @@ const Algorithm = (props) => {
 
     let algor = (
         <div className={classes.background}>
-            {/* <div className={classes.header}>
-                {Editbutton}
-            </div> */}
-            {/* <Divider /> */}
             <div className={classes.header}>
                 <PageHeader
                     className={classes.pageheader}

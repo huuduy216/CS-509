@@ -12,7 +12,12 @@ const initalState = {
     codeDrawData:{},
     codeDrawDataSubtitle:"",
     codeDrawDataBodytext:"",
-    codeDrawDataType:""
+    codeDrawDataType:"",
+    codeDrawDataTitle:"",
+    //content implementation
+    codeDrawDataCode:"",
+    codeDrawDataLanguage:undefined,
+
 };
 const setCodeClear = (state, action) => {
     return update.updateObject(state, {
@@ -79,7 +84,6 @@ const codeDrawData = (state, action) => {
 } 
 
 const setSubtitle = (state, action) => {
-    
     return update.updateObject(state, { codeDrawDataSubtitle:action.subtitle });
 } 
 
@@ -91,8 +95,22 @@ const setContentType = (state, action) => {
     return update.updateObject(state, { codeDrawDataType: action.ContentType });
 } 
 
+
+const setTitle = (state, action) => {
+    return update.updateObject(state, { codeDrawDataTitle: action.title });
+} 
+
+
+const setCodeBody = (state, action) => {
+    return update.updateObject(state, { codeDrawDataCode: action.codeBody });
+} 
+
+const setCodeLanguage = (state, action) => {
+    return update.updateObject(state, { codeDrawDataLanguage: action.language});
+}
+
 const setContentClear = (state,action)=>{
-    return update.updateObject(state,{codeDrawDataSubtitle:"",codeDrawDataBodytext:"",codeDrawDataType:"",codeDrawData:{}})
+    return update.updateObject(state,{codeDrawDataSubtitle:"",codeDrawDataBodytext:"",codeDrawDataType:"",codeDrawDataTitle:"",codeDrawDataCode:"",codeDrawData:{}})
 }
 
 
@@ -116,6 +134,9 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_SUBTITLE: return (setSubtitle(state,action));
         case actionTypes.SET_TEXTBODY: return (setTextBody(state,action));
         case actionTypes.SET_CONTENTTYPE: return (setContentType(state,action));
+        case actionTypes.SET_TITLE: return(setTitle(state,action));
+        case actionTypes.SET_CODE_BODY: return(setCodeBody(state,action));
+        case actionTypes.SET_CODE_LANGUAGE: return(setCodeLanguage(state,action));
         case actionTypes.SET_CONTENT_CLEAR: return(setContentClear(state,action));
         default:
             return state;

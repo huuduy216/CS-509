@@ -8,6 +8,7 @@ import Tree from './Tree';
 import { Button, Spin, Input, Typography, Upload } from 'antd';
 
 import * as CodeAction from '../../../store/action/code';
+import * as AuthAction from '../../../store/action/auth';
 
 const { Title } = Typography;
 
@@ -42,19 +43,32 @@ const TreeNode = (props) => {
     }
 
     const clickDrawDisplay = () => {
+        props.setLoadingTime(1000);
         if(props.node.type==="classification"){
             props.getClassificationContent(props.node)
         }else if(props.node.type==="sub_classification"){
             props.getSubClassificationContent(props.node)
         }else if(props.node.type==="algorithm_type"){
             props.getAlgorithmContent(props.node)
+        }else if(props.node.type==="algorithm_implementations"){
+            // props.getImplementationContent(props.node)
+            let codeDrawData = {
+                "nodeType": "algorithm_implementations",
+                "nodeTitle": "Implementation",
+                "nodecode":"",
+                "nodekey":props.node.key,
+            };
+            props.setDrawerData(codeDrawData);
+            props.changeCodeLanguage(undefined);
         }else{
             props.setContentClear()
         }
+        
+        // console.log(props.codeDrawData)
+        
         setTimeout(() => {
             props.setDrawerDisplay(true);
         }, 150);
-        
         // console.log(Object.keys(props.codeDrawData).length === 0 && Object.getPrototypeOf(props.codeDrawData) === Object.prototype);
     }
 
@@ -195,8 +209,11 @@ const mapDispatchToProps = dispatch => {
         getClassificationContent: (node) => dispatch(CodeAction.getClassificationContent(node)),
         getSubClassificationContent:(node)=>dispatch(CodeAction.getSubClassificationContent(node)),
         getAlgorithmContent:(node) => dispatch(CodeAction.getAlgorithmContent(node)),
-        setContentClear:()=>dispatch(CodeAction.setContentClear())
-
+        editImplementationContent:(node)=>dispatch(CodeAction.editImplementationContent(node)),
+        setDrawerData:(DrawerData)=>dispatch(CodeAction.setDrawerData(DrawerData)),
+        setContentClear:()=>dispatch(CodeAction.setContentClear()),
+        changeCodeLanguage:(language)=>dispatch(CodeAction.changeCodeLanguage(language)),
+        setLoadingTime:(time)=>dispatch(AuthAction.setLoadingTime(time)),
     }
 }
 
