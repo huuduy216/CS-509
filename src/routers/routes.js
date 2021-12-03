@@ -11,6 +11,7 @@ import Loading from '../container/Loading';
 
 //user router authoirzation
 import SafeRoute from './SafeRoute'
+import Users from '../container/Users'
 
 
 const Routes = (props) => {
@@ -27,6 +28,7 @@ const Routes = (props) => {
             <SafeRoute path="/content" component={Content} exact/>
             <SafeRoute path="/userhome" component={UserHome} exact/>
             <SafeRoute path="/loading" component={Loading} exact />
+            <SafeRoute path ="/users" component ={Users} exact/>
         </Switch>
 
     )

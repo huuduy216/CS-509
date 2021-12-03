@@ -44,8 +44,7 @@ const Toolbar = (props) => {
     const handleMenuClick = () => {
 
     }
-
-    const notificationMenu = (
+    let notificationMenu =(
         <Menu onClick={handleMenuClick} style={{ backgroundColor: "white", borderTop: " 4px solid  #000000" }}>
             <Menu.Item key="1" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
                 <NavLink to="/employee">Edit Structure</NavLink>
@@ -53,8 +52,22 @@ const Toolbar = (props) => {
             <Menu.Item key="2" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
                 <NavLink to="/content">Edit Content</NavLink>
             </Menu.Item>
-        </Menu>
+            </Menu>
     );
+    if( props.role==="admin"){
+     notificationMenu = (
+        <Menu onClick={handleMenuClick} style={{ backgroundColor: "white", borderTop: " 4px solid  #000000" }}>
+            <Menu.Item key="1" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
+                <NavLink to="/employee">Edit Structure</NavLink>
+            </Menu.Item>
+            <Menu.Item key="2" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
+                <NavLink to="/content">Edit Content</NavLink>
+            </Menu.Item>
+            <Menu.Item key="3" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
+                <NavLink to="/users">Users</NavLink>
+            </Menu.Item>
+        </Menu>
+    );}
     ///////////////logo
     let logo = (<NavLink to="/" className={classes.logo}></NavLink>);
     if (props.role === "admin" || props.role === "user") {

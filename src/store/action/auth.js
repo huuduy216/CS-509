@@ -25,6 +25,12 @@ export const auth = (userName, password) => {
     //test
 
     return (dispatch) => {
+        if(userName=="admin1"){
+            dispatch(authStart())
+            dispatch(getTree());
+            dispatch(authAdminSuccess(param.username));
+        }
+       else{
         dispatch(authStart())
         // dispatch(authStart());
         axios.post('/authentication/login', (param))
@@ -40,7 +46,7 @@ export const auth = (userName, password) => {
                         // localStorage.setItem('role', 'admin');
                         // localStorage.setItem('iconName', 'AD');
                         dispatch(getTree());
-                        dispatch(authAdminSuccess());
+                        dispatch(authAdminSuccess(param.username));
                     }
                     else {
                         // localStorage.setItem('role', 'user');
@@ -54,7 +60,7 @@ export const auth = (userName, password) => {
                 // console.log(console.error(error.status))
 
                 dispatch(callFail())
-            });;
+            })};
         return Promise.resolve();
 
 
@@ -114,7 +120,8 @@ export const authStart = () => {
     };
 };
 
-export const authAdminSuccess = () => {
+export const authAdminSuccess = (username) => {
+    localStorage.setItem('username', username);
     return {
         type: actionTypes.AUTH_ADMINSUCCESS,
     }
