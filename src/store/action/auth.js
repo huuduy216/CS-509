@@ -69,6 +69,11 @@ export const auth = (userName, password) => {
     // return (dispatch) => {
 
 }
+export const deleteUser =(id)=>{
+    return (dispatch)=>{
+        ///logic for deleting users.
+    }
+}
 export const refresh = () => {
     return (dispatch) => {
         dispatch(authStart())

@@ -23,7 +23,9 @@ const authAdminSuccess = (state, action) => {
 const authUserSuccess = (state, action) => {
     return update.updateObject(state,{isAuthenticated:true,role:"user",logout:false});
 }
-
+const deleteUser =(state,action)=>{
+    return
+}
 const authFail = (state, action) => {
     return update.updateObject(state,{loginError:action.loginError,isAuthenticated:false,loading:false,role:"",logout:false});
 }
@@ -59,6 +61,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.REG_FAIL: return (regFail(state, action));
         case actionTypes.AUTH_LOGOUT: return (authLogout(state, action));
         case actionTypes.AUTH_LOADING: return (authLoading(state, action));
+        case actionTypes.SET_DELETEUSER: return (deleteUser(state,action));
         default:
             return state;
     }
