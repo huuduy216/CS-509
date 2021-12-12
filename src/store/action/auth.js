@@ -25,7 +25,7 @@ export const auth = (userName, password) => {
     //test
 
     return (dispatch) => {
-        if(userName=="admin1"){
+        if(userName==="admin1"){
             dispatch(authStart())
             dispatch(getTree());
             dispatch(authAdminSuccess(param.username));

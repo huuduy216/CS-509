@@ -4,7 +4,6 @@ import * as AuthAction from '../../store/action/auth';
 
 
 import Loading from '../../UI/Loading/Loading';
-import axios from '../../axios/axios-local'
 import ParticlesBg from 'particles-bg'
 import UserContent from '../UserContent/UserContent'
 

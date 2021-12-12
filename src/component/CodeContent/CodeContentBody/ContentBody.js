@@ -72,7 +72,7 @@ const ContentBody = (props) => {
 
     }
     const listData = [];
-    for (let i = 0; i < 22; i++) {
+    for (let i = 0; i < 22; i++) { 
         listData.push({
             title: `JJQ ${i}`,
             description:
