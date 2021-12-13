@@ -19,7 +19,22 @@ function Index() {
         }
         async function fetchData() {
             const response = await axios.get('/normal/getcodetree', config);
-            let tree = JSON.stringify(response.data.tree)
+
+            let DB = response.data.DB;
+            let AddDbId = (arr) => {
+                arr.map((item) => {
+                    // item.key = id + '-' + item.key;
+                    item["dbId"]=DB[item.key]
+                    if (item.children && item.children.length > 0) {
+                        AddDbId(item.children)
+
+                    } return null;
+                })
+                return arr;
+            }
+            
+            let tree = AddDbId(response.data.tree.children)
+            tree = JSON.stringify(response.data.tree)
             localStorage.setItem('tree', tree);
             SetSpaceTreeData(response.data.tree.children)
         }
@@ -27,19 +42,21 @@ function Index() {
         fetchData();
     }, [])
 
-    let description1="CodeSpace is a programming website for researcher who wants to create a collaborative place to share "
-    let description2="research with colleagues, and allow other researchers to participate."
-    
+    let description1 = "CodeSpace is a programming website for researcher who wants to create a collaborative place to share "
+    let description2 = "research with colleagues, and allow other researchers to participate."
+
     return (
         <React.Fragment>
-            <div style={{ backgroundColor: "transparent", height: "300px", marginTop: "100px",marginLeft:"30px"}}>
+            <div style={{ backgroundColor: "transparent", height: "300px", marginTop: "100px", marginLeft: "30px" }}>
                 <Texty style={{ fontFamily: "Impact", fontSize: "88px", marginLeft: "22px" }}>Welcome to CodeSpace !</Texty>
-                <p style={{  fontSize: "18px", marginLeft: "29px",marginTop:"20px",fontFamily:"Andale Mono"}}>{description1}</p>
-                <p style={{  fontSize: "18px", marginLeft: "29px",marginTop:"20px",fontFamily:"Andale Mono" }}>{description2}</p>
+                <p style={{ fontSize: "18px", marginLeft: "29px", marginTop: "20px", fontFamily: "Andale Mono" }}>{description1}</p>
+                <p style={{ fontSize: "18px", marginLeft: "29px", marginTop: "20px", fontFamily: "Andale Mono" }}>{description2}</p>
             </div>
             <Toolbar />
             <Code spaceTreeData={spaceTreeData} />
-            <CodeDrawer spaceTreeData={spaceTreeData}/>
+            <CodeDrawer spaceTreeData={spaceTreeData} />
+
+
             <ParticlesBg type="cobweb" bg={true} />
         </React.Fragment>
     )

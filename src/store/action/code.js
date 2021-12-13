@@ -70,7 +70,7 @@ export const treeChildAdd = (treeData, id) => {
             key: id,
             type: new_type,
             children: [],
-            dbId:"+1",
+            dbId: "+1",
         }];
     return {
         type: actionTypes.SET_TREE_CHILD_ADD,
@@ -131,14 +131,14 @@ export const treeAlgorithmAdd = (treeData, id) => {
         key: id + "-" + 1,
         type: 'algorithm_problem',
         children: [],
-        dbId:"+1",
+        dbId: "+1",
     }
     let implementation = {
         title: "Implementations",
         key: id + "-" + 0,
         type: 'algorithm_implementations',
         children: [],
-        dbId:"+1",
+        dbId: "+1",
     }
     changingNode.children = [
         ...changingNode.children,
@@ -146,7 +146,7 @@ export const treeAlgorithmAdd = (treeData, id) => {
             title: "New Algorithm",
             key: id,
             type: new_type,
-            dbId:"+1",
+            dbId: "+1",
             // children: [newBenchmark[0], newProblem[0]],
             children: [implementation, probleminstance],
         }];
@@ -175,10 +175,10 @@ export const treeClassificationAdd = (treeData) => {
         title: "New Classification",
         key: id,
         type: "classification",
-        dbId:"+1",
+        dbId: "+1",
         children: [],
     };
- 
+
     const newtreeData = [...treeData, newNode];
     return {
         type: actionTypes.SET_TREE_Classification_ADD,
@@ -244,7 +244,7 @@ export const treeUrlAddClick = (treeData, id, url) => {
 
 //Click Delete Tree
 export const treeChildDelete = (treeData, id) => {
-   
+
     //add treeData
     id = id.split("-").map((str) => parseInt(str));
 
@@ -629,27 +629,27 @@ export const editAlgorithmContent = (key) => {
 //set Content
 //set Content implementation
 
-export const getImplementationContent = (key,language) => {
-    let newKey =key.substring(0,key.length-2);
-    let ImpleFkAndLanguage = { "fatherKey": newKey,"language": language};
+export const getImplementationContent = (key, language) => {
+    let newKey = key.substring(0, key.length - 2);
+    let ImpleFkAndLanguage = { "fatherKey": newKey, "language": language };
     return (dispatch) => {
         axios.post('/all/getimplementation', ImpleFkAndLanguage
         )
             .then(response => {
-            //    let codeDrawData = {
-            //         "subtitle": "",
-            //         "textbody": "",
-            //         "code": ""
-            //     }
+                //    let codeDrawData = {
+                //         "subtitle": "",
+                //         "textbody": "",
+                //         "code": ""
+                //     }
                 dispatch(changeCodeBody(response.data.code))
             })
         return Promise.resolve();
     }
 }
 
-export const editImplementationContent = (key,language) => {
-    let newKey =key.substring(0,key.length-2);
-    let ImpleFkAndLanguage = { "fatherKey": newKey,"language": language};
+export const editImplementationContent = (key, language) => {
+    let newKey = key.substring(0, key.length - 2);
+    let ImpleFkAndLanguage = { "fatherKey": newKey, "language": language };
     return (dispatch) => {
         axios.post('/all/getimplementation', ImpleFkAndLanguage
         )
@@ -664,7 +664,7 @@ export const editImplementationContent = (key,language) => {
 
 export const postImplementationContent = (key, language, codebody) => {
 
-    let newKey =key.substring(0,key.length-2);
+    let newKey = key.substring(0, key.length - 2);
     let implcontent = {
         "key": newKey,
         "language": language,
@@ -677,6 +677,43 @@ export const postImplementationContent = (key, language, codebody) => {
             }
         })
             .then(response => {
+            })
+        return Promise.resolve();
+    }
+}
+
+//set Content
+//set Content Benchmark
+export const postBenchmarkContent = (benchmarkBody) => {
+
+    return (dispatch) => {
+        axios.post('/all/benchmark', benchmarkBody
+        )
+            .then(response => {
+                console.log(response)
+            })
+        return Promise.resolve();
+    }
+}
+
+export const getBenchmark = (key) => {
+    let newKey = {
+        "algorKey": key.substring(0, key.length - 2)
+    }
+    let codeDrawData = {
+        "nodeType": "algorithm_problem",
+        "nodeTitle": "Problem Instance",
+        "nodecode":"",
+        "nodekey":key,
+        "benchmarks":[]
+    };
+
+    return (dispatch) => {
+        axios.post('/all/getbenchmark', newKey
+        )
+            .then(response => {
+                codeDrawData["benchmarks"]=response.data.benchmarks;
+                dispatch(setDrawerData(codeDrawData))
             })
         return Promise.resolve();
     }

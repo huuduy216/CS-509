@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React  from 'react'
 import { connect } from 'react-redux';
 import classes from "./UserContent.module.css"
 import { List, Avatar, } from 'antd';
-import Content from '../../container/Content';
 import * as authActions from "../../store/action/auth"
 const Usercontent = (props)=>{
 

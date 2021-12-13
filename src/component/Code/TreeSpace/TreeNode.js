@@ -78,6 +78,9 @@ const TreeNode = (props) => {
             };
             props.setDrawerData(codeDrawData);
             props.changeCodeLanguage(undefined);
+        }else if(props.node.type==="algorithm_problem"){
+            props.getBenchmark(props.node.key);
+     
         }else{
             props.setContentClear()
         }
@@ -233,7 +236,8 @@ const mapDispatchToProps = dispatch => {
         setContentClear:()=>dispatch(CodeAction.setContentClear()),
         changeCodeLanguage:(language)=>dispatch(CodeAction.changeCodeLanguage(language)),
         setLoadingTime:(time)=>dispatch(AuthAction.setLoadingTime(time)),
-        updateUserHistory:(userHistory)=>dispatch(CodeAction.updateUserHistory(userHistory))
+        updateUserHistory:(userHistory)=>dispatch(CodeAction.updateUserHistory(userHistory)),
+        getBenchmark:(algorKey)=>dispatch(CodeAction.getBenchmark(algorKey))
     }
 }
 
