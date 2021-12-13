@@ -52,7 +52,7 @@ const Algorithm = (props) => {
         EditButton = (<Button onClick={ClickEditButton} className={classes.EditButton} icon={<EyeOutlined />}>View</Button>);
     }
 
-    if (role === "user") {
+    if (role === "user"|| role ==="admin") {
         Editbutton = (
             <div className={classes.headerRest}>
                 {EditButton}
