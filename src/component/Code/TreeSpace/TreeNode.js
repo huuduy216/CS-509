@@ -34,11 +34,29 @@ const TreeNode = (props) => {
 
     const clickAddButton = () => {
         props.addChild(props.treeData, props.node.key);
+        let history =props.userHistory
+        let element= "Added " + props.node.title 
+        history.push(element)
+        props.updateUserHistory(history);
+        console.log(history)
         setChildVisibility(true);
     }
-
+    const deleteChildFunction =()=>{
+        props.deleteChild(props.treeData, props.node.key)
+        let history =props.userHistory
+        let element= "Deleted " + props.node.title 
+        history.push(element)
+        props.updateUserHistory(history);
+        console.log(history)
+    }
     const clickAddAlgorButton = () => {
         props.addAlgor(props.treeData, props.node.key);
+        let history =props.userHistory
+        let element= "Added " + props.node.title 
+        history.push(element)
+        props.updateUserHistory(history);
+        console.log(history)
+
         setChildVisibility(true);
     }
 
@@ -139,7 +157,7 @@ const TreeNode = (props) => {
             <Button onClick={e => setChildVisibility(v => !v)} className={hasChild ? classes.editButton : classes.editButtonHidden} size="small" icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
             <Button onClick={() => clickAddButton()} className={(((((!AlgorithmItem) && hasChild) && (!addButtonHidden)) || (ClassificationItem)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
             <Button onClick={() => clickAddAlgorButton(props.treeData, props.node.key)} className={(((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
-            <Button onClick={() => props.deleteChild(props.treeData, props.node.key)} className={(deleteButtonHidden && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
+            <Button onClick={() => deleteChildFunction(props.treeData, props.node.key)} className={(deleteButtonHidden && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
             {inputClass}
             <div className={ImplementationItem ? classes.upload : classes.hideUpload}>
                 <Upload {...Fileprops} >
@@ -195,6 +213,7 @@ const mapStateToProps = state => {
         treeData: state.code.treeData,
         fresh: state.code.fresh,
         codeDrawData: state.code.codeDrawData,
+        userHistory : state.code.userHistory
     };
 }
 
@@ -214,6 +233,7 @@ const mapDispatchToProps = dispatch => {
         setContentClear:()=>dispatch(CodeAction.setContentClear()),
         changeCodeLanguage:(language)=>dispatch(CodeAction.changeCodeLanguage(language)),
         setLoadingTime:(time)=>dispatch(AuthAction.setLoadingTime(time)),
+        updateUserHistory:(userHistory)=>dispatch(CodeAction.updateUserHistory(userHistory))
     }
 }
 

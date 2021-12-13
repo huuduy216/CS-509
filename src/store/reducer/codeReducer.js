@@ -1,6 +1,7 @@
 import * as actionTypes from '../action/actionTypes';
 import * as update from '../../Utility/update'
 
+
 const initalState = {
     edit: "12",
     treeData: [],
@@ -17,7 +18,7 @@ const initalState = {
     //content implementation
     codeDrawDataCode:"",
     codeDrawDataLanguage:undefined,
-
+    userHistory:[]
 };
 const setCodeClear = (state, action) => {
     return update.updateObject(state, {
@@ -95,7 +96,9 @@ const setContentType = (state, action) => {
     return update.updateObject(state, { codeDrawDataType: action.ContentType });
 } 
 
-
+const updateUserHistory =(state,action)=>{
+    return update.updateObject(state, { userHistory: action.userHistory });
+}
 const setTitle = (state, action) => {
     return update.updateObject(state, { codeDrawDataTitle: action.title });
 } 
@@ -112,7 +115,9 @@ const setCodeLanguage = (state, action) => {
 const setContentClear = (state,action)=>{
     return update.updateObject(state,{codeDrawDataSubtitle:"",codeDrawDataBodytext:"",codeDrawDataType:"",codeDrawDataTitle:"",codeDrawDataCode:"",codeDrawData:{}})
 }
-
+const emptyUser =(state,action)=>{
+    return update.updateObject(state, { userHistory: []});
+}
 
 const reducer = (state = initalState, action) => {
     switch (action.type) {
@@ -138,6 +143,8 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_CODE_BODY: return(setCodeBody(state,action));
         case actionTypes.SET_CODE_LANGUAGE: return(setCodeLanguage(state,action));
         case actionTypes.SET_CONTENT_CLEAR: return(setContentClear(state,action));
+        case actionTypes.SET_UPDATE_USER_HISTORY: return(updateUserHistory(state,action));
+        case actionTypes.SET_EMPTY_USER_HISTORY:return(emptyUser(state,action))
         default:
             return state;
     }

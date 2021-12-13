@@ -2,15 +2,16 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios/axios-local';
 
 //post tree
-export const postTree = (treeData) => {
+export const postTree = (treeData,userHistory) => {
     let tranData = {
         title: "root",
         key: '-1',
         type: 'root',
         children: [...treeData]
     };
-    let Data=[{...tranData}]
     
+    let Data=[{...tranData},{...userHistory},localStorage.getItem('username')]
+    console.log("inside save ")
     return (dispatch) => {
         axios.post('/normal/codetree', Data, {
             headers: {
@@ -30,7 +31,11 @@ export const treeFresh = (fresh) => {
     }
 }
 
-
+export const emptyUserHistory =()=>{
+    return{
+     type:  actionTypes.SET_EMPTY_USER_HISTORY
+    }
+}
 //Click Add Tree
 export const treeChildAdd = (treeData, id) => {
 
@@ -72,7 +77,12 @@ export const treeChildAdd = (treeData, id) => {
         treeData: treeData,
     }
 }
-
+export const updateUserHistory =(userHistory)=>{
+    return {
+       type: actionTypes.SET_UPDATE_USER_HISTORY,
+       userHistory: userHistory
+    }
+}
 export const treeAddClick = (treeData, id) => {
 
     return (dispatch) => {
