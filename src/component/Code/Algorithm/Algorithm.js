@@ -24,13 +24,16 @@ const Algorithm = (props) => {
     );
     //save Button
     const saveClick = () => {
-        props.postTree(props.treeData);
+        console.log("==============")
+        props.postTree(props.treeData,props.userHistory);
+        console.log("==============")
         props.loadingtime(1000);
-        window.location.reload(false);
+       // window.location.reload(false);
     }
 
     //eidtButton
     const ClickEditButton = () => {
+        
         SetEditButton(!editButton);
         if (!props.changeTreeEnable) {
             props.changeTree(props.spaceTreeData);
@@ -43,6 +46,12 @@ const Algorithm = (props) => {
     //add classification
     const AddClass=()=>{
         props.addClass(props.treeData);
+        let history =props.userHistory
+        let element= "Added New Classification"
+        history.push(element)
+        props.updateUserHistory(history);
+        console.log(history);
+
     }
     const [editButton, SetEditButton] = useState(true);
     let EditButton;
@@ -58,7 +67,7 @@ const Algorithm = (props) => {
                 {EditButton}
                 <Button disabled={editButton} onClick={() => { AddClass() }} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
                 <Button disabled={editButton} onClick={ClickMerge} type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
-                <Button disabled={editButton} onClick={() => saveClick()} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
+                <Button disabled={editButton} onClick={() => {saveClick()}} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
             </div>
         );
     }
@@ -105,6 +114,7 @@ const mapStateToProps = state => {
         treeData: state.code.treeData,
         edit: state.code.edit,
         role: state.auth.role,
+        userHistory : state.code.userHistory,
         loading: state.auth.loading,
         treeDataEmpty: state.code.treeDataEmpty,
         changeTreeEnable: state.code.changeTreeEnable,
@@ -114,11 +124,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addClass: (treeData) => dispatch(CodeAction.treeClassificationAddClick(treeData)),
-        postTree: (treeData) => dispatch(CodeAction.postTree(treeData)),
+        postTree: (treeData,userhistory) => dispatch(CodeAction.postTree(treeData,userhistory)),
         changeTree: (treeData) => dispatch(AuthAction.changeTree(treeData)),
         loadingtime: (time) => dispatch(AuthAction.setLoadingTime(time)),
         getTree: () => dispatch(AuthAction.getTree()),
-        treeEditEnable: () => dispatch(CodeAction.treeEditable())
+        treeEditEnable: () => dispatch(CodeAction.treeEditable()),
+        updateUserHistory:(userhistory)=>dispatch(CodeAction.updateUserHistory(userhistory)),
     }
 }
 

@@ -170,6 +170,8 @@ export const authLogout = () => {
     localStorage.removeItem('role');
     localStorage.removeItem('timesheeticonName');
     localStorage.removeItem('tree');
+    
+
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -179,6 +181,7 @@ export const authLogoutNew = () => {
     return (dispatch) => {
         dispatch(CodeAction.setCodeStateClear())
         dispatch(authLogout());
+        dispatch(CodeAction.emptyUserHistory());
     }
 }
 

@@ -7,6 +7,14 @@ const Usercontent = (props)=>{
 
     const deleteItem = (item)=>{
         props.deleteUser(item);
+        props.SetUserActivityData( [{
+            "Name":"User1",
+        "History" : " did this",
+        "Id":"1"
+      
+      
+    }])
+      
     }
     return (
         <React.Fragment>

@@ -1,6 +1,7 @@
 import * as actionTypes from '../action/actionTypes';
 import * as update from '../../Utility/update'
 
+
 const initalState = {
     registered: false,
     isAuthenticated: false,
@@ -48,7 +49,10 @@ const callFail = (state, action) => {
 const regFail = (state, action) => {
     return update.updateObject(state, { loginError: action.loginError, isAuthenticated: false, loading: false, role: "" ,logout:false});
 }
+const emptyUser=(state,action)=>{
+    return update.updateObject(state, {});
 
+}
 
 const reducer = (state = initalState, action) => {
     switch (action.type) {
@@ -62,6 +66,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.AUTH_LOGOUT: return (authLogout(state, action));
         case actionTypes.AUTH_LOADING: return (authLoading(state, action));
         case actionTypes.SET_DELETEUSER: return (deleteUser(state,action));
+        
         default:
             return state;
     }

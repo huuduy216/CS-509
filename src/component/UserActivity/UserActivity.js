@@ -25,6 +25,7 @@ const UserActivity = (props) => {
             // localStorage.setItem('userActivity', userActivity);
             
             // SetUserActivityData(response.data.tree)
+            console.log("done")
             SetUserActivityData([{
                 "Name":"User1",
                 "History" : " did this",
@@ -49,7 +50,7 @@ const UserActivity = (props) => {
     let content = (
         <div>
            
-            <UserContent userActivityData={userActivityData} setLoading={setLoading}/>
+            <UserContent userActivityData={userActivityData} SetUserActivityData={SetUserActivityData} setLoading={setLoading}/>
             <ParticlesBg type="cobweb" bg={true} />
         </div>)
 
@@ -75,12 +76,5 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
 
-        changeTree: (treeData) => dispatch(AuthAction.changeTree(treeData)),
-
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserActivity);
+export default connect(mapStateToProps, null)(UserActivity);
