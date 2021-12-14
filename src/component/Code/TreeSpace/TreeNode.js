@@ -113,12 +113,14 @@ const TreeNode = (props) => {
     const Fileprops = {
         customRequest({
             file,
-        }) {
+        }) { 
+           let transform = file.name+ Math.floor(Math.random() * 100);
+
             const params = {
                 ACL: 'public-read',
                 Body: file,
                 Bucket: S3_BUCKET,
-                Key: file.name
+                Key: transform
             };
 
             myBucket.putObject(params)
@@ -131,7 +133,8 @@ const TreeNode = (props) => {
                 .send((err) => {
                     if (!err) {
                         console.log("done deplo")
-                        let url = "https://" + S3_BUCKET + ".s3." + REGION + ".amazonaws.com/" + encodeURI(file.name)
+                        let url = "https://" + S3_BUCKET + ".s3." + REGION + ".amazonaws.com/" + decodeURI(transform)
+                        console.log(encodeURI(file.name));
                         props.addurl(props.treeData, props.node.key, url);
                         console.log(url)
                     }
