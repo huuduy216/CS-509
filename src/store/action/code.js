@@ -2,15 +2,15 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios/axios-local';
 
 //post tree
-export const postTree = (treeData,userHistory) => {
+export const postTree = (treeData, userHistory) => {
     let tranData = {
         title: "root",
         key: '-1',
         type: 'root',
         children: [...treeData]
     };
-    
-    let Data=[{...tranData},{...userHistory},localStorage.getItem('username')]
+
+    let Data = [{ ...tranData }, { ...userHistory }, localStorage.getItem('username')]
     console.log("inside save ")
     return (dispatch) => {
         axios.post('/normal/codetree', Data, {
@@ -31,9 +31,9 @@ export const treeFresh = (fresh) => {
     }
 }
 
-export const emptyUserHistory =()=>{
-    return{
-     type:  actionTypes.SET_EMPTY_USER_HISTORY
+export const emptyUserHistory = () => {
+    return {
+        type: actionTypes.SET_EMPTY_USER_HISTORY
     }
 }
 //Click Add Tree
@@ -77,10 +77,10 @@ export const treeChildAdd = (treeData, id) => {
         treeData: treeData,
     }
 }
-export const updateUserHistory =(userHistory)=>{
+export const updateUserHistory = (userHistory) => {
     return {
-       type: actionTypes.SET_UPDATE_USER_HISTORY,
-       userHistory: userHistory
+        type: actionTypes.SET_UPDATE_USER_HISTORY,
+        userHistory: userHistory
     }
 }
 export const treeAddClick = (treeData, id) => {
@@ -508,6 +508,13 @@ export const changeCodeLanguage = (language) => {
         language: language
     }
 }
+
+export const changeBenchmark = (benchmark) => {
+    return {
+        type: actionTypes.SET_BENCHMARK,
+        benchmark: benchmark
+    }
+}
 //set Content
 //set Content subclassification
 export const getSubClassificationContent = (treeData) => {
@@ -696,24 +703,67 @@ export const postBenchmarkContent = (benchmarkBody) => {
     }
 }
 
-export const getBenchmark = (key) => {
-    let newKey = {
-        "algorKey": key.substring(0, key.length - 2)
+export const getBenchmark = (key, benchmarkType) => {
+
+    let keyAndType = {
+        "algorKey": key.substring(0, key.length - 2),
+        "benchmarkType": benchmarkType,
     }
     let codeDrawData = {
         "nodeType": "algorithm_problem",
         "nodeTitle": "Problem Instance",
-        "nodecode":"",
-        "nodekey":key,
-        "benchmarks":[]
+        "nodecode": "",
+        "nodekey": key,
+        "benchmarks": []
     };
 
     return (dispatch) => {
-        axios.post('/all/getbenchmark', newKey
+        axios.post('/all/getbenchmark', keyAndType
         )
             .then(response => {
-                codeDrawData["benchmarks"]=response.data.benchmarks;
+                console.log(response.data)
+                codeDrawData["benchmarks"] = response.data.benchmarks;
                 dispatch(setDrawerData(codeDrawData))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const getBenchmarkContent = (key, benchmarkType) => {
+    let keyAndType = {
+        "algorKey": key.substring(0, key.length - 2),
+        "benchmarkType": benchmarkType,
+    }
+
+    return (dispatch) => {
+        axios.post('/all/getbenchmark', keyAndType
+        )
+            .then(response => {
+                console.log(response)
+                dispatch(changeBenchmark(response.data.benchmarks))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const deleteBenchmarkContent = (idBenchmark,key, benchmarkType) => {
+    console.log(key)
+                console.log(benchmarkType)
+    let idbenchmark = {
+        "idBenchmark": idBenchmark
+    }
+
+    return (dispatch) => {
+        axios.post('/normal/deletebenchmark', idbenchmark, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+        )
+            .then(response => {
+                console.log(key)
+                console.log(benchmarkType)
+                dispatch(getBenchmarkContent(key,benchmarkType))
             })
         return Promise.resolve();
     }

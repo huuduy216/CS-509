@@ -15,6 +15,7 @@ const initalState = {
     codeDrawDataBodytext:"",
     codeDrawDataType:"",
     codeDrawDataTitle:"",
+    codeDrawBenchmark:[],
     //content implementation
     codeDrawDataCode:"",
     codeDrawDataLanguage:undefined,
@@ -112,6 +113,10 @@ const setCodeLanguage = (state, action) => {
     return update.updateObject(state, { codeDrawDataLanguage: action.language});
 }
 
+const setBenchmark = (state, action) => {
+    return update.updateObject(state, { codeDrawBenchmark: action.benchmark});
+}
+
 const setContentClear = (state,action)=>{
     return update.updateObject(state,{codeDrawDataSubtitle:"",codeDrawDataBodytext:"",codeDrawDataType:"",codeDrawDataTitle:"",codeDrawDataCode:"",codeDrawData:{}})
 }
@@ -144,7 +149,8 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_CODE_LANGUAGE: return(setCodeLanguage(state,action));
         case actionTypes.SET_CONTENT_CLEAR: return(setContentClear(state,action));
         case actionTypes.SET_UPDATE_USER_HISTORY: return(updateUserHistory(state,action));
-        case actionTypes.SET_EMPTY_USER_HISTORY:return(emptyUser(state,action))
+        case actionTypes.SET_EMPTY_USER_HISTORY:return(emptyUser(state,action));
+        case actionTypes.SET_BENCHMARK:return(setBenchmark(state,action));
         default:
             return state;
     }

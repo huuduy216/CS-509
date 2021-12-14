@@ -79,8 +79,14 @@ const TreeNode = (props) => {
             props.setDrawerData(codeDrawData);
             props.changeCodeLanguage(undefined);
         }else if(props.node.type==="algorithm_problem"){
-            props.getBenchmark(props.node.key);
-     
+            let codeDrawData = {
+                "nodeType": "algorithm_problem",
+                "nodeTitle": "Problem Instance",
+                "nodecode":"",
+                "nodekey": props.node.key,
+                "benchmarks":[]
+            };
+            props.setDrawerData(codeDrawData)
         }else{
             props.setContentClear()
         }
