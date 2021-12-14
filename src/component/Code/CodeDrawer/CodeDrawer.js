@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import classes from './CodeDrawer.module.css';
 import { connect } from 'react-redux';
 import * as CodeAction from '../../../store/action/code';
@@ -19,8 +19,10 @@ const { Panel } = Collapse;
 const CodeDrawer = (props) => {
 
     // console.log(props.codeDrawData)
+    const [benchmarkType, setBenchmarkType] = useState("")
 
     const onClose = () => {
+        setBenchmarkType("")
         props.setDrawerDisplay(false);
     };
 
@@ -64,11 +66,7 @@ const CodeDrawer = (props) => {
                 renderItem={item => (
                     <List.Item
                         key={item.title}
-                        actions={[
-                            <IconText icon={StarOutlined} text={item.stars} key="list-vertical-star-o" />,
-                            <IconText icon={LikeOutlined} text={item.likes} key="list-vertical-like-o" />,
-                            // <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                        ]}
+            
                     >
                         <List.Item.Meta
                             title={<p>{item.username}</p>}
@@ -102,7 +100,10 @@ const CodeDrawer = (props) => {
     }
 
 
-
+    const onChangecase = (e)=>{
+        setBenchmarkType(e)
+        props.getBenchmark(props.codeDrawData.nodekey,e)
+    }
 
     function callback(key) {
         // console.log(key);
@@ -144,6 +145,7 @@ const CodeDrawer = (props) => {
         benchmark["algorId"] = changingNode["dbId"]
         benchmark["like"] = "0"
         benchmark["star"] = "0"
+        benchmark["benchmarkType"]=benchmarkType
         props.postBenchmarkContent(benchmark);
         props.setLoadingTime(2000);
         window.location.reload(false);
@@ -219,7 +221,7 @@ const CodeDrawer = (props) => {
                         style={{ width: 200 }}
                         placeholder="Select a case"
                         optionFilterProp="children"
-                        onChange={onChange}
+                        onChange={onChangecase}
                         filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
@@ -233,7 +235,7 @@ const CodeDrawer = (props) => {
                     </p>
                     <Divider />
                     {benchmarkBody}
-                    <Button type="primary" onClick={uploadBenchmark}>Upload Benchmark</Button>
+                    <Button type="primary" onClick={uploadBenchmark} disabled={benchmarkType===""}>Upload Benchmark</Button>
                 </div>
             )
         }
@@ -346,10 +348,8 @@ const CodeDrawer = (props) => {
                 {body}
             </Drawer>
         </React.Fragment>
-
-    );
-};
-
+    )
+}
 const mapStateToProps = state => {
 
     return {
@@ -360,15 +360,15 @@ const mapStateToProps = state => {
         loading: state.auth.loading
     };
 }
-
 const mapDispatchToProps = dispatch => {
     return {
         setDrawerDisplay: (drawvisible) => dispatch(CodeAction.setCodeDrawerDisplay(drawvisible)),
         getImplementationContent: (key, language) => dispatch(CodeAction.getImplementationContent(key, language)),
         setLoadingTime: (time) => dispatch(AuthAction.setLoadingTime(time)),
         setDrawerData: (DrawerData) => dispatch(CodeAction.setDrawerData(DrawerData)),
-        postBenchmarkContent: (benchmarkBody) => dispatch(CodeAction.postBenchmarkContent(benchmarkBody))
+        postBenchmarkContent: (benchmarkBody) => dispatch(CodeAction.postBenchmarkContent(benchmarkBody)),
+        getBenchmark: (key,benchmarkType)=>dispatch(CodeAction.getBenchmark(key,benchmarkType))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CodeDrawer);
+export default connect(mapStateToProps, mapDispatchToProps)(CodeDrawer)

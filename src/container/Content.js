@@ -12,6 +12,7 @@ import CodeContent from '../component/CodeContent/CodeContent'
 
 const Content = (props) => {
     const [spaceTreeData, SetSpaceTreeData] = useState([]);
+    const [dbId, SetDbId] = useState({});
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -27,6 +28,7 @@ const Content = (props) => {
             // console.log(response.data.children)
             // props.changeTree(response.data.children);
             SetSpaceTreeData(response.data.tree)
+            SetDbId(response.data.DB);
         }
 
         fetchData();
@@ -34,7 +36,7 @@ const Content = (props) => {
     let content = (
         <div>
             <Toolbar />
-            <CodeContent spaceTreeData={spaceTreeData} setLoading={setLoading}/>
+            <CodeContent spaceTreeData={spaceTreeData} setLoading={setLoading} dbId={dbId}/>
             <ParticlesBg type="cobweb" bg={true} />
         </div>)
 

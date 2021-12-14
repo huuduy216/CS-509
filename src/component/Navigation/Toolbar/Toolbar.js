@@ -44,6 +44,8 @@ const Toolbar = (props) => {
     const handleMenuClick = () => {
 
     }
+
+    
     let notificationMenu =(
         <Menu onClick={handleMenuClick} style={{ backgroundColor: "white", borderTop: " 4px solid  #000000" }}>
             <Menu.Item key="1" style={{ fontWeight: "bold", height: "40px", lineHeight: "30px" }}>
