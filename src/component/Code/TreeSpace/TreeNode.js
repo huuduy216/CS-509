@@ -160,7 +160,7 @@ const TreeNode = (props) => {
             <Button onClick={e => setChildVisibility(v => !v)} className={hasChild ? classes.editButton : classes.editButtonHidden} size="small" icon={childVisible ? <DownOutlined /> : <RightOutlined />} type="text" />
             <Button onClick={() => clickAddButton()} className={(((((!AlgorithmItem) && hasChild) && (!addButtonHidden)) || (ClassificationItem)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<PlusOutlined />} type="primary" />
             <Button onClick={() => clickAddAlgorButton(props.treeData, props.node.key)} className={(((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
-            <Button onClick={() => deleteChildFunction(props.treeData, props.node.key)} className={(deleteButtonHidden && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
+            <Button onClick={() => deleteChildFunction(props.treeData, props.node.key)} className={(deleteButtonHidden && (!props.editButton))  ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
             {inputClass}
             <div className={ImplementationItem ? classes.upload : classes.hideUpload}>
                 <Upload {...Fileprops} >
