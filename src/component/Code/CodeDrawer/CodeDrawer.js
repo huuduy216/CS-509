@@ -102,7 +102,7 @@ const CodeDrawer = (props) => {
 
     const onChangecase = (e)=>{
         setBenchmarkType(e)
-        props.getBenchmark(props.codeDrawData.nodekey,e)
+        props.getBenchmark(props.codeDrawData.nodekey,e,"algorithm_problem")
     }
 
     function callback(key) {
@@ -177,10 +177,14 @@ const CodeDrawer = (props) => {
         function onChange(value) {
             let key = props.codeDrawData.nodekey;
             props.getImplementationContent(key, value);
+            setBenchmarkType(value)
+            console.log("inside imp", value)
+            props.getBenchmark(props.codeDrawData.nodekey,value,"algorithm_implementations")
 
         }
 
         if (props.codeDrawData.nodeType === "algorithm_implementations") {
+            drawBenchmark(props.codeDrawData.benchmarks)
             body = (
                 <div className={classes.body}>
                     <Divider />
@@ -206,6 +210,10 @@ const CodeDrawer = (props) => {
                             <Option key={item} value={item}>{item}</Option>
                         )}
                     </Select>
+                    <Divider />
+                    {benchmarkBody}
+                    <Button type="primary" onClick={uploadBenchmark} disabled={benchmarkType===""}>Upload Benchmark</Button>
+                
 
                 </div>
             )
@@ -367,7 +375,7 @@ const mapDispatchToProps = dispatch => {
         setLoadingTime: (time) => dispatch(AuthAction.setLoadingTime(time)),
         setDrawerData: (DrawerData) => dispatch(CodeAction.setDrawerData(DrawerData)),
         postBenchmarkContent: (benchmarkBody) => dispatch(CodeAction.postBenchmarkContent(benchmarkBody)),
-        getBenchmark: (key,benchmarkType)=>dispatch(CodeAction.getBenchmark(key,benchmarkType))
+        getBenchmark: (key,benchmarkType,callType)=>dispatch(CodeAction.getBenchmark(key,benchmarkType,callType))
     }
 }
 

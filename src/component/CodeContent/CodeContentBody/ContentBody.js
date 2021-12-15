@@ -61,6 +61,8 @@ const ContentBody = (props) => {
     const changeLanguage = (e) => {
         props.setCodeLanguage(e);
         props.editImplementationContent(props.NodeValue, e);
+        setProblemType(e);
+        props.getBenchmarkContent(props.NodeValue, e,"algorithm_implementations");
     }
 
     const changeCode = (value) => {
@@ -128,7 +130,7 @@ const ContentBody = (props) => {
 
     const changeProblem = (e) => {
         setProblemType(e);
-        props.getBenchmarkContent(props.NodeValue, e);
+        props.getBenchmarkContent(props.NodeValue, e,"algorithm_problem");
     }
 
     const uploadBenchmark = () => {
@@ -211,6 +213,7 @@ const ContentBody = (props) => {
             </div>
         );
     } else if (props.codeDrawDataType === "algorithm_implementations") {
+        drawBenchmark(props.codeDrawBenchmark)
         body = (<div className={classes.background}>
             <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
                 Implementation
@@ -238,8 +241,16 @@ const ContentBody = (props) => {
                         <Option key={item} value={item}>{item}</Option>
                     )}
                 </Select>
+               
                 <Button onClick={() => saveImpl()} type="danger" style={{ width: "12%", marginLeft: "48%" }} disabled={props.codeLanguage === undefined}>Save</Button>
-            </div>
+                </div>
+                <Divider />
+                <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
+                    Benchmark
+                    </p>
+                {benchmarkBody}
+                <Button type="primary" onClick={uploadBenchmark} disabled={problemType===""} style={{width:"30%"}}>Upload Benchmark</Button>
+           
 
         </div>
         );
@@ -408,7 +419,7 @@ const mapDispatchToProps = dispatch => {
         changeTextBody: (textbody) => dispatch(codeActions.changeTextBody(textbody)),
         changeCodeBody: (codeBody) => dispatch(codeActions.changeCodeBody(codeBody)),
         setLoadingTime: (time) => dispatch(authActions.setLoadingTime(time)),
-        getBenchmarkContent: (key, benchmarkType) => dispatch(codeActions.getBenchmarkContent(key, benchmarkType)),
+        getBenchmarkContent: (key, benchmarkType,callType) => dispatch(codeActions.getBenchmarkContent(key, benchmarkType,callType)),
         deleteBenchmarkContent:(idBenchmark,NodeValue,problemType)=>dispatch(codeActions.deleteBenchmarkContent(idBenchmark,NodeValue,problemType)),
         changeContentType: (type) => dispatch(codeActions.changeContentType(type)),
         postBenchmarkContent: (benchmarkBody) => dispatch(codeActions.postBenchmarkContent(benchmarkBody)),

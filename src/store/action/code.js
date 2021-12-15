@@ -703,15 +703,24 @@ export const postBenchmarkContent = (benchmarkBody) => {
     }
 }
 
-export const getBenchmark = (key, benchmarkType) => {
-
+export const getBenchmark = (key, benchmarkType,callType) => {
+    let nodeType
+    let nodeTitle
+    if (callType==="algorithm_problem"){
+        nodeType="algorithm_problem"
+        nodeTitle="Problem Instance"
+    }
+    else{
+        nodeType="algorithm_implementations"
+        nodeTitle="Implementations"
+    }
     let keyAndType = {
         "algorKey": key.substring(0, key.length - 2),
         "benchmarkType": benchmarkType,
     }
     let codeDrawData = {
-        "nodeType": "algorithm_problem",
-        "nodeTitle": "Problem Instance",
+        "nodeType": nodeType,
+        "nodeTitle": nodeTitle,
         "nodecode": "",
         "nodekey": key,
         "benchmarks": []
