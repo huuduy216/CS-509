@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import * as AuthAction from '../../store/action/auth';
-
+import axios from '../../axios/axios-local'
 
 import Loading from '../../UI/Loading/Loading';
 import ParticlesBg from 'particles-bg'
@@ -20,29 +20,13 @@ const UserActivity = (props) => {
             }
         }
         async function fetchData() {
-            // const response = await axios.get('/normal/getuserActivity', config);
-            // let userActivity = JSON.stringify(response.data.tree)
-            // localStorage.setItem('userActivity', userActivity);
+             const response = await axios.get('/all/getUsersActivity', config);
+            let userActivity = JSON.stringify(response.data)
+            localStorage.setItem('userActivity', userActivity);
             
-            // SetUserActivityData(response.data.tree)
+            SetUserActivityData(response.data)
             console.log("done")
-            SetUserActivityData([{
-                "Name":"User1",
-                "History" : " did this",
-                "Id":"1"
-              
-              
-              
-              },{
-                  "Name":"User2",
-                  "History" : " did this",
-                  "Id":"2"
-                
-              },{
-              "Name":"User3",
-                "History" : " did that",
-                "Id":"3"}
-              ])
+            
         }
 
         fetchData();

@@ -6,14 +6,10 @@ import * as authActions from "../../store/action/auth"
 const Usercontent = (props)=>{
 
     const deleteItem = (item)=>{
-        props.deleteUser(item);
-        props.SetUserActivityData( [{
-            "Name":"User1",
-        "History" : " did this",
-        "Id":"1"
       
-      
-    }])
+    
+        props.deleteUser(item.item.userName,props.SetUserActivityData);
+        
       
     }
     return (
@@ -28,8 +24,8 @@ const Usercontent = (props)=>{
       >
         <List.Item.Meta
           avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title={item.Name}
-          description={item.History}
+          title={item.userName}
+          description={item.history}
         />
       </List.Item>
     )}
@@ -42,7 +38,7 @@ const mapDispatchToProps = dispatch => {
     return {
        
        
-        deleteUser : (id) => dispatch(authActions.deleteUser(id)),
+        deleteUser : (id,set) => dispatch(authActions.deleteUser(id,set)),
     }
 }
 export default connect(null, mapDispatchToProps)(Usercontent);

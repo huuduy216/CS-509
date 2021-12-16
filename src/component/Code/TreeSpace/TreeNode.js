@@ -35,7 +35,7 @@ const TreeNode = (props) => {
     const clickAddButton = () => {
         props.addChild(props.treeData, props.node.key);
         let history =props.userHistory
-        let element= "Added " + props.node.title 
+        let element= "Added Subclassification" +  +"||"
         history.push(element)
         props.updateUserHistory(history);
         console.log(history)
@@ -44,7 +44,7 @@ const TreeNode = (props) => {
     const deleteChildFunction =()=>{
         props.deleteChild(props.treeData, props.node.key)
         let history =props.userHistory
-        let element= "Deleted " + props.node.title 
+        let element= "Deleted " + props.node.title +"||"
         history.push(element)
         props.updateUserHistory(history);
         console.log(history)
@@ -52,7 +52,7 @@ const TreeNode = (props) => {
     const clickAddAlgorButton = () => {
         props.addAlgor(props.treeData, props.node.key);
         let history =props.userHistory
-        let element= "Added " + props.node.title 
+        let element= "Added New Algorithm" +  +"||"
         history.push(element)
         props.updateUserHistory(history);
         console.log(history)
@@ -115,6 +115,11 @@ const TreeNode = (props) => {
             file,
         }) { 
            let transform = file.name+ Math.floor(Math.random() * 100);
+           let history =props.userHistory
+           let element= "Added New File" + file.name
+           history.push(element)
+           props.updateUserHistory(history);
+           
 
             const params = {
                 ACL: 'public-read',
@@ -245,7 +250,7 @@ const mapDispatchToProps = dispatch => {
         setContentClear:()=>dispatch(CodeAction.setContentClear()),
         changeCodeLanguage:(language)=>dispatch(CodeAction.changeCodeLanguage(language)),
         setLoadingTime:(time)=>dispatch(AuthAction.setLoadingTime(time)),
-        updateUserHistory:(userHistory)=>dispatch(CodeAction.updateUserHistory(userHistory)),
+        updateUserHistory:(userhistory)=>dispatch(CodeAction.updateUserHistory(userhistory)),
         getBenchmark:(algorKey)=>dispatch(CodeAction.getBenchmark(algorKey))
     }
 }

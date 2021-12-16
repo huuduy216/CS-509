@@ -24,11 +24,12 @@ const Algorithm = (props) => {
     );
     //save Button
     const saveClick = () => {
-        console.log("==============")
-        props.postTree(props.treeData,props.userHistory);
-        console.log("==============")
+       
+        props.postTree(props.treeData,);
+        props.saveHistory(props.userHistory,localStorage.getItem('username'));
+        
         props.loadingtime(1000);
-       // window.location.reload(false);
+        // window.location.reload(false);
     }
 
     //eidtButton
@@ -41,7 +42,7 @@ const Algorithm = (props) => {
         }
     } 
     const ClickMerge = ()=>{
-        console.log(props.treeData)
+        
     }
     //add classification
     const AddClass=()=>{
@@ -50,7 +51,7 @@ const Algorithm = (props) => {
         let element= "Added New Classification"
         history.push(element)
         props.updateUserHistory(history);
-        console.log(history);
+   
 
     }
     const [editButton, SetEditButton] = useState(true);
@@ -130,6 +131,7 @@ const mapDispatchToProps = dispatch => {
         getTree: () => dispatch(AuthAction.getTree()),
         treeEditEnable: () => dispatch(CodeAction.treeEditable()),
         updateUserHistory:(userhistory)=>dispatch(CodeAction.updateUserHistory(userhistory)),
+        saveHistory:(userHistory, username)=>dispatch(CodeAction.saveHistory(userHistory, username))
     }
 }
 

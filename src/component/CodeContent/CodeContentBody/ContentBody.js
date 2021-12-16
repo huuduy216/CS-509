@@ -70,7 +70,10 @@ const ContentBody = (props) => {
     }
 
     const deleteBenchmark=(idBenchmark)=>{
-       
+        let history =props.userHistory
+        let element= "Deleted Benchmark"  +"||"
+        history.push(element)
+        props.updateUserHistory(history);
         props.deleteBenchmarkContent(idBenchmark,props.NodeValue,problemType);
        
     }
@@ -134,7 +137,10 @@ const ContentBody = (props) => {
     }
 
     const uploadBenchmark = () => {
-        
+        let history =props.userHistory
+        let element= "Added New Benchmark" +"||"
+        history.push(element)
+        props.updateUserHistory(history);
         props.changeContentType("algorithm_benchmark");
       
     }
@@ -400,6 +406,7 @@ const mapStateToProps = state => {
         codeDrawData: state.code.codeDrawData,
         subtitle: state.code.codeDrawDataSubtitle,
         textbody: state.code.codeDrawDataBodytext,
+        userHistory : state.code.userHistory,
         codeDrawDataType: state.code.codeDrawDataType,
         codeDrawDataTitle: state.code.codeDrawDataTitle,
         codeDrawDataCode: state.code.codeDrawDataCode,
@@ -423,7 +430,7 @@ const mapDispatchToProps = dispatch => {
         deleteBenchmarkContent:(idBenchmark,NodeValue,problemType)=>dispatch(codeActions.deleteBenchmarkContent(idBenchmark,NodeValue,problemType)),
         changeContentType: (type) => dispatch(codeActions.changeContentType(type)),
         postBenchmarkContent: (benchmarkBody) => dispatch(codeActions.postBenchmarkContent(benchmarkBody)),
-
+        updateUserHistory:(userhistory)=>dispatch(codeActions.updateUserHistory(userhistory)),
 
     }
 }

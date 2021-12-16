@@ -29,6 +29,7 @@ export const auth = (userName, password) => {
             dispatch(authStart())
             dispatch(getTree());
             dispatch(authAdminSuccess(param.username));
+
         }
        else{
         dispatch(authStart())
@@ -39,26 +40,54 @@ export const auth = (userName, password) => {
                     dispatch(authFail(response.data.message));
                 }
                 else {
+                    
+                   
+                    axios.get('/all/getUsersActivity').then(response2=>{
+                        let history;
+                        let fullHistory =response2.data
+                        for(let i =0;i<fullHistory.length;i++){
+                            console.log("hi")
+                            if(fullHistory[i].userName===param.username){
+                                history = fullHistory[i].history
+                            }
+                        }
+                        
+                        dispatch(CodeAction.updateUserHistory([history]))
+                       
+                    })
+                   
                     localStorage.setItem('token', response.data.token);
                     // localStorage.setItem('Authenticated', true);
-
+                   
                     if (response.data.role[0].authority === 'ROLE_ADMIN') {
                         // localStorage.setItem('role', 'admin');
                         // localStorage.setItem('iconName', 'AD');
+                        // for(let i =0;i<fullHistory.length;i++){
+                        //     console.log("hi")
+                        //     if(fullHistory[i].userName===param.username){
+
+                        //         history = fullHistory[i].history
+                        //     }
+                        // }
+                       
+                        // dispatch(CodeAction.updateUserHistory(history));
                         dispatch(getTree());
                         dispatch(authAdminSuccess(param.username));
+                        
                     }
                     else {
+                          
                         // localStorage.setItem('role', 'user');
                         // localStorage.setItem('iconName', 'USER');
+                         ;
                         dispatch(getTree());
                         dispatch(authUserSuccess(param.username));
                     }
-
+                    
                 }
             }).catch(error => {
                 // console.log(console.error(error.status))
-
+               console.log(error)
                 dispatch(callFail())
             })};
         return Promise.resolve();
@@ -69,9 +98,27 @@ export const auth = (userName, password) => {
     // return (dispatch) => {
 
 }
-export const deleteUser =(id)=>{
+export const deleteUser =(userName,SetUserActivityData)=>{
+    console.log(userName)
+    const param ={
+        "username":userName
+    }
     return (dispatch)=>{
-        ///logic for deleting users.
+       axios.post('/authentication/delete',param).then(response=>{
+         
+             
+             console.log("inside delet")
+            axios.get('/all/getUsersActivity').then(response2=>{
+                let userActivity = JSON.stringify(response2.data)
+                localStorage.setItem('userActivity', userActivity);
+                SetUserActivityData(response2.data)
+            })
+            
+         
+       }).catch(err=>{
+           console.log(err);
+       })
+       return Promise.resolve();
     }
 }
 export const refresh = () => {
@@ -84,10 +131,20 @@ export const reg = (userName, password) => {
         username: userName,
         password: password
     }
-
+    const params ={
+        
+            username: userName,
+            history: ""
+        
+    }
     return (dispatch) => {
         dispatch(authStart())
+        axios.post('/all/setUsersActivity',[params])
+        .then(response => {
 
+        }).catch(err=>{
+               console.log("errror inside save history")
+        })
 
 
         axios.post('/authentication/register', param)
@@ -95,7 +152,8 @@ export const reg = (userName, password) => {
             .then(response => {
 
                 if (response.data !== "") {
-
+                    
+                    
                     dispatch(regUserSuccess(""));
 
                 } else {

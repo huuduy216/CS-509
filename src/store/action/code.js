@@ -10,7 +10,7 @@ export const postTree = (treeData, userHistory) => {
         children: [...treeData]
     };
 
-    let Data = [{ ...tranData }, { ...userHistory }, localStorage.getItem('username')]
+    let Data = [{ ...tranData }]
     console.log("inside save ")
     return (dispatch) => {
         axios.post('/normal/codetree', Data, {
@@ -19,6 +19,29 @@ export const postTree = (treeData, userHistory) => {
             }
         })
             .then(response => {
+            })
+        return Promise.resolve();
+    }
+}
+
+export const saveHistory = (userHistory, userName) => {
+    
+  let userHistoryReq=""
+   let userHistoryLength = userHistory.length;
+   for(let i =0; i< userHistoryLength;i++){
+        userHistoryReq= userHistoryReq+ userHistory[i]+ " "
+   }
+   let params ={
+       username: userName,
+       history: userHistoryReq
+   }
+   
+    return (dispatch) => {
+        axios.post('/all/setUsersActivity',[params])
+            .then(response => {
+
+            }).catch(err=>{
+                   console.log("errror inside save history")
             })
         return Promise.resolve();
     }
