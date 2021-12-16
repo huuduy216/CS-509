@@ -26,10 +26,10 @@ const Algorithm = (props) => {
     const saveClick = () => {
 
         props.postTree(props.treeData,);
-        // props.saveHistory(props.userHistory,localStorage.getItem('username'));
+         props.saveHistory(props.userHistory,localStorage.getItem('username'));
 
         props.loadingtime(1000);
-        window.location.reload(false);
+     //   window.location.reload(false);
     }
 
     //eidtButton

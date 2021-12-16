@@ -42,19 +42,19 @@ export const auth = (userName, password) => {
                 else {
                     
                    
-                    // axios.get('/all/getUsersActivity').then(response2=>{
-                    //     let history;
-                    //     let fullHistory =response2.data
-                    //     for(let i =0;i<fullHistory.length;i++){
-                    //         console.log("hi")
-                    //         if(fullHistory[i].userName===param.username){
-                    //             history = fullHistory[i].history
-                    //         }
-                    //     }
+                    axios.get('/all/getUsersActivity').then(response2=>{
+                        let history;
+                        let fullHistory =response2.data
+                        for(let i =0;i<fullHistory.length;i++){
+                            console.log("hi")
+                            if(fullHistory[i].userName===param.username){
+                                history = fullHistory[i].history
+                            }
+                        }
                         
-                    //     dispatch(CodeAction.updateUserHistory([history]))
+                        dispatch(CodeAction.updateUserHistory([history]))
                        
-                    // })
+                    })
                    
                     localStorage.setItem('token', response.data.token);
                     // localStorage.setItem('Authenticated', true);
