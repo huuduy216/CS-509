@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
-import * as AuthAction from '../../store/action/auth';
 import axios from '../../axios/axios-local'
 
 import Loading from '../../UI/Loading/Loading';

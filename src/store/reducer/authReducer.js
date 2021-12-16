@@ -49,10 +49,10 @@ const callFail = (state, action) => {
 const regFail = (state, action) => {
     return update.updateObject(state, { loginError: action.loginError, isAuthenticated: false, loading: false, role: "" ,logout:false});
 }
-const emptyUser=(state,action)=>{
-    return update.updateObject(state, {});
+// const emptyUser=(state,action)=>{
+//     return update.updateObject(state, {});
 
-}
+// }
 
 const reducer = (state = initalState, action) => {
     switch (action.type) {

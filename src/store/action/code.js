@@ -753,7 +753,7 @@ export const getBenchmark = (key, benchmarkType,callType) => {
         axios.post('/all/getbenchmark', keyAndType
         )
             .then(response => {
-                console.log(response.data)
+               
                 codeDrawData["benchmarks"] = response.data.benchmarks;
                 dispatch(setDrawerData(codeDrawData))
             })

@@ -71,7 +71,7 @@ const ContentBody = (props) => {
 
     const deleteBenchmark=(idBenchmark)=>{
         let history =props.userHistory
-        let element= "Deleted Benchmark"  +"||"
+        let element= "Deleted Benchmark||"
         history.push(element)
         props.updateUserHistory(history);
         props.deleteBenchmarkContent(idBenchmark,props.NodeValue,problemType);
@@ -138,7 +138,7 @@ const ContentBody = (props) => {
 
     const uploadBenchmark = () => {
         let history =props.userHistory
-        let element= "Added New Benchmark" +"||"
+        let element= "Added New Benchmark||"
         history.push(element)
         props.updateUserHistory(history);
         props.changeContentType("algorithm_benchmark");
@@ -230,6 +230,9 @@ const ContentBody = (props) => {
                 height='800px'
                 width='95%'
                 onChange={changeCode}
+                isDownloadEnabled
+                downloadButtonToolTipText={'Download'}
+                downloadButtonAriaLabel={'Download code'}
             />
             <div className={classes.impleSelectBody}>
                 <Select

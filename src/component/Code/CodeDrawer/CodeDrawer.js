@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import * as CodeAction from '../../../store/action/code';
 import * as AuthAction from '../../../store/action/auth';
 
-import { Drawer, Button, Select, Divider, List, Space, Descriptions, Collapse, Form, Input } from 'antd';
-import { LikeOutlined, StarOutlined } from '@ant-design/icons';
+import { Drawer, Button, Select, Divider, List, Descriptions, Collapse, Form, Input } from 'antd';
 
 
 // import * as AuthAction from '../../../store/action/auth';
@@ -42,12 +41,6 @@ const CodeDrawer = (props) => {
                 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
         });
     }
-    const IconText = ({ icon, text }) => (
-        <Space>
-            {React.createElement(icon)}
-            {text}
-        </Space>
-    );
 
     let benchmarkBody = null;
     const drawBenchmark = (listData) => {
@@ -178,7 +171,6 @@ const CodeDrawer = (props) => {
             let key = props.codeDrawData.nodekey;
             props.getImplementationContent(key, value);
             setBenchmarkType(value)
-            console.log("inside imp", value)
             props.getBenchmark(props.codeDrawData.nodekey,value,"algorithm_implementations")
 
         }
