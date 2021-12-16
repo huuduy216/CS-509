@@ -24,12 +24,12 @@ const Algorithm = (props) => {
     );
     //save Button
     const saveClick = () => {
-       
+
         props.postTree(props.treeData,);
-        props.saveHistory(props.userHistory,localStorage.getItem('username'));
-        
+        // props.saveHistory(props.userHistory,localStorage.getItem('username'));
+
         props.loadingtime(1000);
-        // window.location.reload(false);
+        window.location.reload(false);
     }
 
     //eidtButton
@@ -40,8 +40,8 @@ const Algorithm = (props) => {
             props.changeTree(props.spaceTreeData);
             props.treeEditEnable();
         }
-    } 
-  
+    }
+
     //reclassify Button
     const treeChildDelete = (treeData, id) => {
         //add treeData
@@ -49,7 +49,7 @@ const Algorithm = (props) => {
 
         const nodes = treeData;
 
-     
+    
 
         if (id.length === 1) {
             let newNodes = [];
@@ -81,12 +81,10 @@ const Algorithm = (props) => {
                 ]
             }
 
-
-
             return newNodes;
         } else {
             let changingNode = treeData[id[0]];
-
+           
             for (let i = 2; i < id.length; i++) {
                 changingNode = changingNode.children[id[i - 1]];
             }
@@ -120,8 +118,6 @@ const Algorithm = (props) => {
 
         if (id.length > 1) {
             for (let i = 1; i < id.length; i++) {
-                console.log(changingNode)
-                console.log(id[i])
                 changingNode = changingNode.children[id[i]];
             }
         }
@@ -129,24 +125,24 @@ const Algorithm = (props) => {
     }
 
     const treeChildAdd = (treeData, id, originalNode) => {
-
         // let id = node.key;
         let oldIdLength = originalNode.key.length;
         id = id.split("-").map((str) => parseInt(str));
         let changingNode = treeData[id[0]];
-
+ 
         if (id.length > 1) {
             for (let i = 1; i < id.length; i++) {
                 changingNode = changingNode.children[id[i]];
             }
         }
 
+     
 
         if (changingNode.children === undefined) {
             changingNode.children = [];
         }
         let NewId;
-        if (changingNode.children.length === undefined) {
+        if (changingNode.children.length === undefined || changingNode.children.length === 0) {
             NewId = id.join("-") + "-0";
         } else {
             let NowNumber = changingNode.children.length;
@@ -179,10 +175,10 @@ const Algorithm = (props) => {
 
     const handleOk = () => {
         let newSpaceTreeDataThree = JSON.parse(JSON.stringify(props.treeData));
-        newSpaceTreeDataThree = treeChildDelete(newSpaceTreeDataThree, originalValue);
         newSpaceTreeDataThree = treeChildAdd(newSpaceTreeDataThree, targetValue, originalNode)
+        newSpaceTreeDataThree = treeChildDelete(newSpaceTreeDataThree, originalValue);
         props.changeTree(newSpaceTreeDataThree)
-
+        props.loadingtime(1000)
         setIsModalVisible(false);
     };
 
@@ -283,8 +279,8 @@ const Algorithm = (props) => {
         return arr;
     }
     const ClickReclassify = () => {
-        console.log(props.treeData)
-       
+
+
         let newSpaceTreeData = JSON.parse(JSON.stringify(props.treeData));
         let newSpaceTreeDataTwo = JSON.parse(JSON.stringify(props.treeData));
 
@@ -297,18 +293,60 @@ const Algorithm = (props) => {
     }
     //Merge Button
     const ClickMerge = () => {
-        console.log(props.treeData)
+        let newSpaceTreeData = JSON.parse(JSON.stringify(props.treeData));
+        let newSpaceTreeDataTwo = JSON.parse(JSON.stringify(props.treeData));
+
+
+        changeId(newSpaceTreeData);
+        SetClassAndAlgorLeft(leaveClassAndAlgor(newSpaceTreeData))
+        changeId(newSpaceTreeDataTwo);
+        SetClassLeft(leaveClass(newSpaceTreeDataTwo))
+        setIsMergeModalVisible(true);
     }
+
+    const handleMergeOk = () => {
+        let newSpaceTreeDataThree = JSON.parse(JSON.stringify(props.treeData));
+      
+        if (originalNode.children && originalNode.children.length > 0) {
+            for(let i=0;i<originalNode.children.length;i++){
+                newSpaceTreeDataThree = treeChildAdd(newSpaceTreeDataThree, targetValue, originalNode.children[i])
+            }
+        }
+        newSpaceTreeDataThree = treeChildDelete(newSpaceTreeDataThree, originalValue);
+        props.changeTree(newSpaceTreeDataThree)
+        props.loadingtime(1000)
+        setIsMergeModalVisible(false);
+    };
+
+    const handleMergeCancel = () => {
+        setOriginalValue(undefined)
+        setTargetValue(undefined)
+        setIsMergeModalVisible(false);
+    };
+    //Merge Button //mergeBody
+    const [isMergeModalVisible, setIsMergeModalVisible] = useState(false);
+    let mergeyModal = (
+        <Modal title="Merge" visible={isMergeModalVisible} onOk={handleMergeOk} okButtonProps={{ disabled: (originalValue === undefined || targetValue === undefined || targetNode.type === "algorithm_type" || originalNode.type === "algorithm_type") }} onCancel={handleMergeCancel} width={"80%"}>
+            {OriginalClassificaiton}
+            <ArrowDownOutlined style={{ marginLeft: "35%", marginTop: "20px", marginBottom: "20px" }} />
+            {TargetClassificaiton}
+        </Modal>
+    );
     //add classification
     const AddClass = () => {
         props.addClass(props.treeData);
-        let history =props.userHistory
-        let element= 'Added New Classification||'
+        let history = props.userHistory
+        let element = 'Added New Classification||'
         history.push(element)
         props.updateUserHistory(history);
-   
+
 
     }
+
+    // const ShowConsole = () => {
+    //     console.log(props.treeData)
+    // }
+
     const [editButton, SetEditButton] = useState(true);
     let EditButton;
     if (editButton) {
@@ -324,6 +362,7 @@ const Algorithm = (props) => {
                 <Button disabled={editButton} onClick={() => { AddClass() }} type="primary" className={classes.EditButton} icon={<AppstoreAddOutlined />}>Add Classfifcation</Button>
                 <Button disabled={editButton} onClick={ClickReclassify} type="primary" className={classes.EditButton} icon={<PullRequestOutlined />}>Reclassify</Button>
                 <Button disabled={editButton} onClick={ClickMerge} type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>Merge</Button>
+                {/* <Button disabled={editButton} onClick={ShowConsole} type="primary" className={classes.EditButton} icon={<MergeCellsOutlined />}>SHOW</Button> */}
                 <Button disabled={editButton} onClick={() => { saveClick() }} type="danger" className={classes.EditButton} icon={<SaveOutlined />}>Save</Button>
             </div>
         );
@@ -360,6 +399,7 @@ const Algorithm = (props) => {
 
     return (
         <React.Fragment>
+            {mergeyModal}
             {reclassifyModal}
             {algor}
         </React.Fragment>
@@ -387,8 +427,8 @@ const mapDispatchToProps = dispatch => {
         loadingtime: (time) => dispatch(AuthAction.setLoadingTime(time)),
         getTree: () => dispatch(AuthAction.getTree()),
         treeEditEnable: () => dispatch(CodeAction.treeEditable()),
-        updateUserHistory:(userhistory)=>dispatch(CodeAction.updateUserHistory(userhistory)),
-        saveHistory:(userHistory, username)=>dispatch(CodeAction.saveHistory(userHistory, username))
+        updateUserHistory: (userhistory) => dispatch(CodeAction.updateUserHistory(userhistory)),
+        saveHistory: (userHistory, username) => dispatch(CodeAction.saveHistory(userHistory, username))
     }
 }
 
