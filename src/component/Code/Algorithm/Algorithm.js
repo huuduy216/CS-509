@@ -48,7 +48,7 @@ const Algorithm = (props) => {
     const AddClass=()=>{
         props.addClass(props.treeData);
         let history =props.userHistory
-        let element= "Added New Classification"
+        let element= "Added New Classification" +"||"
         history.push(element)
         props.updateUserHistory(history);
    

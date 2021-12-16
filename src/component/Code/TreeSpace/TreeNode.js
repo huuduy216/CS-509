@@ -35,7 +35,7 @@ const TreeNode = (props) => {
     const clickAddButton = () => {
         props.addChild(props.treeData, props.node.key);
         let history =props.userHistory
-        let element= "Added Subclassification" +  +"||"
+        let element= "Added Subclassification"   +"||"
         history.push(element)
         props.updateUserHistory(history);
         console.log(history)
@@ -52,7 +52,7 @@ const TreeNode = (props) => {
     const clickAddAlgorButton = () => {
         props.addAlgor(props.treeData, props.node.key);
         let history =props.userHistory
-        let element= "Added New Algorithm" +  +"||"
+        let element= "Added New Algorithm"   +"||"
         history.push(element)
         props.updateUserHistory(history);
         console.log(history)
@@ -116,7 +116,7 @@ const TreeNode = (props) => {
         }) { 
            let transform = file.name+ Math.floor(Math.random() * 100);
            let history =props.userHistory
-           let element= "Added New File" + file.name
+           let element= "Added New File" + file.name +"||"
            history.push(element)
            props.updateUserHistory(history);
            
