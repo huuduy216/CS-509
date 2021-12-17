@@ -9,7 +9,7 @@ import ContentBody from './CodeContentBody/ContentBody'
 const CodeContent = (props) => {
 
     const [codeLanguage, setCodeLanguage] = useState("");
-
+    const [AlgorNameForImplAndProblem, setAlgorNameForImplAndProblem] = useState("");
     let treelist = {};
     //transfer datatree
     let changeId = (arr) => {
@@ -26,19 +26,47 @@ const CodeContent = (props) => {
     const spaceTreeData = changeId([props.spaceTreeData]);
     //select tree
     const [value, setValue] = useState(undefined);
+    const [problemType, setProblemType] = useState("")
+
+    const findParentAlgor = (id,treeData) => {
+        id = id.split("-").map((str) => parseInt(str));
+        let changingNode = treeData[id[0]];
+
+        if (id.length > 1) {
+            for (let i = 1; i < id.length; i++) {
+                changingNode = changingNode.children[id[i]];
+            }
+        }
+        return changingNode;
+    }
 
     const onChange = (value) => {
         props.setContentClear()
         setCodeLanguage(undefined)
         if (treelist[value] === "classification") {
+            setAlgorNameForImplAndProblem("");
             props.editClassificationContent(value);
         } else if (treelist[value] === "sub_classification") {
+            setAlgorNameForImplAndProblem("");
             props.editSubClassificationContent(value);
         } else if (treelist[value] === "algorithm_type") {
+            setAlgorNameForImplAndProblem("");
             props.editAlgorithmContent(value);
         } else if (treelist[value] === "algorithm_implementations") {
+            let algorKey = value.substring(0,value.length-2)
+            setAlgorNameForImplAndProblem(findParentAlgor(algorKey,spaceTreeData[0].children).title)
+            props.changeBenchmark([])
+            setProblemType(undefined)
             props.changeContentType("algorithm_implementations");
         } else if (treelist[value] === "algorithm_problem") {
+            let algorKey = value.substring(0,value.length-2)
+            setAlgorNameForImplAndProblem(findParentAlgor(algorKey,spaceTreeData[0].children).title)
+            props.changeBenchmark([])
+            setProblemType(undefined)
+            let problemInfo = {
+                algorKey: value.substring(0, value.length - 2)
+            }
+            props.getProblemContent(problemInfo);
             props.changeContentType("algorithm_problem");
         } else {
             props.setContentClear()
@@ -69,7 +97,7 @@ const CodeContent = (props) => {
             </div>
             {/* <Divider/> */}
             <div className={classes.body}>
-                <ContentBody NodeValue={value} spaceTreeData={spaceTreeData} setLoading={props.setLoading} codeLanguage={codeLanguage} setCodeLanguage={setCodeLanguage} dbId={props.dbId}/>
+                <ContentBody problemType={problemType} setProblemType={setProblemType} NodeValue={value} spaceTreeData={spaceTreeData} setLoading={props.setLoading} codeLanguage={codeLanguage} setCodeLanguage={setCodeLanguage} dbId={props.dbId} AlgorNameForImplAndProblem={AlgorNameForImplAndProblem}/>
             </div>
         </div>
     );
@@ -123,7 +151,8 @@ const mapDispatchToProps = dispatch => {
         editAlgorithmContent: (key) => dispatch(codeActions.editAlgorithmContent(key)),
         changeContentType: (type) => dispatch(codeActions.changeContentType(type)),
         setContentClear: () => dispatch(codeActions.setContentClear()),
-
+        changeBenchmark: (benchmark) => dispatch(codeActions.changeBenchmark(benchmark)),
+        getProblemContent: (problemInfo) => dispatch(codeActions.getProblemContent(problemInfo)),
     }
 }
 

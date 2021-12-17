@@ -25,23 +25,23 @@ export const postTree = (treeData, userHistory) => {
 }
 
 export const saveHistory = (userHistory, userName) => {
-    
-  let userHistoryReq=""
-   let userHistoryLength = userHistory.length;
-   for(let i =0; i< userHistoryLength;i++){
-        userHistoryReq= userHistoryReq+ userHistory[i]+ " "
-   }
-   let params ={
-       username: userName,
-       history: userHistoryReq
-   }
-   
+
+    let userHistoryReq = ""
+    let userHistoryLength = userHistory.length;
+    for (let i = 0; i < userHistoryLength; i++) {
+        userHistoryReq = userHistoryReq + userHistory[i] + " "
+    }
+    let params = {
+        username: userName,
+        history: userHistoryReq
+    }
+
     return (dispatch) => {
-        axios.post('/all/setUsersActivity',[params])
+        axios.post('/all/setUsersActivity', [params])
             .then(response => {
 
-            }).catch(err=>{
-                   console.log("errror inside save history")
+            }).catch(err => {
+                console.log("errror inside save history")
             })
         return Promise.resolve();
     }
@@ -538,6 +538,15 @@ export const changeBenchmark = (benchmark) => {
         benchmark: benchmark
     }
 }
+
+export const changeProblem = (problem, probleminfo) => {
+    return {
+        type: actionTypes.SET_PROBLEM,
+        problem: problem,
+        probleminfo: probleminfo
+    }
+}
+
 //set Content
 //set Content subclassification
 export const getSubClassificationContent = (treeData) => {
@@ -726,16 +735,16 @@ export const postBenchmarkContent = (benchmarkBody) => {
     }
 }
 
-export const getBenchmark = (key, benchmarkType,callType) => {
+export const getBenchmark = (key, benchmarkType, callType) => {
     let nodeType
     let nodeTitle
-    if (callType==="algorithm_problem"){
-        nodeType="algorithm_problem"
-        nodeTitle="Problem Instance"
+    if (callType === "algorithm_problem") {
+        nodeType = "algorithm_problem"
+        nodeTitle = "Problem Instance"
     }
-    else{
-        nodeType="algorithm_implementations"
-        nodeTitle="Implementations"
+    else {
+        nodeType = "algorithm_implementations"
+        nodeTitle = "Implementations"
     }
     let keyAndType = {
         "algorKey": key.substring(0, key.length - 2),
@@ -753,7 +762,28 @@ export const getBenchmark = (key, benchmarkType,callType) => {
         axios.post('/all/getbenchmark', keyAndType
         )
             .then(response => {
-               
+                console.log(response.data)
+                codeDrawData["benchmarks"] = response.data.benchmarks;
+                dispatch(setDrawerData(codeDrawData))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const ProblemgetBenchmark = (codedrawdata,key, benchmarkType) => {
+    
+    let keyAndType = {
+        "algorKey": key.substring(0, key.length - 2),
+        "benchmarkType": benchmarkType,
+    }
+    let codeDrawData = {
+        ...codedrawdata
+    };
+
+    return (dispatch) => {
+        axios.post('/all/getbenchmark', keyAndType
+        )
+            .then(response => {
                 codeDrawData["benchmarks"] = response.data.benchmarks;
                 dispatch(setDrawerData(codeDrawData))
             })
@@ -771,16 +801,13 @@ export const getBenchmarkContent = (key, benchmarkType) => {
         axios.post('/all/getbenchmark', keyAndType
         )
             .then(response => {
-                console.log(response)
                 dispatch(changeBenchmark(response.data.benchmarks))
             })
         return Promise.resolve();
     }
 }
 
-export const deleteBenchmarkContent = (idBenchmark,key, benchmarkType) => {
-    console.log(key)
-                console.log(benchmarkType)
+export const deleteBenchmarkContent = (idBenchmark, key, benchmarkType) => {
     let idbenchmark = {
         "idBenchmark": idBenchmark
     }
@@ -793,9 +820,105 @@ export const deleteBenchmarkContent = (idBenchmark,key, benchmarkType) => {
         }
         )
             .then(response => {
-                console.log(key)
-                console.log(benchmarkType)
-                dispatch(getBenchmarkContent(key,benchmarkType))
+                dispatch(getBenchmarkContent(key, benchmarkType))
+            })
+        return Promise.resolve();
+    }
+}
+
+//set Problem Instance
+export const postProblemContent = (problemIns) => {
+
+    return (dispatch) => {
+        axios.post('/normal/problem', problemIns, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+        )
+            .then(response => {
+                console.log(response)
+            })
+        return Promise.resolve();
+    }
+}
+
+export const getProblemContent = (problemInfo) => {
+
+    return (dispatch) => {
+        axios.post('/all/getproblem', problemInfo
+        )
+            .then(response => {
+                let probleminfo = {}
+                if (response.data.problems.length > 0) {
+                    let problemArray = response.data.problems;
+                    for (let i = 0; i < problemArray.length; i++) {
+                        probleminfo[problemArray[i].caseName] = {
+                            fileName: problemArray[i].fileName,
+                            idProblem: problemArray[i].idProblem,
+                            idAlgor: problemArray[i].id_Algorithm,
+                            url: problemArray[i].url
+                        }
+                    }
+                }
+                dispatch(changeProblem(response.data.problems, probleminfo))
+            })
+        return Promise.resolve();
+    }
+}
+
+export const getDrawerProblemContent = (algorName, key, problemInfo) => {
+   
+    let codeDrawData = {
+        "nodeType": "algorithm_problem",
+        "nodeTitle": `${algorName} / Problem Instance`,
+        "nodecode": "",
+        "nodekey": key,
+        "benchmarks": []
+    };
+
+    return (dispatch) => {
+        axios.post('/all/getproblem', problemInfo
+        )
+            .then(response => {
+                let probleminfo = {}
+                let problems=[]
+                if (response.data.problems.length > 0) {
+                    let problemArray = response.data.problems;
+                    for (let i = 0; i < problemArray.length; i++) {
+                        probleminfo[problemArray[i].caseName] = {
+                            fileName: problemArray[i].fileName,
+                            idProblem: problemArray[i].idProblem,
+                            idAlgor: problemArray[i].id_Algorithm,
+                            url: problemArray[i].url
+                        }
+                    }
+                    problems = problemArray;
+                }
+
+                codeDrawData = {
+                    ...codeDrawData,
+                    "problems": problems,
+                    "probleminfo": probleminfo,
+                }
+                dispatch(setDrawerData(codeDrawData))
+            })
+        return Promise.resolve();
+    }
+}
+
+
+export const deleteProblemContent = (deleteCaseInfo) => {
+
+    return (dispatch) => {
+        axios.post('/normal/deleteproblem', deleteCaseInfo, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+        )
+            .then(response => {
+                console.log(response)
             })
         return Promise.resolve();
     }

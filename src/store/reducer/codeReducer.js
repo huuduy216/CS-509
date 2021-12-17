@@ -16,6 +16,8 @@ const initalState = {
     codeDrawDataType:"",
     codeDrawDataTitle:"",
     codeDrawBenchmark:[],
+    codeDrawProblem:[],
+    codeDrawProblemInfo:{},
     //content implementation
     codeDrawDataCode:"",
     codeDrawDataLanguage:undefined,
@@ -117,6 +119,10 @@ const setBenchmark = (state, action) => {
     return update.updateObject(state, { codeDrawBenchmark: action.benchmark});
 }
 
+const setProblem = (state, action) => {
+    return update.updateObject(state, { codeDrawProblem: action.problem,codeDrawProblemInfo: action.probleminfo});
+}
+
 const setContentClear = (state,action)=>{
     return update.updateObject(state,{codeDrawDataSubtitle:"",codeDrawDataBodytext:"",codeDrawDataType:"",codeDrawDataTitle:"",codeDrawDataCode:"",codeDrawData:{}})
 }
@@ -151,6 +157,7 @@ const reducer = (state = initalState, action) => {
         case actionTypes.SET_UPDATE_USER_HISTORY: return(updateUserHistory(state,action));
         case actionTypes.SET_EMPTY_USER_HISTORY:return(emptyUser(state,action));
         case actionTypes.SET_BENCHMARK:return(setBenchmark(state,action));
+        case actionTypes.SET_PROBLEM: return(setProblem(state,action));
         default:
             return state;
     }

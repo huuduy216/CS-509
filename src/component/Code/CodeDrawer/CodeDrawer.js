@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import classes from './CodeDrawer.module.css';
 import { connect } from 'react-redux';
 import * as CodeAction from '../../../store/action/code';
@@ -59,7 +59,7 @@ const CodeDrawer = (props) => {
                 renderItem={item => (
                     <List.Item
                         key={item.title}
-            
+
                     >
                         <List.Item.Meta
                             title={<p>{item.username}</p>}
@@ -93,9 +93,10 @@ const CodeDrawer = (props) => {
     }
 
 
-    const onChangecase = (e)=>{
+    const onChangecase = (e) => {
         setBenchmarkType(e)
-        props.getBenchmark(props.codeDrawData.nodekey,e,"algorithm_problem")
+        props.ProblemgetBenchmark(props.codeDrawData,props.codeDrawData.nodekey, e);
+        // props.getBenchmark(props.codeDrawData.nodekey, e, "algorithm_problem")
     }
 
     function callback(key) {
@@ -138,7 +139,7 @@ const CodeDrawer = (props) => {
         benchmark["algorId"] = changingNode["dbId"]
         benchmark["like"] = "0"
         benchmark["star"] = "0"
-        benchmark["benchmarkType"]=benchmarkType
+        benchmark["benchmarkType"] = benchmarkType
         props.postBenchmarkContent(benchmark);
         props.setLoadingTime(2000);
         window.location.reload(false);
@@ -171,7 +172,7 @@ const CodeDrawer = (props) => {
             let key = props.codeDrawData.nodekey;
             props.getImplementationContent(key, value);
             setBenchmarkType(value)
-            props.getBenchmark(props.codeDrawData.nodekey,value,"algorithm_implementations")
+            props.getBenchmark(props.codeDrawData.nodekey, value, "algorithm_implementations")
 
         }
 
@@ -187,6 +188,7 @@ const CodeDrawer = (props) => {
                         code={props.codeDrawDataCode}
                         height='500px'
                         width='650px'
+                        isDownloadEnabled
                     />
                     <Select
                         showSearch
@@ -204,8 +206,8 @@ const CodeDrawer = (props) => {
                     </Select>
                     <Divider />
                     {benchmarkBody}
-                    <Button type="primary" onClick={uploadBenchmark} disabled={benchmarkType===""}>Upload Benchmark</Button>
-                
+                    <Button type="primary" onClick={uploadBenchmark} disabled={benchmarkType === ""}>Upload Benchmark</Button>
+
 
                 </div>
             )
@@ -226,8 +228,9 @@ const CodeDrawer = (props) => {
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
                     >
-                        <Option value="Best Case">Best Case</Option>
-                        <Option value="Worst Case">Worst Case</Option>
+                        {(props.codeDrawData.problems).map(item =>
+                            <Option key={item.caseName} value={item.caseName}>{item.caseName}</Option>
+                        )}
                     </Select>
                     <Divider />
                     <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
@@ -235,7 +238,7 @@ const CodeDrawer = (props) => {
                     </p>
                     <Divider />
                     {benchmarkBody}
-                    <Button type="primary" onClick={uploadBenchmark} disabled={benchmarkType===""}>Upload Benchmark</Button>
+                    <Button type="primary" onClick={uploadBenchmark} disabled={benchmarkType === ""}>Upload Benchmark</Button>
                 </div>
             )
         }
@@ -367,7 +370,8 @@ const mapDispatchToProps = dispatch => {
         setLoadingTime: (time) => dispatch(AuthAction.setLoadingTime(time)),
         setDrawerData: (DrawerData) => dispatch(CodeAction.setDrawerData(DrawerData)),
         postBenchmarkContent: (benchmarkBody) => dispatch(CodeAction.postBenchmarkContent(benchmarkBody)),
-        getBenchmark: (key,benchmarkType,callType)=>dispatch(CodeAction.getBenchmark(key,benchmarkType,callType))
+        getBenchmark: (key, benchmarkType, callType) => dispatch(CodeAction.getBenchmark(key, benchmarkType, callType)),
+        ProblemgetBenchmark:(codedrawdata,key, benchmarkType)=>dispatch(CodeAction.ProblemgetBenchmark(codedrawdata,key, benchmarkType))
     }
 }
 

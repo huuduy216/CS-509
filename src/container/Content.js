@@ -23,10 +23,24 @@ const Content = (props) => {
         }
         async function fetchData() {
             const response = await axios.get('/normal/getcodetree', config);
-            let tree = JSON.stringify(response.data.tree)
-            localStorage.setItem('tree', tree);
+            // let tree = JSON.stringify(response.data.tree)
+            // localStorage.setItem('tree', tree);
             // console.log(response.data.children)
             // props.changeTree(response.data.children);
+            let DB = response.data.DB;
+            let AddDbId = (arr) => {
+                arr.map((item) => {
+                    // item.key = id + '-' + item.key;
+                    item["dbId"]=DB[item.key]
+                    if (item.children && item.children.length > 0) {
+                        AddDbId(item.children)
+
+                    } return null;
+                })
+                return arr;
+            }
+            let tree = AddDbId([response.data.tree])
+            localStorage.setItem('tree', JSON.stringify(tree));
             SetSpaceTreeData(response.data.tree)
             SetDbId(response.data.DB);
         }

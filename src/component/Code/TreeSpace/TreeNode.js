@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import AWS from 'aws-sdk'
 import classes from './TreeNode.module.css';
-import { RightOutlined, PlusOutlined, DownOutlined, DeleteOutlined, FontColorsOutlined, UploadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
+import { RightOutlined, PlusOutlined, DownOutlined, DeleteOutlined, FontColorsOutlined,CloudDownloadOutlined } from '@ant-design/icons';
 import Tree from './Tree';
-import { Button, Spin, Input, Typography, Upload } from 'antd';
+import { Button, Spin, Input, Typography } from 'antd';
 
 import * as CodeAction from '../../../store/action/code';
 import * as AuthAction from '../../../store/action/auth';
@@ -29,8 +29,8 @@ const TreeNode = (props) => {
     // const deleteButtonHidden = (!node.type.includes('benchmark'))? true : false;
     // const [progress, setProgress] = useState(0);
     const ImplementationItem = props.node.type === "algorithm_implementations" || props.node.type === "algorithm_problem" ? true : false;
-    const S3_BUCKET = 'cs-509-implementations';
-    const REGION = 'us-east-2';
+    // const S3_BUCKET = 'cs-509-implementations';
+    // const REGION = 'us-east-2';
 
     const clickAddButton = () => {
         props.addChild(props.treeData, props.node.key);
@@ -55,9 +55,20 @@ const TreeNode = (props) => {
         let element= "Added New Algorithm||"
         history.push(element)
         props.updateUserHistory(history);
-        console.log(history)
-
         setChildVisibility(true);
+    }
+
+    //find imple and problem parent
+    const findParentAlgor = (id,treeData) => {
+        id = id.split("-").map((str) => parseInt(str));
+        let changingNode = treeData[id[0]];
+
+        if (id.length > 1) {
+            for (let i = 1; i < id.length; i++) {
+                changingNode = changingNode.children[id[i]];
+            }
+        }
+        return changingNode;
     }
 
     const clickDrawDisplay = () => {
@@ -70,23 +81,32 @@ const TreeNode = (props) => {
             props.getAlgorithmContent(props.node)
         }else if(props.node.type==="algorithm_implementations"){
             // props.getImplementationContent(props.node)
+            let nowKey = props.node.key;
+            let algorName = findParentAlgor(nowKey.substring(0,nowKey.length-2),JSON.parse(localStorage["tree"]).children).title
             let codeDrawData = {
                 "nodeType": "algorithm_implementations",
-                "nodeTitle": "Implementation",
+                "nodeTitle": `${algorName} / Implementation`,
                 "nodecode":"",
                 "nodekey":props.node.key,
             };
             props.setDrawerData(codeDrawData);
             props.changeCodeLanguage(undefined);
         }else if(props.node.type==="algorithm_problem"){
-            let codeDrawData = {
-                "nodeType": "algorithm_problem",
-                "nodeTitle": "Problem Instance",
-                "nodecode":"",
-                "nodekey": props.node.key,
-                "benchmarks":[]
-            };
-            props.setDrawerData(codeDrawData)
+            let nowKey = props.node.key;
+            let algorName = findParentAlgor(nowKey.substring(0,nowKey.length-2),JSON.parse(localStorage["tree"]).children).title
+           
+            // let codeDrawData = {
+            //     "nodeType": "algorithm_problem",
+            //     "nodeTitle":  `${algorName} / Problem Instance`,
+            //     "nodecode":"",
+            //     "nodekey": props.node.key,
+            //     "benchmarks":[]
+            // };
+            // props.setDrawerData(codeDrawData)
+            let problemInfo = {
+                algorKey: nowKey.substring(0,nowKey.length-2)
+            }
+            props.getDrawerProblemContent(algorName,nowKey,problemInfo);
         }else{
             props.setContentClear()
         }
@@ -105,49 +125,49 @@ const TreeNode = (props) => {
         secretAccessKey: 'hxVlxlDTeDCFasxWePCqNtFA7XYoBmZQ1R301lK3'
     })
 
-    const myBucket = new AWS.S3({
-        params: { Bucket: S3_BUCKET },
-        region: REGION,
-    })
+    // const myBucket = new AWS.S3({
+    //     params: { Bucket: S3_BUCKET },
+    //     region: REGION,
+    // })
 
-    const Fileprops = {
-        customRequest({
-            file,
-        }) { 
-           let transform = file.name+ Math.floor(Math.random() * 100);
-           let history =props.userHistory
-           let element= "Added New File" + file.name +"||"
-           history.push(element)
-           props.updateUserHistory(history);
+    // const Fileprops = {
+    //     customRequest({
+    //         file,
+    //     }) { 
+    //        let transform = file.name+ Math.floor(Math.random() * 100);
+    //        let history =props.userHistory
+    //        let element= "Added New File" + file.name +"||"
+    //        history.push(element)
+    //        props.updateUserHistory(history);
            
 
-            const params = {
-                ACL: 'public-read',
-                Body: file,
-                Bucket: S3_BUCKET,
-                Key: transform
-            };
+    //         const params = {
+    //             ACL: 'public-read',
+    //             Body: file,
+    //             Bucket: S3_BUCKET,
+    //             Key: transform
+    //         };
 
-            myBucket.putObject(params)
-                .on('httpUploadProgress', (evt) => {
-                    // setProgress(Math.round((evt.loaded / evt.total) * 100))
+    //         myBucket.putObject(params)
+    //             .on('httpUploadProgress', (evt) => {
+    //                 // setProgress(Math.round((evt.loaded / evt.total) * 100))
 
-                    if (evt.loaded === 100)
-                        console.log("done")
-                })
-                .send((err) => {
-                    if (!err) {
-                        console.log("done deplo")
-                        let url = "https://" + S3_BUCKET + ".s3." + REGION + ".amazonaws.com/" + decodeURI(transform)
-                        console.log(encodeURI(file.name));
-                        props.addurl(props.treeData, props.node.key, url);
-                        console.log(url)
-                    }
-                    //  props.addImplementationChild(treeData,key, url);
-                })
-            setChildVisibility(true);
-        }
-    };
+    //                 if (evt.loaded === 100)
+    //                     console.log("done")
+    //             })
+    //             .send((err) => {
+    //                 if (!err) {
+    //                     console.log("done deplo")
+    //                     let url = "https://" + S3_BUCKET + ".s3." + REGION + ".amazonaws.com/" + decodeURI(transform)
+    //                     console.log(encodeURI(file.name));
+    //                     props.addurl(props.treeData, props.node.key, url);
+    //                     console.log(url)
+    //                 }
+    //                 //  props.addImplementationChild(treeData,key, url);
+    //             })
+    //         setChildVisibility(true);
+    //     }
+    // };
 
     //input set
     let auth = localStorage.getItem('timesheetisAuthenticated');
@@ -176,13 +196,13 @@ const TreeNode = (props) => {
             <Button onClick={() => clickAddAlgorButton(props.treeData, props.node.key)} className={(((!AlgorithmItem) && (!addButtonHidden)) && (!props.editButton)) && (!UrlItem) ? classes.editButton : classes.editButtonHidden} size="small" icon={<FontColorsOutlined />} type="primary" danger ghost />
             <Button onClick={() => deleteChildFunction(props.treeData, props.node.key)} className={(deleteButtonHidden && (!props.editButton))  ? classes.editButton : classes.editButtonHidden} size="small" icon={<DeleteOutlined />} type="danger" />
             {inputClass}
-            <div className={ImplementationItem ? classes.upload : classes.hideUpload}>
+            {/* <div className={ImplementationItem ? classes.upload : classes.hideUpload}>
                 <Upload {...Fileprops} >
                     <Button icon={<UploadOutlined />} hidden={props.editButton}>
                         Upload to S3
                     </Button>
                 </Upload>
-            </div>
+            </div> */}
         </div>
     )
 
@@ -251,7 +271,8 @@ const mapDispatchToProps = dispatch => {
         changeCodeLanguage:(language)=>dispatch(CodeAction.changeCodeLanguage(language)),
         setLoadingTime:(time)=>dispatch(AuthAction.setLoadingTime(time)),
         updateUserHistory:(userhistory)=>dispatch(CodeAction.updateUserHistory(userhistory)),
-        getBenchmark:(algorKey)=>dispatch(CodeAction.getBenchmark(algorKey))
+        getBenchmark:(algorKey)=>dispatch(CodeAction.getBenchmark(algorKey)),
+        getDrawerProblemContent:(algorName, key, problemInfo)=>dispatch(CodeAction.getDrawerProblemContent(algorName, key, problemInfo)),
     }
 }
 

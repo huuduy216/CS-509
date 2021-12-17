@@ -6,12 +6,12 @@ import AWS from 'aws-sdk'
 
 
 import classes from './ContentBody.module.css';
-import { message, Button, Input, Select, Divider, List, Descriptions, Collapse,Form } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Upload, Modal, message, Button, Input, Select, Divider, List, Descriptions, Collapse, Form } from 'antd';
+import { CloudDownloadOutlined, UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import { CodeEditor } from '@patternfly/react-code-editor';
 import * as ImpleData from '../../../assets/ImplementationData';
-import * as ProblemData from '../../../assets/ProblemInstanceData';
+
 
 const { Option } = Select;
 
@@ -23,7 +23,8 @@ const { Panel } = Collapse;
 const ContentBody = (props) => {
     //classification edit button
     const [textEdit, setTextEdit] = useState(true)
-    const [problemType, setProblemType] = useState("")
+
+
 
     const clickTextEditButton = () => {
         setTextEdit(!textEdit);
@@ -61,21 +62,21 @@ const ContentBody = (props) => {
     const changeLanguage = (e) => {
         props.setCodeLanguage(e);
         props.editImplementationContent(props.NodeValue, e);
-        setProblemType(e);
-        props.getBenchmarkContent(props.NodeValue, e,"algorithm_implementations");
+        props.setProblemType(e)
+        props.getBenchmarkContent(props.NodeValue, e, "algorithm_implementations");
     }
 
     const changeCode = (value) => {
         props.changeCodeBody(value);
     }
 
-    const deleteBenchmark=(idBenchmark)=>{
-        let history =props.userHistory
-        let element= "Deleted Benchmark||"
+    const deleteBenchmark = (idBenchmark) => {
+        let history = props.userHistory
+        let element = "Deleted Benchmark||"
         history.push(element)
         props.updateUserHistory(history);
-        props.deleteBenchmarkContent(idBenchmark,props.NodeValue,problemType);
-       
+        props.deleteBenchmarkContent(idBenchmark, props.NodeValue, props.problemType);
+
     }
     //problem instance set
     let benchmarkBody = null;
@@ -97,7 +98,7 @@ const ContentBody = (props) => {
                     <List.Item
                         key={item.title}
                     >
-                
+
                         <List.Item.Meta
                             title={<p>{item.username}</p>}
                             description={item.date}
@@ -124,7 +125,7 @@ const ContentBody = (props) => {
                                 </Descriptions>
                             </Panel>
                         </Collapse >
-                        <Button icon={<DeleteOutlined />} type="danger" style={{marginTop:"15px"}} onClick={()=>deleteBenchmark(item.idBenchmark)}/>
+                        <Button icon={<DeleteOutlined />} type="danger" style={{ marginTop: "15px" }} onClick={() => deleteBenchmark(item.idBenchmark)} />
                     </List.Item>
                 )}
             />
@@ -132,17 +133,129 @@ const ContentBody = (props) => {
     }
 
     const changeProblem = (e) => {
-        setProblemType(e);
-        props.getBenchmarkContent(props.NodeValue, e,"algorithm_problem");
+        props.setProblemType(e);
+        props.getBenchmarkContent(props.NodeValue, e, "algorithm_problem");
+        setShowUrl(props.codeDrawProblemInfo[e].url)
     }
 
     const uploadBenchmark = () => {
-        let history =props.userHistory
-        let element= "Added New Benchmark||"
+        let history = props.userHistory
+        let element = "Added New Benchmark||"
         history.push(element)
         props.updateUserHistory(history);
         props.changeContentType("algorithm_benchmark");
-      
+
+    }
+    const [isCaseModalVisible, setIsCaseModalVisible] = useState(false);
+    const [caseName, setCaseName] = useState("");
+    const [uploadFileName, setUploadFileName] = useState("");
+    const [caseUrl, setCaseUrl] = useState("");
+    const [showUrl, setShowUrl] = useState("")
+
+    const handleCaseOk = () => {
+        let algorid = props.dbId[props.NodeValue.substring(0, props.NodeValue.length - 2)]
+        let problemIns = {
+            casename: caseName,
+            fileName: uploadFileName,
+            url: caseUrl,
+            algorId: algorid
+        }
+        // console.log(props.dbId)
+        // console.log(problemIns)
+        props.postProblemContent(problemIns);
+        setIsCaseModalVisible(false);
+        props.setLoadingTime(2000);
+        window.location.reload(false);
+    };
+
+    const handleCaseCancel = () => {
+        setCaseName("")
+        setUploadFileName("")
+        setIsCaseModalVisible(false);
+    };
+
+    const changeCaseName = (e) => {
+
+        setCaseName(e.target.value);
+    }
+    //Problem instance //add cases  //S3
+    const S3_BUCKET = 'cs-509-implementations';
+    const REGION = 'us-east-2';
+
+    const myBucket = new AWS.S3({
+        params: { Bucket: S3_BUCKET },
+        region: REGION,
+    })
+
+    const Fileprops = {
+        customRequest({
+            file,
+        }) {
+            let transform = file.name + Math.floor(Math.random() * 100);
+            let history = props.userHistory
+            let element = "Added New File" + file.name + "||"
+            history.push(element)
+            props.updateUserHistory(history);
+
+
+            const params = {
+                ACL: 'public-read',
+                Body: file,
+                Bucket: S3_BUCKET,
+                Key: transform
+            };
+
+            myBucket.putObject(params)
+                .on('httpUploadProgress', (evt) => {
+                    // setProgress(Math.round((evt.loaded / evt.total) * 100))
+
+                    if (evt.loaded === 100)
+                        console.log("done")
+                })
+                .send((err) => {
+                    if (!err) {
+                        console.log("done deplo")
+                        let url = "https://" + S3_BUCKET + ".s3." + REGION + ".amazonaws.com/" + decodeURI(transform)
+                        setUploadFileName(file.name);
+                        setCaseUrl(url)
+                        // console.log(encodeURI(file.name));
+                        // console.log(url)
+                    }
+                    //  props.addImplementationChild(treeData,key, url);
+                })
+        }
+    };
+    //Problem instance //add cases 
+    let AddCaseModal = (
+        <Modal title="Add Cases" visible={isCaseModalVisible} onOk={handleCaseOk} onCancel={handleCaseCancel} width={"70%"} style={{ marginTop: "11%", marginRight: "17%" }} okButtonProps={{ disabled: caseName === "" || uploadFileName === "" }}>
+            <div>
+                Cases name:   <Input value={caseName} onChange={(e) => changeCaseName(e)} placeholder="Input Case Name" style={{ width: "60%", marginLeft: "3%", marginBottom: "5%" }} />
+            </div>
+            <div>
+                Upload Problem Instance: <Input value={uploadFileName} readOnly placeholder="Cases File" style={{ width: "50%", marginLeft: "3%" }} />
+                <Upload {...Fileprops} showUploadList={false}>
+                    <Button icon={<UploadOutlined />} style={{ marginTop: "10%" }}>
+                        Upload
+                    </Button>
+                </Upload>
+            </div>
+
+        </Modal>
+    );
+
+    const deleteCases = () => {
+        let deleteCaseInfo = {
+            ...props.codeDrawProblemInfo[props.problemType],
+            caseName: props.problemType
+        }
+
+        props.deleteProblemContent(deleteCaseInfo);
+        props.setLoadingTime(3000)
+        window.location.reload(false);
+    }
+
+    const addCases = () => {
+        setIsCaseModalVisible(true);
     }
 
     const onFinish = (values) => {
@@ -161,7 +274,7 @@ const ContentBody = (props) => {
         benchmark["algorId"] = props.dbId[id]
         benchmark["like"] = "0"
         benchmark["star"] = "0"
-        benchmark["benchmarkType"]=problemType
+        benchmark["benchmarkType"] = props.problemType
 
         props.postBenchmarkContent(benchmark);
         props.setLoadingTime(2000);
@@ -222,7 +335,7 @@ const ContentBody = (props) => {
         drawBenchmark(props.codeDrawBenchmark)
         body = (<div className={classes.background}>
             <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
-                Implementation
+                {props.AlgorNameForImplAndProblem} / Implementation
             </p>
             <CodeEditor
                 isDarkTheme
@@ -250,16 +363,16 @@ const ContentBody = (props) => {
                         <Option key={item} value={item}>{item}</Option>
                     )}
                 </Select>
-               
+
                 <Button onClick={() => saveImpl()} type="danger" style={{ width: "12%", marginLeft: "48%" }} disabled={props.codeLanguage === undefined}>Save</Button>
-                </div>
-                <Divider />
-                <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
-                    Benchmark
-                    </p>
-                {benchmarkBody}
-                <Button type="primary" onClick={uploadBenchmark} disabled={problemType===""} style={{width:"30%"}}>Upload Benchmark</Button>
-           
+            </div>
+            <Divider />
+            <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
+                Benchmark
+            </p>
+            {benchmarkBody}
+            <Button type="primary" onClick={uploadBenchmark} style={{ width: "30%" }} disabled={props.problemType === "" || props.problemType === undefined}>Upload Benchmark</Button>
+
 
         </div>
         );
@@ -268,13 +381,14 @@ const ContentBody = (props) => {
         body = (
             <div className={classes.background}>
                 <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
-                    Problem Instance
+                    {props.AlgorNameForImplAndProblem} / Problem Instance
                 </p>
-
+                <Button onClick={addCases} type="primary" style={{ width: "10%", fontWeight: "bolder", fontSize: "12pt" }}>Add</Button>
                 <div className={classes.impleSelectBody}>
                     <Select
+                        value={props.problemType}
                         showSearch
-                        style={{ width: "40%", marginLeft: "0%" }}
+                        style={{ width: "42.5%", marginLeft: "0%" }}
                         placeholder="Select case"
                         optionFilterProp="children"
                         onChange={changeProblem}
@@ -282,25 +396,28 @@ const ContentBody = (props) => {
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
                     >
-                        {ProblemData.Problem.map(item =>
-                            <Option key={item} value={item}>{item}</Option>
+                        {props.codeDrawProblem.map(item =>
+                            <Option key={item.caseName} value={item.caseName}>{item.caseName}</Option>
                         )}
                     </Select>
                 </div>
+                <Button icon={<CloudDownloadOutlined />} type="link" style={{ width: "40%", fontWeight: "bolder", fontSize: "12pt", marginTop: "18px" }} hidden={props.problemType === "" || props.problemType === undefined} href={showUrl}> {props.problemType}</Button>
+                <Button onClick={deleteCases} type="danger" style={{ width: "40%", fontWeight: "bolder", fontSize: "12pt", marginTop: "18px" }} disabled={props.problemType === "" || props.problemType === undefined}>Delete   {props.problemType}</Button>
+
                 <Divider />
                 <p style={{ fontFamily: "Verdana", fontSize: "20pt", width: "50%" }}>
                     Benchmark
                 </p>
                 {benchmarkBody}
-                <Button type="primary" onClick={uploadBenchmark} disabled={problemType===""} style={{width:"30%"}}>Upload Benchmark</Button>
+                <Button type="primary" onClick={uploadBenchmark} style={{ width: "30%", fontWeight: "bolder", fontSize: "12pt" }} disabled={props.problemType === "" || props.problemType === undefined}>Upload Benchmark</Button>
             </div>
         );
-    }else  if (props.codeDrawDataType === "algorithm_benchmark") {
+    } else if (props.codeDrawDataType === "algorithm_benchmark") {
         body = (
-            
+
             <div className={classes.background}>
-                <p style={{fontSize:"19pt"}}>Upload Benchmark</p>
-                <Divider/>
+                <p style={{ fontSize: "19pt" }}>Upload Benchmark</p>
+                <Divider />
                 <Form
                     name="basic"
                     initialValues={{ remember: true }}
@@ -309,7 +426,7 @@ const ContentBody = (props) => {
                     autoComplete="off"
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
-                   
+
                 >
                     <Form.Item
                         label="Username"
@@ -395,6 +512,7 @@ const ContentBody = (props) => {
 
     return (
         <React.Fragment>
+            {AddCaseModal}
             {body}
         </React.Fragment>
 
@@ -409,11 +527,14 @@ const mapStateToProps = state => {
         codeDrawData: state.code.codeDrawData,
         subtitle: state.code.codeDrawDataSubtitle,
         textbody: state.code.codeDrawDataBodytext,
-        userHistory : state.code.userHistory,
+        userHistory: state.code.userHistory,
         codeDrawDataType: state.code.codeDrawDataType,
         codeDrawDataTitle: state.code.codeDrawDataTitle,
         codeDrawDataCode: state.code.codeDrawDataCode,
-        codeDrawBenchmark: state.code.codeDrawBenchmark
+        codeDrawBenchmark: state.code.codeDrawBenchmark,
+        codeDrawProblem: state.code.codeDrawProblem,
+        codeDrawProblemInfo: state.code.codeDrawProblemInfo,
+
     };
 }
 
@@ -429,12 +550,13 @@ const mapDispatchToProps = dispatch => {
         changeTextBody: (textbody) => dispatch(codeActions.changeTextBody(textbody)),
         changeCodeBody: (codeBody) => dispatch(codeActions.changeCodeBody(codeBody)),
         setLoadingTime: (time) => dispatch(authActions.setLoadingTime(time)),
-        getBenchmarkContent: (key, benchmarkType,callType) => dispatch(codeActions.getBenchmarkContent(key, benchmarkType,callType)),
-        deleteBenchmarkContent:(idBenchmark,NodeValue,problemType)=>dispatch(codeActions.deleteBenchmarkContent(idBenchmark,NodeValue,problemType)),
+        getBenchmarkContent: (key, benchmarkType, callType) => dispatch(codeActions.getBenchmarkContent(key, benchmarkType, callType)),
+        deleteBenchmarkContent: (idBenchmark, NodeValue, problemType) => dispatch(codeActions.deleteBenchmarkContent(idBenchmark, NodeValue, problemType)),
         changeContentType: (type) => dispatch(codeActions.changeContentType(type)),
         postBenchmarkContent: (benchmarkBody) => dispatch(codeActions.postBenchmarkContent(benchmarkBody)),
-        updateUserHistory:(userhistory)=>dispatch(codeActions.updateUserHistory(userhistory)),
-
+        updateUserHistory: (userhistory) => dispatch(codeActions.updateUserHistory(userhistory)),
+        postProblemContent: (problemIns) => dispatch(codeActions.postProblemContent(problemIns)),
+        deleteProblemContent: (deleteCaseInfo) => dispatch(codeActions.deleteProblemContent(deleteCaseInfo))
     }
 }
 
